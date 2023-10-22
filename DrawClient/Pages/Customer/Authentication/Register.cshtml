@@ -1,0 +1,46 @@
+﻿@page
+@model DrawClient.Pages.Customer.Authentication.RegisterModel
+
+<section id="corses-singel" class="pt-50 pb-50 gray-bg">
+	<div class="login-container">
+		<div class="screen__register">
+			<div class="screen__content">
+				<form class="register">
+					<div class="login__field">
+						<i class="login__icon bi bi bi-envelope-at-fill"></i>
+						<input type="email" class="login__input" placeholder="Email">
+					</div>
+					<div class="login__field">
+						<i class="login__icon bi bi-person-fill"></i>
+						<input type="text" class="login__input" placeholder="Name">
+					</div>
+					<div class="login__field">
+						<i class="login__icon bi bi-telephone-fill"></i>
+						<input type="text" class="login__input" placeholder="Phone">
+					</div>
+					<div class="login__field">
+						<i class="login__icon bi bi-eye-slash-fill"></i>
+						<input type="password" class="login__input" placeholder="Password">
+					</div>
+					<button class="button login__submit">
+						<span class="button__text">Register Now</span>
+						<i class="button__icon bi bi bi-person-plus-fill"></i>
+					</button>
+				</form>
+				<div class="social-login">
+					<a href="/Customer/Authentication/Login" class="register-anchor"><h8>or Login</h8></a>
+				</div>
+			</div>
+			<div class="screen__background">
+				<span class="screen__background__shape screen__background__shape4"></span>
+				<span class="screen__background__shape screen__background__shape3"></span>
+				<span class="screen__background__shape screen__background__shape2"></span>
+				<span class="screen__background__shape screen__background__shape1"></span>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<link rel="stylesheet" href="/css/login.css">
+}

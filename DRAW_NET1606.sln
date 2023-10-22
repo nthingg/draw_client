@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawClient", "DrawClient\DrawClient.csproj", "{8116D426-B07C-4CE6-A2BA-8075C3285A54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8116D426-B07C-4CE6-A2BA-8075C3285A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8116D426-B07C-4CE6-A2BA-8075C3285A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8116D426-B07C-4CE6-A2BA-8075C3285A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8116D426-B07C-4CE6-A2BA-8075C3285A54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2D6F579-D6E5-426D-A81E-091A140B583E}
+	EndGlobalSection
+EndGlobal
