@@ -1,0 +1,129 @@
+﻿@page
+@model DrawClient.Pages.Customer.Course.IndexModel
+@{
+    Layout = "_LayoutCourse";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container__course-index">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h6>
+                                <a class="index-title">
+                                    Introduction to Architectural Perspective
+                                </a>
+                            </h6>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="video-container">
+                                <iframe src="@Model.YtbURL"></iframe>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <h6>
+                                <a class="text-navy">
+                                    Content:
+                                </a>
+                            </h6>
+                            <p class="mt-1"> Dive into the fascinating world of architectural perspective. Understand the principles of linear perspective, vanishing points, and horizon lines. Explore how these concepts form the foundation of architectural drawing.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.1</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.2</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Sketching Basic Shapes and Proportions</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.3</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Creating Realistic Building Facades</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.4</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Cityscapes and Urban Environments</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.5</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Architectural Interiors and Spatial Design</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.6</span>
+                                <br />
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Special Techniques: Reflections and Glass</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.7</span>
+                                <br/>
+                                <a href="#" class="mt-2 lecture-title">
+                                    <ul>
+                                        <li><span class="head">Final Projects and Creative Expression</span></li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <link rel="stylesheet" href="/css/cart.css">
+}
