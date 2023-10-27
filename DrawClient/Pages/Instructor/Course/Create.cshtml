@@ -5,5 +5,60 @@
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
-    <p>Create Course Here</p>
+    <div class="container">
+        <h2 class="mb-5">Create new course</h2>
+        <div class="create-section">
+            <form method="post" class="row" enctype="multipart/form-data">
+                <div class="col-md-6">
+                    <div class="form-container w-75">
+                        <h5 class="form-label mb-2">Course title</h5>
+                        <input class="form-control" type="text" placeholder="Course title here..." asp-for="@Model.Course.Name" />
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label my-2">Description</h5>
+                        <textarea class="form-control mb-2" type="text" asp-for="@Model.Course.Description"
+                        placeholder="Course description goes here..." rows="8"></textarea>
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label">Image</h5><div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                       aria-describedby="inputGroupFileAddon01" asp-for="@Model.Image">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 category-option">
+                    <h4>Category options</h4>
+                    <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="form-container">
+                                <h5 class="form-label mb-2">Price</h5>
+                                <input class="form-control" type="text" asp-for="@Model.Course.OriginalPrice" />
+                            </div>
+                            <div class="form-container">
+                                <h5 class="form-label mb-2">Level</h5>
+                                <select class="custom-select" aria-label="Default select example" asp-items="Model.Level"></select>
+                            </div>
+                            <div class="form-container">
+                                <h5 class="form-label mb-2">Material</h5>
+                                <select class="custom-select" aria-label="Default select example" asp-items="Model.Material"></select>
+                            </div>
+                            <div class="form-container">
+                                <h5 class="form-label mb-2">Topic</h5>
+                                <select class="custom-select" aria-label="Default select example" asp-items="Model.Topic"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 footer action d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-dark">Add Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </section>

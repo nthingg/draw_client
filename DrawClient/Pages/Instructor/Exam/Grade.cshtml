@@ -1,4 +1,32 @@
 ﻿@page
 @model DrawClient.Pages.Instructor.Exam.GradeModel
 @{
+    Layout = "_LayoutInstructor";
 }
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container">
+        <h3 class="mb-5">Ungrade exams</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Course</th>
+                    <th>Student</th>
+                    <th>Lesson</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="https://dummyimage.com/600x400/000/fff&text=no+image" width="50" height="50"></td>
+                    <td>Course name</td>
+                    <td>Student Name</td>
+                    <td>Lesson Content</td>
+                    <td>
+                        <button class="btn btn-outline-secondary">Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

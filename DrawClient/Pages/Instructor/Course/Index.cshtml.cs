@@ -1,12 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using ViewModel.Base;
+using ViewModel.Course;
 
 namespace DrawClient.Pages.Instructor.Course
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _client;
+
+        public IndexModel(IConfiguration configuration)
         {
+            _configuration = configuration;
+            _client = new HttpClient();
+            var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
+            _client.BaseAddress = new Uri(apiUrl);
+        }
+
+        public Page<CourseViewModel> Courses { get; set; }
+
+        public async Task OnGetAsync(int pageIndex = 0)
+        {
+            var res = await _client.GetAsync(_client.BaseAddress + $"/course/page?pageIndex={pageIndex}&pageSize={5}");
+            if (res.IsSuccessStatusCode)
+            {
+                var dataStr = await res.Content.ReadAsStringAsync();
+                var courses = JsonConvert.DeserializeObject<Page<CourseViewModel>>(dataStr);
+                if (courses is not null)
+                {
+                    Courses = courses;
+                }
+            }
         }
     }
 }
