@@ -1,0 +1,45 @@
+﻿@page
+@model DrawClient.Pages.Instructor.Exam.DetailsModel
+@{
+    Layout = "_LayoutInstructor";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container">
+        <div class="detail-section">
+            <form method="post" class="row">
+                <div class="col-md-6">
+                    <div class="form-container w-75">
+                        <h5 class="form-label mb-2">Course title</h5>
+                        <input class="form-control" type="text" placeholder="Course title here..." />
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label my-2">Content</h5>
+                        <input class="form-control" type="text" />
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label my-2">Student Submission</h5>
+                        <img src="https://dummyimage.com/600x400/000/fff&text=no+image" />
+                    </div>
+                </div>
+                <div class="col-md-6 category-option">
+                    <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="form-container mb-3">
+                                <h5 class="form-label mb-2">Grade</h5>
+                                <input class="form-control" type="text" />
+                            </div>
+                            <div class="form-container mb-3">
+                                <h5 class="form-label mb-2">Comment (optional)</h5>
+                                <textarea class="form-control mb-2" type="text" placeholder="Your comment goes here..." rows="8"></textarea>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-outline-dark">Grade</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

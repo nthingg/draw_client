@@ -1,0 +1,82 @@
+﻿@page
+@model DrawClient.Pages.Instructor.Course.IndexModel
+@{
+    Layout = "_LayoutInstructor";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container my-4">
+
+        <div class="course-list-section mt-2">
+            <!-- HEADER SECTION -->
+            <div class="header-section row">
+                <h5 class="col-md-9">Manage Courses</h5>
+                <div class="col-md-2 m-auto">
+                    <a class="btn btn-outline-secondary mb-4" href="/Instructor/Course/Create">Add Course</a>
+                </div>
+            </div>
+            <!-- CONTENT SECTION -->
+            <div class="body-section row">
+                @foreach (var item in Model.Courses.Items)
+                {
+                    <div class="col-sm-6 col-md-4 col-xl-3 course-detail">
+                        <div class="card" style="width: 18rem; height: 30rem">
+                            <img class="card-img-top" src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text" style="height: 12rem">
+                                    @if (item.Description.Length >= 135)
+                                    {
+                                        <span>@(item.Description.Substring(0, 135) + " […]")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@(item.Description);</span>
+                                    }
+                                </p>
+                                <div class="action text-right mt-3">
+                                    <a href="#" class="btn btn-primary">Detail</a>
+                                    <a asp-page="Update" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- PAGING SECTION -->
+            @{
+                var currentPageIndex = Model.Courses.PageIndex + 1;
+                var previous = Model.Courses.Previous;
+                var next = Model.Courses.Next;
+                var totalPage = Model.Courses.TotalPagesCount;
+            }
+
+            <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item @(!previous ? "disabled" : "")">
+                            <a class="page-link" href="" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link">@currentPageIndex</a>
+                            <span class="sr-only">(current)</span>
+                        </li>
+                        @if (totalPage >= currentPageIndex + 1)
+                        {
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                        }
+                        @if (totalPage >= currentPageIndex + 2)
+                        {
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                        }
+                        <li class="page-item @(!next ? "disabled" : "")">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</section>
