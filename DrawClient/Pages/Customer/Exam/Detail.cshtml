@@ -1,0 +1,35 @@
+﻿@page
+@model DrawClient.Pages.Customer.Exam.DetailModel
+
+<div class="d-flex justify-content-around mt-5">
+    <div class="border col-md-3">
+        <div class="bg-primary p-3 text-white">
+            <h2>Coach info</h2>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="name" style="margin-bottom: 10px;">Learner Name</label>
+            <input type="text" class="form-control" readonly="" value="Nguyen Ngoc Thinh">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="phone" style="margin-bottom: 10px;">Course Name</label>
+            <input type="text" class="form-control" value="Painting for Starter">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="password" style="margin-bottom: 10px;">Result (Marks)</label>
+            <input type="text" class="form-control" value="10">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="confirm" style="margin-bottom: 10px;">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirm" placeholder="Enter password again" onkeyup="verifyConfirm()">
+            <span id="confirm-error" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-8 table-responsive overflow-auto" style="max-height:80vh;">
+        <div class="bg-primary p-3 text-white">
+            <h2>Exam Information</h2>
+        </div>
+    </div>
+</div>
