@@ -4,6 +4,49 @@
     Layout = "_LayoutAdmin";
 }
 
+
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
-    <p>List Instructor Here</p>
+    <div class="p-3" style="width: 1000px; margin: auto;">
+        <div class="row pt-4">
+            <div>
+                <h2 class="text-primary" style="text-align: center; margin-bottom: 30px;">Instructor List</h2>
+            </div>
+
+            <div class="justify-content-end mb-1">
+                <a class="btn table-primary" asp-page="Create">
+                    <i style="font-size: 20px;" class="bi bi-plus-square"></i>
+                </a>
+            </div>
+
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th style="width: 280px;">Name</th>
+                        <th style="width: 150px;">Phone</th>
+                        <th style="width: 300px;">Email</th>
+                        <th style="width: 110px; text-align: center;">Block</th>
+                        <th style="text-align: center;">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle;">Nguyen Quoc Manh</td>
+                        <td style="vertical-align: middle;">0919999999</td>
+                        <td style="vertical-align: middle;">manhnq2002@gmail.com</td>
+                        <td style="vertical-align: middle;">
+                            <div class="form-check form-switch m-0 p-0 d-flex justify-content-center">
+                                <input class="form-check-input m-auto" type="checkbox" checked role="switch" id="flexSwitchCheckChecked">
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-dark" asp-page="Detail" asp-route-customerId="#">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>
