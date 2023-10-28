@@ -1,8 +1,13 @@
+using DrawClient.Helper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddSession();
+//add start ThinhNN
+builder.Services.AddSingleton<CloudinaryHelper>();
+//and end ThinhNN
 
 var app = builder.Build();
 

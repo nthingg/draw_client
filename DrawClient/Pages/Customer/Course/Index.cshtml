@@ -5,13 +5,13 @@
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
-    <div class="container__course-index">
+    <div class="container__course-index" style="margin: 0 auto">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-sm-8">
+                @* <div class="col-sm-8">
                     <div class="ibox">
-                        <div class="ibox-content">
-                            <h6>
+                        <div class="ibox-content tbl-exam">
+                            <h6 class="tbl-exam">
                                 <a class="index-title">
                                     Introduction to Architectural Perspective
                                 </a>
@@ -30,15 +30,177 @@
                             </h6>
                             <p class="mt-1"> Dive into the fascinating world of architectural perspective. Understand the principles of linear perspective, vanishing points, and horizon lines. Explore how these concepts form the foundation of architectural drawing.</p>
                         </div>
+                    </div> *@
+                <div class="col-sm-8">
+                    <div class="ibox">
+                        <div class="ibox-content tbl-exam">
+                            <h6 class="tbl-exam">
+                                <a class="index-title">
+                                    Introduction to Architectural Perspective
+                                </a>
+                            </h6>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="image-container">
+                                <img src="@Model.ImageURl" alt="Image Description">
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <h6>
+                                <a class="text-navy">
+                                    Content:
+                                </a>
+                            </h6>
+                            <p class="mt-1"> Dive into the fascinating world of architectural perspective. Understand the principles of linear perspective, vanishing points, and horizon lines. Explore how these concepts form the foundation of architectural drawing.</p>
+                        </div>
+                        <div class="ibox-content">
+                            <h6>
+                                <a class="text-navy">
+                                    Submission:
+                                </a>
+                            </h6>
+                            <form method="post" enctype="multipart/form-data" class="mt-10">
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <input class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
+                    <div class="scrollable-content" style="max-height: 1000px; overflow-y: scroll;">
+                        <div class="accordion" id="accordionExample">
+                            <!-- Your existing card elements go here -->
+                            <div class="card">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 2</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 3</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 2</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 3</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 2</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card mt-20">
+                                <div class="card-header tbl-exam">
+                                    <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 3</span>
+                                </div>
+                                <div class="card-header">
+                                    <a href="#" class="lecture-title">
+                                        <ul>
+                                            <li><span class="head">Introduction to Architectural Perspective</span></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* <div class="col-sm-4">
                     <div class="accordion" id="accordionExample">
                         <div class="card">
+                            <div class="card-header tbl-exam">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1</span>
+                            </div>
                             <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.1</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
+                                <a href="#" class="lecture-title">
                                     <ul>
                                         <li><span class="head">Introduction to Architectural Perspective</span></li>
                                     </ul>
@@ -46,79 +208,33 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card mt-20">
+                            <div class="card-header tbl-exam">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 2</span>
+                            </div>
                             <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.2</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
+                                <a href="#" class="lecture-title">
                                     <ul>
-                                        <li><span class="head">Sketching Basic Shapes and Proportions</span></li>
+                                        <li><span class="head">Introduction to Architectural Perspective</span></li>
                                     </ul>
                                 </a>
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.3</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
-                                    <ul>
-                                        <li><span class="head">Creating Realistic Building Facades</span></li>
-                                    </ul>
-                                </a>
+                        <div class="card mt-20">
+                            <div class="card-header tbl-exam">
+                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 3</span>
                             </div>
-                        </div>
-
-                        <div class="card">
                             <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.4</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
+                                <a href="#" class="lecture-title">
                                     <ul>
-                                        <li><span class="head">Cityscapes and Urban Environments</span></li>
-                                    </ul>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.5</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
-                                    <ul>
-                                        <li><span class="head">Architectural Interiors and Spatial Design</span></li>
-                                    </ul>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.6</span>
-                                <br />
-                                <a href="#" class="mt-2 lecture-title">
-                                    <ul>
-                                        <li><span class="head">Special Techniques: Reflections and Glass</span></li>
-                                    </ul>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lecture 1.7</span>
-                                <br/>
-                                <a href="#" class="mt-2 lecture-title">
-                                    <ul>
-                                        <li><span class="head">Final Projects and Creative Expression</span></li>
+                                        <li><span class="head">Introduction to Architectural Perspective</span></li>
                                     </ul>
                                 </a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
     </div>

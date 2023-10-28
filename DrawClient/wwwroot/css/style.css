@@ -3830,7 +3830,7 @@ p.form-message.error {
 }
 
 .container__course-index {
-    width: 100vw;
+    width: 85vw;
 }
 
 .lecture-title {
@@ -3908,3 +3908,21 @@ p.form-message.error {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.tbl-exam {
+    background-color: #07294d !important;
+    color: #ffc600 !important;
+}
+
+.image-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (height:width) */
+    overflow: hidden;
+}
+
+    .image-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
