@@ -1,11 +1,10 @@
+using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Reflection.Emit;
-using ViewModel.Base;
+using System.Text;
 using ViewModel.Course;
-using ViewModel.Lesson;
 using ViewModel.Topic;
 
 namespace DrawClient.Pages.Instructor.Course
@@ -14,16 +13,18 @@ namespace DrawClient.Pages.Instructor.Course
     {
 		private readonly IConfiguration _configuration;
 		private readonly HttpClient _client;
+		private readonly CloudinaryHelper _cloudinary;
 
-		public CreateModel(IConfiguration configuration)
-		{
-			_configuration = configuration;
-			_client = new HttpClient();
-			var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
-			_client.BaseAddress = new Uri(apiUrl);
-		}
+        public CreateModel(IConfiguration configuration, CloudinaryHelper cloudinary)
+        {
+            _configuration = configuration;
+			_cloudinary = cloudinary;
+            _client = new HttpClient();
+            var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
+            _client.BaseAddress = new Uri(apiUrl);
+        }
 
-		[BindProperty]
+        [BindProperty]
 		public CourseCreateViewModel Course { get; set; }
 		[BindProperty]
 		public IFormFile Image { get; set; }
@@ -37,6 +38,35 @@ namespace DrawClient.Pages.Instructor.Course
 			await GenerateMaterialOptions();
 			await GenerateTopicOptions();
         }
+
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (ModelState.IsValid)
+            {
+				var filePath = await _cloudinary.UploadImageToCloudinaryAsync(Image);
+				Course.ThumbUrl = filePath;
+
+				var dataStr = JsonConvert.SerializeObject(Course);
+				var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
+				var token = HttpContext.Session.GetString("instructToken");
+				var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/course");
+				request.Headers.Add("Authorization", $"Bearer {token}");
+				request.Content = content;
+
+				//
+				var res = await _client.SendAsync(request);
+				if (res.IsSuccessStatusCode)
+				{
+					return RedirectToPage("/Instructor/Course/AddLesson", new { name = Course.Name });
+				}
+            }
+
+            await GenerateLevelOptions();
+            await GenerateMaterialOptions();
+            await GenerateTopicOptions();
+
+            return Page();
+		}
 
 		private async Task GenerateTopicOptions()
 		{

@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\course\imgs\" />
+    <Content Remove="Pages\Instructor\Course\AddLesson.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\course\videos\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
@@ -20,6 +24,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Instructor\Course\AddLesson.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Instructor\Course\AddLesson.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Instructor\Course\AddLesson.cshtml" />
   </ItemGroup>
 
 </Project>

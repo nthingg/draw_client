@@ -1,0 +1,130 @@
+﻿@page
+@model DrawClient.Pages.Instructor.Course.AddLessonModel
+@{
+    Layout = "_LayoutInstructor";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container">
+        <div class="row">
+            <!-- Course Header Section -->
+            <h2 class="mb-5 col-md-8">Edit course</h2>
+            <div class="col-md-4 footer action mx-auto">
+                <a class="btn btn-outline-dark" asp-page="/Instructor/Course/AddLesson" asp-page-handler="Finish" asp-route-id="@Model.Id">Finish</a>
+                <button class="btn btn-outline-danger">Cancel</button>
+            </div>
+        </div>
+        <!-- Course Body Section -->
+        <div class="create-section">
+            <form method="post" class="row">
+                <div class="col-md-6">
+                    <div class="form-container w-75">
+                        <h5 class="form-label mb-2">Course title</h5>
+                        <input class="form-control" type="text" placeholder="Course title here..." asp-for="@Model.Course.Name" />
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label my-2">Description</h5>
+                        <textarea class="form-control mb-2" type="text" asp-for="@Model.Course.Description"
+                                  placeholder="Course description goes here..." rows="8">
+                        </textarea>
+                    </div>
+                    <div class="form-container w-75">
+                        <h5 class="form-label">Image</h5>
+                        @if (Model.Course.ThumbUrl is not null)
+                        {
+                            <img src="@Model.Course.ThumbUrl" />
+                        }
+                        else
+                        {
+                            <img src="https://dummyimage.com/600x400/000/fff&text=no+image" />
+                        }
+                    </div>
+                </div>
+                <!-- Course Category Section -->
+                <div class="col-md-6 category-option">
+                    <h4>Category options</h4>
+                    <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="form-container">
+                                <h5 class="form-label mb-2">Price</h5>
+                                <input class="form-control" type="text" asp-for="@Model.Course.OriginalPrice" />
+                            </div>
+                            <div class="form-container">
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Level</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Level"></select>
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Material</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Material"></select>
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Topic</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Topic"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <hr />
+
+        <div class="lesson-container">
+            <!-- Lesson Header Section -->
+            <h3>Lessons</h3>
+            <div class="lesson-body row">
+                <!-- Lesson ontent Section -->
+                <div class="col-6 lesson-content">
+                    <div class="card mb-3">
+                        <div></div>
+                        @if (TempData["succeed"] is not null)
+                        {
+                            <div class="card-header">
+                                <div class="row">
+                                    <h5 class="col-8 text-success">@TempData["succeed"]</h5>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- Add Lesson Section -->
+                <div class="add-lesson-seciton col-6">
+                    <form class="add-lesson-form" method="post" enctype="multipart/form-data">
+                        <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Title</h5>
+                                    <input class="form-control" type="text" asp-for="@Model.Lesson.Title" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Content</h5>
+                                    <input class="form-control" type="text" asp-for="@Model.Lesson.Content" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Video</h5>
+                                    <input class="form-control" type="file" asp-for="@Model.VideoUrl">
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Lesson Number</h5>
+                                    <input class="form-control" type="text" />
+                                </div>
+                                <div class="form-container my-4">
+                                    <h5 class="form-label d-inline-block">Exam</h5>
+                                    <input class="form-check-input d-inline-block ml-5 float-end" asp-for="@Model.Lesson.IsExam"
+                                           type="checkbox" style="width: 20px; height: 20px;" />
+                                </div>
+                                <div class="text-right">
+                                    <input hidden asp-for="@Model.CourseName" />
+                                    <input asp-for="@Model.Id" type="hidden"/>
+                                    <button type="submit" class="btn btn-outline-secondary">Add Lesson</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
