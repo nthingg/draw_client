@@ -20,11 +20,11 @@
                 @foreach (var item in Model.Courses.Items)
                 {
                     <div class="col-sm-6 col-md-4 col-xl-3 course-detail">
-                        <div class="card" style="width: 18rem; height: 30rem">
+                        <div class="card" style="width: 18rem; min-height: 33rem">
                             <img class="card-img-top" src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Card image cap" height="160">
                             <div class="card-body">
                                 <h5 class="card-title">@item.Name</h5>
-                                <p class="card-text" style="height: 12rem">
+                                <p class="card-text" style="min-height: 13rem">
                                     @if (item.Description.Length >= 135)
                                     {
                                         <span>@(item.Description.Substring(0, 135) + " […]")</span>

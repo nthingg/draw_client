@@ -1,3 +1,4 @@
+using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,10 +15,12 @@ namespace DrawClient.Pages.Instructor.Course
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
+        private readonly CloudinaryHelper _cloudinary;
 
-        public UpdateModel(IConfiguration configuration)
+        public UpdateModel(IConfiguration configuration, CloudinaryHelper cloudinary)
         {
             _configuration = configuration;
+            _cloudinary = cloudinary;
             _client = new HttpClient();
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
             _client.BaseAddress = new Uri(apiUrl);

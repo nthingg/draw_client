@@ -1,3 +1,4 @@
+using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,12 +14,12 @@ namespace DrawClient.Pages.Instructor.Course
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
-        private readonly IWebHostEnvironment _environment;
+        private readonly CloudinaryHelper _cloudinary;
 
-        public AddLessonModel(IConfiguration configuration, IWebHostEnvironment environment)
+        public AddLessonModel(IConfiguration configuration, CloudinaryHelper cloudinary)
         {
             _configuration = configuration;
-            _environment = environment;
+            _cloudinary = cloudinary;
             _client = new HttpClient();
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
             _client.BaseAddress = new Uri(apiUrl);
@@ -67,17 +68,8 @@ namespace DrawClient.Pages.Instructor.Course
             {
                 if (VideoUrl is not null)
                 {
-                    // Get the full path to the wwwroot directory.
-                    string wwwrootPath = _environment.WebRootPath;
-
-                    Guid name = Guid.NewGuid();
-                    var filePath = Path.Combine(wwwrootPath, "images", "course", "videos", name.ToString() + Path.GetExtension(VideoUrl.FileName));
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await VideoUrl.CopyToAsync(fileStream);
-                    }
-
-                    Lesson.VideoUrl = @"/images/course/videos/" + name.ToString() + Path.GetExtension(VideoUrl.FileName);
+                    var url = await _cloudinary.UploadImageToCloudinaryAsync(VideoUrl);
+                    Lesson.VideoUrl = url;
                 }
                 var dataStr = JsonConvert.SerializeObject(Lesson);
                 var content = new StringContent(dataStr, Encoding.UTF8, "application/json");

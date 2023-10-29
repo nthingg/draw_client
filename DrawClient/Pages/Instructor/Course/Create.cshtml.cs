@@ -1,3 +1,4 @@
+using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,12 +13,12 @@ namespace DrawClient.Pages.Instructor.Course
     {
 		private readonly IConfiguration _configuration;
 		private readonly HttpClient _client;
-		private readonly IWebHostEnvironment _environment;
+		private readonly CloudinaryHelper _cloudinary;
 
-        public CreateModel(IConfiguration configuration, IWebHostEnvironment environment)
+        public CreateModel(IConfiguration configuration, CloudinaryHelper cloudinary)
         {
             _configuration = configuration;
-            _environment = environment;
+			_cloudinary = cloudinary;
             _client = new HttpClient();
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
             _client.BaseAddress = new Uri(apiUrl);
@@ -42,17 +43,8 @@ namespace DrawClient.Pages.Instructor.Course
 		{
 			if (ModelState.IsValid)
             {
-                // Get the full path to the wwwroot directory.
-                string wwwrootPath = _environment.WebRootPath;
-
-                Guid name = Guid.NewGuid();
-                var filePath = Path.Combine(wwwrootPath, "images", "course", "imgs", name.ToString() + Path.GetExtension(Image.FileName));
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await Image.CopyToAsync(fileStream);
-                }
-
-				Course.ThumbUrl = @"/images/course/imgs/" + name.ToString() + Path.GetExtension(Image.FileName);
+				var filePath = await _cloudinary.UploadImageToCloudinaryAsync(Image);
+				Course.ThumbUrl = filePath;
 
 				var dataStr = JsonConvert.SerializeObject(Course);
 				var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
@@ -65,7 +57,7 @@ namespace DrawClient.Pages.Instructor.Course
 				var res = await _client.SendAsync(request);
 				if (res.IsSuccessStatusCode)
 				{
-					return RedirectToPage("/Instructor/Course/AddLesson", Course.Name);
+					return RedirectToPage("/Instructor/Course/AddLesson", new { name = Course.Name });
 				}
             }
 
