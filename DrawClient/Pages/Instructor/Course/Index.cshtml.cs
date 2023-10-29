@@ -23,7 +23,12 @@ namespace DrawClient.Pages.Instructor.Course
 
         public async Task OnGetAsync(int pageIndex = 0)
         {
-            var res = await _client.GetAsync(_client.BaseAddress + $"/course/page?pageIndex={pageIndex}&pageSize={5}");
+            var token = HttpContext.Session.GetString("instructToken");
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/by-instructor?pageIndex={pageIndex}&pageSize={5}");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+
+            var res = await _client.SendAsync(request);
+
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();

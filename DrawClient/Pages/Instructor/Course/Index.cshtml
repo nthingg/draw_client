@@ -21,7 +21,7 @@
                 {
                     <div class="col-sm-6 col-md-4 col-xl-3 course-detail">
                         <div class="card" style="width: 18rem; height: 30rem">
-                            <img class="card-img-top" src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Card image cap">
+                            <img class="card-img-top" src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Card image cap" height="160">
                             <div class="card-body">
                                 <h5 class="card-title">@item.Name</h5>
                                 <p class="card-text" style="height: 12rem">
@@ -31,11 +31,11 @@
                                     }
                                     else
                                     {
-                                        <span>@(item.Description);</span>
+                                        <span>@(item.Description)</span>
                                     }
                                 </p>
                                 <div class="action text-right mt-3">
-                                    <a href="#" class="btn btn-primary">Detail</a>
+                                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-primary">Detail</a>
                                     <a asp-page="Update" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                                 </div>
                             </div>

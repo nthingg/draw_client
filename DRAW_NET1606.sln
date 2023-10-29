@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawClient", "DrawClient\DrawClient.csproj", "{8116D426-B07C-4CE6-A2BA-8075C3285A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{A3F3313F-B0A3-4DB4-9DCD-4DC6B9897591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{A3F3313F-B0A3-4DB4-9DCD-4DC6B9897591}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
