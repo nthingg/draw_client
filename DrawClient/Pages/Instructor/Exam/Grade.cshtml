@@ -17,15 +17,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><img src="https://dummyimage.com/600x400/000/fff&text=no+image" width="50" height="50"></td>
-                    <td>Course name</td>
-                    <td>Student Name</td>
-                    <td>Lesson Content</td>
-                    <td>
-                        <button class="btn btn-outline-secondary">Details</button>
-                    </td>
-                </tr>
+                @foreach (var item in Model.Exams)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.ThumbUrl" width="50" height="50"></td>
+                        <td>@item.CourseName</td>
+                        <td>@item.Learner.Information.Name</td>
+                        <td>@item.Lesson.Content</td>
+                        <td>
+                            <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
