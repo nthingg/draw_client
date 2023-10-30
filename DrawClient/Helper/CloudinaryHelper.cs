@@ -27,7 +27,7 @@ namespace DrawClient.Helper
                 {
                     File = new FileDescription(file.Name, new MemoryStream(imgData))
                 };
-                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams, type: "auto");
                 imgUrl = uploadResult.SecureUrl.AbsoluteUri;
             }
             return imgUrl;

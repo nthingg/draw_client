@@ -1,9 +1,11 @@
+using AutoMapper;
 using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Net;
+using System.Text;
 using ViewModel.Base;
 using ViewModel.Course;
 using ViewModel.Lesson;
@@ -16,16 +18,34 @@ namespace DrawClient.Pages.Instructor.Course
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
         private readonly CloudinaryHelper _cloudinary;
+        private readonly IMapper _mapper;
 
-        public UpdateModel(IConfiguration configuration, CloudinaryHelper cloudinary)
+        public UpdateModel(IConfiguration configuration, CloudinaryHelper cloudinary, IMapper mapper)
         {
             _configuration = configuration;
             _cloudinary = cloudinary;
+            _mapper = mapper;
             _client = new HttpClient();
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
             _client.BaseAddress = new Uri(apiUrl);
         }
 
+        [BindProperty]
+        public int Id { get; set; }
+        [BindProperty]
+        public CourseUpdateViewModel CourseUpdate { get; set; }
+        [BindProperty]
+        public IFormFile? Image { get; set; }
+
+        //
+        [BindProperty]
+        public LessonCreateViewModel LessonUpdate { get; set; }
+        [BindProperty]
+        public IFormFile? VideoUrl { get; set; }
+        [BindProperty]
+        public int LessonId { get; set; }
+
+        //
         public CourseViewModel Course { get; set; }
         public Page<LessonViewModel> Lesson { get; set; }
         public SelectList Topic { get; set; }
@@ -34,20 +54,126 @@ namespace DrawClient.Pages.Instructor.Course
 
         public async Task OnGetAsync(int id, int pageIndex = 0)
         {
-            var res = await _client.GetAsync(_client.BaseAddress + "/course/" + id);
-            if (res.IsSuccessStatusCode)
+            Id = id;
+            await GetCourseDetailAsync(Id, pageIndex);
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            ModelState.Remove(nameof(LessonUpdate));
+            ModelState.Remove(nameof(LessonId));
+            ModelState.Remove(nameof(VideoUrl));
+            if (ModelState.IsValid)
             {
-                var dataStr = await res.Content.ReadAsStringAsync();
-                var course = JsonConvert.DeserializeObject<CourseViewModel>(dataStr);
-                if (course is not null)
+                if (Image is not null)
                 {
-                    Course = course;
-                    Lesson = LessonPage(course.Lessons, pageIndex);
-                    await GenerateLevelOptions();
-                    await GenerateMaterialOptions();
-                    await GenerateTopicOptions();
+                    var imgUrl = await _cloudinary.UploadImageToCloudinaryAsync(Image);
+                    CourseUpdate.ThumbUrl = imgUrl;
+                }
+
+                if (CourseUpdate.DiscountPrice == 0)
+                {
+                    CourseUpdate.DiscountPrice = null;
+                }
+
+                var dataStr = JsonConvert.SerializeObject(CourseUpdate);
+                var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
+                //
+                var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/course/" + Id);
+                var token = HttpContext.Session.GetString("instructToken");
+                request.Headers.Add("Authorization", $"Bearer {token}");
+                request.Content = content;
+                //
+                var res = await _client.SendAsync(request);
+                if (res.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Update Succeed";
+                    await GetCourseDetailAsync(Id, 0);
+                    return Page();
                 }
             }
+
+            TempData["error"] = "Error";
+            await GetCourseDetailAsync(Id, 0);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostUpdateLessonAsync(int? pageIndex, string? isExamResult)
+        {
+            if (isExamResult is not null && isExamResult == "on")
+            {
+                LessonUpdate.IsExam = true;
+            }
+            ModelState.Remove(nameof(CourseUpdate));
+            ModelState.Remove(nameof(Image));
+            ModelState.Remove(nameof(CourseUpdate.Name));
+            if (ModelState.IsValid)
+            {
+                if (VideoUrl is not null)
+                {
+                    var imgUrl = await _cloudinary.UploadImageToCloudinaryAsync(VideoUrl);
+                    LessonUpdate.VideoUrl = imgUrl;
+                }
+
+                var dataStr = JsonConvert.SerializeObject(LessonUpdate);
+                var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
+                //
+                var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/course/lesson/" + LessonId);
+                var token = HttpContext.Session.GetString("instructToken");
+                request.Headers.Add("Authorization", $"Bearer {token}");
+                request.Content = content;
+                //
+                var res = await _client.SendAsync(request);
+                if (res.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Update Succeed";
+                    await GetCourseDetailAsync(Id, pageIndex ?? 0);
+                    return Page();
+                }
+            }
+
+            TempData["error"] = "Error";
+            await GetCourseDetailAsync(Id, pageIndex ?? 0);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetRemoveLessonAsync(int lessonId, int courseId)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/lesson/" + lessonId);
+            var token = HttpContext.Session.GetString("instructToken");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+            //
+            var res = await _client.SendAsync(request);
+            if (res.IsSuccessStatusCode)
+            {
+                TempData["success"] = $"Remove Succeed";
+                Id = courseId;
+                await GetCourseDetailAsync(courseId, 0);
+                return Page();
+            }
+
+            TempData["error"] = "Error";
+            Id = courseId;
+            await GetCourseDetailAsync(courseId, 0);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetRemoveCourseAsync(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/status/" + id);
+            var token = HttpContext.Session.GetString("instructToken");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+            //
+            var res = await _client.SendAsync(request);
+            if (res.IsSuccessStatusCode)
+            {
+                TempData["success"] = "Removed Succeed";
+                return Redirect("/Instructor/Course");
+            }
+
+            TempData["error"] = "Error";
+            await GetCourseDetailAsync(id, 0);
+            return Page();
         }
 
         //
@@ -63,6 +189,28 @@ namespace DrawClient.Pages.Instructor.Course
                 PageSize = pageSize,
                 TotalItemsCount = totalCount
             };
+        }
+
+        private async Task GetCourseDetailAsync(int id, int pageIndex)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/course/" + id);
+            var token = HttpContext.Session.GetString("instructToken");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+            //
+            var res = await _client.SendAsync(request);
+            if (res.IsSuccessStatusCode)
+            {
+                var dataStr = await res.Content.ReadAsStringAsync();
+                var course = JsonConvert.DeserializeObject<CourseViewModel>(dataStr);
+                if (course is not null)
+                {
+                    Course = course;
+                    Lesson = LessonPage(course.Lessons.OrderBy(l => l.Id).ToList(), pageIndex);
+                    await GenerateLevelOptions();
+                    await GenerateMaterialOptions();
+                    await GenerateTopicOptions();
+                }
+            }
         }
 
         private async Task GenerateTopicOptions()

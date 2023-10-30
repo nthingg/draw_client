@@ -1,18 +1,19 @@
 ﻿@page
-@model DrawClient.Pages.Instructor.Exam.GradeModel
+@model DrawClient.Pages.Instructor.Exam.ListModel
 @{
     Layout = "_LayoutInstructor";
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
-        <h3 class="mb-5">Ungrade exams</h3>
+        <h3 class="mb-5">Lesson @(Model.Exams.First().Lesson.Title)</h3>
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th colspan="2">Course</th>
                     <th>Student</th>
-                    <th>Lesson</th>
+                    <th>Answer</th>
+                    <th>Result</th>
+                    <th>Comment</th>
                     <th></th>
                 </tr>
             </thead>
@@ -20,14 +21,18 @@
                 @foreach (var item in Model.Exams)
                 {
                     <tr>
-                        <td>
-                            <img src="@item.ThumbUrl" width="50" height="50"></td>
-                        <td>@item.CourseName</td>
                         <td>@item.Learner.Information.Name</td>
-                        <td>@item.Lesson.Content</td>
                         <td>
-                            <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Details</a>
+                            <img src="@item.AnswerUrl" width="50" height="50">
                         </td>
+                        <td>@(item.Result is null ? "Not yet grading" : item.Result)</td>
+                        <td>@(item.Comment is null ? "" : item.Comment)</td>
+                        @if (item.Result is null)
+                        {
+                            <td>
+                                <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Grade</a>
+                            </td>
+                        }
                     </tr>
                 }
 
@@ -35,7 +40,7 @@
                 {
                     <tr>
                         <td colspan="4">
-                            <h5>No ungrade exam found.</h5>
+                            <h5>No exam submit found.</h5>
                         </td>
                     </tr>
                 }
