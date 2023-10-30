@@ -1,0 +1,64 @@
+﻿@page
+@model DrawClient.Pages.Admin.Instructor.DetailModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="d-flex justify-content-around mt-5">
+        <div class="border col-md-3">
+            <div class="table-primary p-3 text-white">
+                <h2>Instructor Info</h2>
+            </div>
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Name:</dt>
+                            <dd class="col-sm-9">Nguyen Quoc Manh</dd>
+
+                            <dt class="col-sm-3">Phone:</dt>
+                            <dd class="col-sm-9">0939999999</dd>
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-9">manhnq@gmail.com</dd>
+                            <dt class="col-sm-3">Block:</dt>
+                            <dd class="col-sm-9 form-switch" style="padding-left: calc(var(--bs-gutter-x) * 0.5);">
+                                <input class="form-check-input m-auto align-middle" type="checkbox" checked="#" id="#">
+                            </dd>
+                        </dl>
+                        <div class="text-end">
+                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-primary">Back to instructor list</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-8 border">
+            <div class="table-primary p-3 text-white sticky-top">
+                <h2>Order history</h2>
+            </div>
+            <div class="row">
+
+                <div class="col-4 overflow-y-auto text-center image-container" style="max-height:60vh;">
+
+                    <button class="image m-2 border-0 p-2" data-bs-target="#">
+                        <img src="https://ppa.vn/newsmultidata/khoa-ve-tranh-son-dau-2.jpg" width="200" height="200" style="object-fit: cover;" />
+                        <div>Ve chan dung</div>
+                    </button>
+                </div>
+                <div class="col p-3">
+                    <dl class="row container-fluid">
+                        <dt class="col-sm-3">Order Date:</dt>
+                        <dd class="col-sm-9">15/10/2023</dd>
+                        <dt class="col-sm-3">Total Price:</dt>
+                        <dd class="col-sm-9">500000VND</dd>
+
+                        <dd class="col-sm-9"><div class="overflow-y-auto text-break h-100">#</div></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
