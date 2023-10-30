@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model DrawClient.Pages.Instructor.Course.DetailsModel
 @{
     Layout = "_LayoutInstructor";
@@ -11,7 +11,7 @@
             <!-- Course Header Section -->
             <h2 class="mb-5 col-md-8">Edit course</h2>
             <div class="col-md-4 footer action mx-auto">
-                <button class="btn btn-outline-dark">Edit</button>
+                <a class="btn btn-outline-dark" asp-page="/Instructor/Course/Update" asp-route-id="@Model.Course.Id">Edit</a>
                 <a class="btn btn-outline-primary" asp-page="/Instructor/Course/Index">Back</a>
             </div>
         </div>
@@ -102,7 +102,7 @@
                                     {
                                         <li class="list-group-item ml-2 text-danger">Kiểm tra</li>
                                         <li class="list-group-item ml-2 text-right">
-                                            <button class="btn bnt-ountline-secondary">Xem kết quả</button>
+                                            <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/List" asp-route-id="@item.Id">View Results</a>
                                         </li>
                                     }
                                 </ul>

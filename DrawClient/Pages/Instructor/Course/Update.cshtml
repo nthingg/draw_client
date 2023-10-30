@@ -7,181 +7,257 @@
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
-        <div class="row">
-            <!-- Course Header Section -->
-            <h2 class="mb-5 col-md-8">Edit course</h2>
-            <div class="col-md-4 footer action mx-auto">
-                <button class="btn btn-outline-dark">Save Change</button>
-                <button class="btn btn-outline-danger">Delete Course</button>
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <!-- Course Header Section -->
+                <h2 class="mb-5 col-md-8">Edit course</h2>
+                <div class="col-md-4 footer action mx-auto">
+                    <button type="submit" class="btn btn-outline-dark">Save Change</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmModal">
+                        Delete Course
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to delete this course?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" asp-page="/Instructor/Course/Update"
+                                       asp-page-handler="RemoveCourse" asp-route-id="@Model.Id">Confirm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- Course Body Section -->
-        <div class="create-section">
-            <form method="post" class="row">
-                <div class="col-md-6">
-                    <div class="form-container w-75">
-                        <h5 class="form-label mb-2">Course title</h5>
-                        <input class="form-control" type="text" placeholder="Course title here..." asp-for="@Model.Course.Name" />
-                    </div>
-                    <div class="form-container w-75">
-                        <h5 class="form-label my-2">Description</h5>
-                        <textarea class="form-control mb-2" type="text" asp-for="@Model.Course.Description"
-                                  placeholder="Course description goes here..." rows="8">
-                        </textarea>
-                    </div>
-                    <div class="form-container w-75">
-                        <h5 class="form-label">Image</h5>
-                        @if (Model.Course.ThumbUrl is not null)
-                        {
-                            <img src="@Model.Course.ThumbUrl" />
-                        }
-                        else
-                        {
-                            <img src="https://dummyimage.com/600x400/000/fff&text=no+image" />
-                        }
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            <!-- Course Body Section -->
+            <div class="create-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-container w-75">
+                            <h5 class="form-label mb-2">Course title</h5>
+                            <input class="form-control" type="text" placeholder="Course title here..."
+                                   value="@Model.Course.Name" asp-for="@Model.CourseUpdate.Name" />
+                        </div>
+                        <div class="form-container w-75">
+                            <h5 class="form-label my-2">Description</h5>
+                            <textarea class="form-control mb-2"
+                                      name="CourseUpdate.Description" id="CourseUpdate.Description"
+                                      placeholder="Course description goes here..." rows="8">@Model.Course.Description</textarea>
+                        </div>
+                        <div class="form-container w-75">
+                            <h5 class="form-label">Image</h5>
+                            @if (Model.Course.ThumbUrl is not null)
+                            {
+                                <img src="@Model.Course.ThumbUrl" />
+                            }
+                            else
+                            {
+                                <img src="https://dummyimage.com/600x400/000/fff&text=no+image" />
+                            }
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="file" id="formFile" asp-for="@Model.Image">
+                                </div>
                             </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                       aria-describedby="inputGroupFileAddon01">
-                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <!-- Course Category Section -->
+                    <div class="col-md-6 category-option">
+                        <h4>Category options</h4>
+                        <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Price</h5>
+                                    <input class="form-control" type="text" asp-for="@Model.CourseUpdate.OriginalPrice" value="@Model.Course.OriginalPrice" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Discount Price</h5>
+                                    <input class="form-control" type="text" asp-for="@Model.CourseUpdate.DiscountPrice" value="@Model.Course.DiscountPrice" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Level</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Level" asp-for="@Model.CourseUpdate.Level"></select>
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Material</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Material" asp-for="@Model.CourseUpdate.Material"></select>
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Topic</h5>
+                                    <select class="custom-select" aria-label="Default select example" asp-items="@Model.Topic" asp-for="@Model.CourseUpdate.TopicId"></select>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Course Category Section -->
-                <div class="col-md-6 category-option">
-                    <h4>Category options</h4>
-                    <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
-                        <div class="card-body">
-                            <div class="form-container">
-                                <h5 class="form-label mb-2">Price</h5>
-                                <input class="form-control" type="text" asp-for="@Model.Course.OriginalPrice" />
-                            </div>
-                            <div class="form-container">
-                                <h5 class="form-label mb-2">Discount Price</h5>
-                                <input class="form-control" type="text" asp-for="@Model.Course.DiscountPrice" />
-                            </div>
-                            <div class="form-container">
-                                <h5 class="form-label mb-2">Level</h5>
-                                <select class="custom-select" aria-label="Default select example" asp-items="@Model.Level"></select>
-                            </div>
-                            <div class="form-container">
-                                <h5 class="form-label mb-2">Material</h5>
-                                <select class="custom-select" aria-label="Default select example" asp-items="@Model.Material"></select>
-                            </div>
-                            <div class="form-container">
-                                <h5 class="form-label mb-2">Topic</h5>
-                                <select class="custom-select" aria-label="Default select example" asp-items="@Model.Topic"></select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            </div>
+        </form>
 
-            <hr />
+        <hr />
 
-            <div class="lesson-container">
-                <div class="row my-4">
-                    <!-- Lesson Header Section -->
-                    <h3 class="col-8">Lessons</h3>
-                    <div class="col-4 mx-auto">
-                        <button class="btn btn-outline-secondary">Add Lesson</button>
-                    </div>
-                </div>
-                <div class="lesson-body row">
-                    <!-- Lesson ontent Section -->
-                    <div class="col-6 lesson-content">
-                        @foreach (var item in Model.Lesson.Items)
-                        {
+        <div class="lesson-container">
+            <div class="my-4">
+                <!-- Lesson Header Section -->
+                <h3>Lessons</h3>
+            </div>
+            <div class="lesson-body row">
+                <!-- Lesson ontent Section -->
+                <div class="col-6 lesson-content">
+                    @foreach (var item in Model.Lesson.Items)
+                    {
+                        <form method="post" enctype="multipart/form-data" asp-page-handler="UpdateLesson">
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <div class="row">
-                                        <h5 class="col-8">@item.Title</h5>
+                                        <h5 class="col-8">
+                                            <input asp-for="@Model.LessonUpdate.Title" value="@item.Title" class="form-control" />
+                                        </h5>
                                         <div class="col-4 mx-auto">
-                                            <button class="btn btn-outline-secondary">Edit</button>
-                                            <button class="btn btn-outline-danger">Remove</button>
+                                            <input type="hidden" asp-for="@Model.Id" />
+                                            <input type="hidden" asp-for="@Model.LessonId" value="@item.Id" />
+                                            @if (!string.IsNullOrEmpty(Request.Query["pageIndex"]))
+                                            {
+                                                <input type="hidden" name="pageIndex" value="@Request.Query["pageIndex"]" />
+                                            }
+                                            <button type="submit" class="btn btn-outline-secondary">Edit</button>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmModalLesson-@item.Id">
+                                                Remove
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="confirmModalLesson-@item.Id" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Do you really want to delete this course?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <a class="btn btn-outline-danger" asp-page="/Instructor/Course/Update"
+                                                           asp-page-handler="RemoveLesson" asp-route-lessonId="@item.Id" asp-route-courseId="@Model.Id">Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item ml-2">@item.Content</li>
-                                    @if (item.VideoUrl is not null)
-                                    {
-                                        <li class="list-group-item ml-2">@item.VideoUrl</li>
-                                    }
-                                    @if (item.IsExam)
-                                    {
-                                        <li class="list-group-item ml-2 text-danger">Kiểm tra</li>
-                                    }
-                                </ul>
-                            </div>
-                        }
+                                <ul class="list-group list-group-flush form-group">
+                                    <li class="list-group-item ml-2">
+                                        <input asp-for="@Model.LessonUpdate.Content" value="@item.Content" class="form-control" />
 
-                        @{
-                            var currentPageIndex = Model.Lesson.PageIndex + 1;
-                            var previous = Model.Lesson.Previous;
-                            var next = Model.Lesson.Next;
-                            var totalPage = Model.Lesson.TotalPagesCount;
-                        }
-
-                        <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item @(!previous ? "disabled" : "")">
-                                        <a class="page-link" asp-page="Update" asp-route-id="@Model.Course.Id" asp-route-pageIndex="@(currentPageIndex-2)" tabindex="-1">Previous</a>
                                     </li>
-                                    <li class="page-item active">
-                                        <a class="page-link">@currentPageIndex</a>
-                                        <span class="sr-only">(current)</span>
+                                    <li class="list-group-item ml-2">
+                                        @if (item.VideoUrl is not null)
+                                        {
+                                            <video width="400" controls>
+                                                <source src="@item.VideoUrl" type="video/mp4">
+                                            </video>
+                                        }
+                                        <input class="form-control" type="file" id="formFile" asp-for="@Model.VideoUrl">
                                     </li>
-                                    @if (totalPage >= currentPageIndex + 1)
-                                    {
-                                        <li class="page-item"><a class="page-link" href="/Instructor/Course/Update/@Model.Course.Id?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
+                                    @{
+                                        var isExam = item.IsExam ? "checked" : "";
                                     }
-                                    @if (totalPage >= currentPageIndex + 2)
-                                    {
-                                        <li class="page-item"><a class="page-link" href="/Instructor/Course/Update/@Model.Course.Id?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
-                                    }
-                                    <li class="page-item @(!next ? "disabled" : "")">
-                                        <a class="page-link" asp-page="Update" asp-route-id="@Model.Course.Id" asp-route-pageIndex="@(currentPageIndex)">Next</a>
+                                    <li class="list-group-item ml-2 text-danger">
+                                        <div class="form-container my-4">
+                                            <label class="form-label d-inline-block">Exam</label>
+                                            <input class="form-check-input d-inline-block ml-5 float-end"
+                                               name="isExamResult" @isExam
+                                               type="checkbox" style="width: 20px; height: 20px;" />
+                                        </div>
                                     </li>
                                 </ul>
-
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- Add Lesson Section -->
-                    <div class="add-lesson-seciton col-6">
-                        <form class="add-lesson-form">
-                            <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
-                                <div class="card-body">
-                                    <div class="form-container">
-                                        <h5 class="form-label mb-2">Title</h5>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                    <div class="form-container">
-                                        <h5 class="form-label mb-2">Content</h5>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                    <div class="form-container">
-                                        <h5 class="form-label mb-2">Video</h5>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                    <div class="form-container">
-                                        <h5 class="form-label mb-2">Lesson Number</h5>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                    <div class="form-container my-4">
-                                        <h5 class="form-label d-inline-block">Exam</h5>
-                                        <input class="form-check-input d-inline-block ml-5 float-end" type="checkbox" value="" style="width: 20px; height: 20px;" />
-                                    </div>
-                                </div>
                             </div>
                         </form>
+                    }
+
+                    @{
+                        var currentPageIndex = Model.Lesson.PageIndex + 1;
+                        var previous = Model.Lesson.Previous;
+                        var next = Model.Lesson.Next;
+                        var totalPage = Model.Lesson.TotalPagesCount;
+                    }
+
+                    <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item @(!previous ? "disabled" : "")">
+                                    <a class="page-link" asp-page="Update" asp-route-id="@Model.Course.Id" asp-route-pageIndex="@(currentPageIndex-2)" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link">@currentPageIndex</a>
+                                    <span class="sr-only">(current)</span>
+                                </li>
+                                @if (totalPage >= currentPageIndex + 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href="/Instructor/Course/Update/@Model.Course.Id?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
+                                }
+                                @if (totalPage >= currentPageIndex + 2)
+                                {
+                                    <li class="page-item"><a class="page-link" href="/Instructor/Course/Update/@Model.Course.Id?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
+                                }
+                                <li class="page-item @(!next ? "disabled" : "")">
+                                    <a class="page-link" asp-page="Update" asp-route-id="@Model.Course.Id" asp-route-pageIndex="@(currentPageIndex)">Next</a>
+                                </li>
+                            </ul>
+
+                        </nav>
                     </div>
+                </div>
+                <!-- Add Lesson Section -->
+                <div class="add-lesson-seciton col-6">
+                    <form class="add-lesson-form" method="post" asp-page="/Instructor/Course/AddLesson">
+                        <div class="card w-75 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Title</h5>
+                                    <input class="form-control" type="text" name="Lesson.Title" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Content</h5>
+                                    <input class="form-control" type="text" name="Lesson.Content" />
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Video</h5>
+                                    <input class="form-control" type="file" name="VideoUrl">
+                                </div>
+                                <div class="form-container">
+                                    <h5 class="form-label mb-2">Lesson Number</h5>
+                                    <input class="form-control" type="text" />
+                                </div>
+                                <div class="form-container my-4">
+                                    <h5 class="form-label d-inline-block">Exam</h5>
+                                    <input class="form-check-input d-inline-block ml-5 float-end" name="isExamResult"
+                                           type="checkbox" style="width: 20px; height: 20px;" />
+                                </div>
+                                <div class="text-right">
+                                    <input name="isUpdate" value="true" type="hidden" />
+                                    <input name="courseId" value="@Model.Id" type="hidden" />
+                                    <button type="submit" class="btn btn-outline-secondary">Add Lesson</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
