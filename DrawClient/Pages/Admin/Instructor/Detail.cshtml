@@ -1,0 +1,190 @@
+﻿@page
+@model DrawClient.Pages.Admin.Instructor.DetailModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="d-flex justify-content-around mt-5">
+        <div class="border col-md-3">
+            <div class="tbl-exam p-3">
+                <h2 class="tbl-exam">Instructor Info</h2>
+            </div>
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Name:</dt>
+                            <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Name == null ? "No data" : Model.instructor.Information.Name)</dd>
+                            <dt class="col-sm-3">Phone:</dt>
+                            <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Phone == null ? "No data" : Model.instructor.Information.Phone)</dd>
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Email == null ? "No data" : Model.instructor.Information.Email)</dd>
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-9">@(Model.instructor == null || Model.instructor.Description == null ? "No data" : Model.instructor.Description)</dd>
+                        </dl>
+                        <div class="row justify-content-around">
+                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-danger">Block</a>
+                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-secondary">Update</a>
+
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <a href="@Url.Content("~/Admin/Instructor/List")" class="btn tbl-exam" style="float: right; margin: 20px 60px 20px 00px">Back to instructor list</a>
+            </div>
+        </div>
+
+
+        <div class="col-md-8 border">
+            <div class="tbl-exam p-3 text-white ">
+                <h2 class="tbl-exam">Course List</h2>
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-1.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>250.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="/Customer/Course/Detail"><h4>Brushstrokes of Inspiration: Beginner's Drawing</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-2.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>300.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="courses-singel.html"><h4>Storytelling through Comics: Sequential Art</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-3.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>500.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="courses-singel.html"><h4>Botanical Beauty: Floral Illustration</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-4.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>799.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="courses-singel.html"><h4>Fantasy Realms and Creatures: Drawing Myths</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-5.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>100.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="courses-singel.html"><h4>Still Life Secrets: Objects in Detail</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="/images/course/cu-1.jpg" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>499.000VND</span>
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>(20 Reviews)</span>
+                                    <a href="courses-singel.html"><h4>Architectural Wonders: Perspective Drawing</h4></a>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                    </div> <!-- row -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

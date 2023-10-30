@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="/css/responsive.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <!--  Toastr -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
     <!--====== PRELOADER PART START ======-->
@@ -142,6 +144,7 @@
     <!--====== SEARCH BOX PART ENDS ======-->
 
     <div>
+        <partial name="_Notification" />
         @RenderBody()
     </div>
 
@@ -275,6 +278,8 @@
     <!--====== Map js ======-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="/js/map-script.js"></script>
+    <!-- Toastr -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

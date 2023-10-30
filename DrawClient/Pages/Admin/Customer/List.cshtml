@@ -5,5 +5,48 @@
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
-    <p>List Customer Here</p>
+    <div class="p-3" style="width: 1000px; margin: auto;">
+        <div class="pt-4" style="width: inherit">
+            <div>
+                <h2 class="draw-header" style="text-align: center; margin-bottom: 30px;">Learner List</h2>
+            </div>
+
+            <div class="justify-content-end mb-1" style="float: right; margin: 0 40px 20px 0; color:#07294d !important;">
+                <a class="btn tbl-exam" asp-page="Create">
+                    <i style="font-size: 20px;" class="bi bi-plus-square mr-2"></i> Add New
+                </a>
+            </div>
+        </div>
+        <div>
+
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="tbl-exam">
+                        <th style="width: 280px;">ID</th>
+                        <th style="width: 280px;">Name</th>
+                        <th style="width: 150px;">Phone</th>
+                        <th style="width: 300px;">Email</th>
+                        <th style="text-align: center;">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.Learners)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle;">@obj.Id</td>
+                            <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Name == null ? "No data" : obj.Information.Name)</td>
+                            <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Phone == null ? "No data" : obj.Information.Phone)</td>
+                            <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Email == null ? "No data" : obj.Information.Email)</td>
+                            <td class="text-center">
+                                <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-customerId="@obj.Id">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>

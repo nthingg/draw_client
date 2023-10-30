@@ -56,11 +56,12 @@ namespace DrawClient.Pages.Instructor.Course
 				//
 				var res = await _client.SendAsync(request);
 				if (res.IsSuccessStatusCode)
-				{
-					return RedirectToPage("/Instructor/Course/AddLesson", new { name = Course.Name });
+                {
+                    return RedirectToPage("/Instructor/Course/AddLesson", new { name = Course.Name });
 				}
             }
 
+            TempData["error"] = "Error";
             await GenerateLevelOptions();
             await GenerateMaterialOptions();
             await GenerateTopicOptions();

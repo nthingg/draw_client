@@ -62,8 +62,17 @@ namespace DrawClient.Pages.Instructor.Course
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string? isExamResult, bool isUpdate = false, int? courseId = null)
         {
+            if (isExamResult is not null || isExamResult == "on")
+            {
+                Lesson.IsExam = true;
+            }
+            if (isUpdate)
+            {
+                ModelState.Remove(nameof(Id));
+                ModelState.Remove(nameof(CourseName));
+            }
             if (ModelState.IsValid)
             {
                 if (VideoUrl is not null)
@@ -75,12 +84,23 @@ namespace DrawClient.Pages.Instructor.Course
                 var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
 
                 //
-                var res = await _client.PostAsync(_client.BaseAddress + "/course/lesson/" + Id, content);
+                var requestId = isUpdate ? courseId : Id;
+                var res = await _client.PostAsync(_client.BaseAddress + "/course/lesson/" + requestId, content);
                 if (res.IsSuccessStatusCode)
                 {
-                    TempData["succeed"] = "Add Succeed";
+                    TempData["success"] = "Add Succeed";
+                    if (isUpdate)
+                    {
+                        return RedirectToPage("/Instructor/Course/Update", new { id = courseId });
+                    }
                     return RedirectToPage("/Instructor/Course/AddLesson", new { name = CourseName });
                 }
+            }
+
+            TempData["error"] = "Error";
+            if (isUpdate)
+            {
+                return RedirectToPage("/Instructor/Course/Update", new { id = courseId });
             }
 
             await GetCourseByNameAsync(CourseName);

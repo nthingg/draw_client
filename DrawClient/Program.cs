@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddSession();
+builder.Services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
 //add start ThinhNN
 builder.Services.AddSingleton<CloudinaryHelper>();
 //and end ThinhNN
