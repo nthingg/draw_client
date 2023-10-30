@@ -36,9 +36,6 @@ namespace DrawClient.Pages.Instructor.Course
                 {
                     Course = course;
                     Lesson = LessonPage(course.Lessons, pageIndex);
-                    await GenerateLevelOptions();
-                    await GenerateMaterialOptions();
-                    await GenerateTopicOptions();
                 }
             }
         }
