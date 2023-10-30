@@ -1,38 +1,32 @@
 ﻿@page
-@model DrawClient.Pages.Admin.Instructor.DetailModel
+@model DrawClient.Pages.Admin.Customer.DetailModel
 @{
     Layout = "_LayoutAdmin";
 }
-
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="d-flex justify-content-around mt-5">
         <div class="border col-md-3">
             <div class="tbl-exam p-3">
-                <h2 class="tbl-exam">Instructor Info</h2>
+                <h2 class="tbl-exam">Learner Info</h2>
             </div>
             <div class="m-3">
                 <div class="card">
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-3">Name:</dt>
+                            @*<dt class="col-sm-3">Name:</dt>
                             <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Name == null ? "No data" : Model.instructor.Information.Name)</dd>
                             <dt class="col-sm-3">Phone:</dt>
                             <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Phone == null ? "No data" : Model.instructor.Information.Phone)</dd>
                             <dt class="col-sm-3">Email:</dt>
                             <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Email == null ? "No data" : Model.instructor.Information.Email)</dd>
                             <dt class="col-sm-3">Email:</dt>
-                            <dd class="col-sm-9">@(Model.instructor == null || Model.instructor.Description == null ? "No data" : Model.instructor.Description)</dd>
+                            <dd class="col-sm-9">@(Model.instructor == null || Model.instructor.Description == null ? "No data" : Model.instructor.Description)</dd>*@
                         </dl>
-                        <div class="row justify-content-around">
-                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-danger">Block</a>
-                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-secondary">Update</a>
-
+                        <div class="text-end">
+                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn tbl-exam">Back to instructor list</a>
                         </div>
-                        
                     </div>
-                    
                 </div>
-                <a href="@Url.Content("~/Admin/Instructor/List")" class="btn tbl-exam" style="float: right; margin: 20px 60px 20px 00px">Back to instructor list</a>
             </div>
         </div>
 
