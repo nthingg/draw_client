@@ -1,14 +1,14 @@
 ﻿@page
-@model DrawClient.Pages.Admin.Instructor.UpdateModel
+@model DrawClient.Pages.Admin.Instructor.BlockModel
 @{
     Layout = "_LayoutAdmin";
 }
-
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
-        <h2 class="mb-5">Update Instructor</h2>
+        <h2 class="mb-5 text-danger">Are you sure to block this user?</h2>
         <div class="create-section">
             <form method="post" class="row" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.instructor.Id"/>
                 <div class="col-md-6 justify-content-center">
                     <div class="form-container">
                         <h5 class="form-label mb-2">Name</h5>
@@ -28,7 +28,7 @@
                                   placeholder="Course description goes here..." rows="8"></textarea>
                     </div>
                     <div class="justify-content-end mb-1" style="float:right;margin: 20px 0 0 0">
-                        <button type="submit" class="btn tbl-exam">Update</button>
+                        <input type="submit" class="btn btn-danger" value="Block"/>
                     </div>
                 </div>
             </form>
