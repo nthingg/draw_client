@@ -24,9 +24,8 @@
                             <dd class="col-sm-9">@(Model.instructor == null || Model.instructor.Description == null ? "No data" : Model.instructor.Description)</dd>
                         </dl>
                         <div class="row justify-content-around">
-                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-danger">Block</a>
-                            <a href="@Url.Content("~/Admin/Instructor/List")" class="btn btn-secondary">Update</a>
-
+                            <a asp-page="/Admin/Instructor/Block" asp-route-id="@Model.instructor.Id" class="btn btn-danger">@(Model.instructor.Information.IsBlocked ?"Unblock":"Block" )</a>
+                            <a asp-page="/Admin/Instructor/Update" asp-route-id="@Model.instructor.Id" class="btn btn-secondary">Update</a>
                         </div>
                         
                     </div>
