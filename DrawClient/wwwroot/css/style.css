@@ -3926,3 +3926,14 @@ p.form-message.error {
         left: 0;
         width: 100%;
     }
+
+.tmp-add-cart {
+    border-style: none;
+    border-radius: 8px;
+    background-color: #ffc600;
+    font-size: 20px !important;
+}
+
+    .tmp-add-cart:hover {
+        background-color: #24486e;
+    }

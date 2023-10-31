@@ -58,27 +58,47 @@
                                         <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
                                     </div>
                                     <div class="price">
-                                        <span>@item.OriginalPrice</span>
+                                        @if (item.DiscountPrice != 0)
+                                        {
+                                            <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
+                                        } else
+                                        {
+                                            <span>@item.OriginalPrice</span>
+                                        }
                                     </div>
                                 </div>
                                 <div class="cont">
-                                    @* <ul>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span> *@
-                                    <a href="/Customer/Course/Detail"><h4>@item.Name</h4></a>
+                                    <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
                                     <div class="course-teacher">
                                         <div class="thum">
                                             <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
                                         </div>
                                         <div class="name">
-                                            <a href="#"><h6>@item.Instructor.Information.Name</h6></a>
+                                            <a><h6>@item.Instructor.Information.Name</h6></a>
                                         </div>
-                                        <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
+                                        <div class="button text-center mt-4">
+                                            @{
+                                                bool check = true;
+                                            }
+                                            @foreach (var course in Model.Purchased)
+                                            {
+                                                if (course.Id == item.Id)
+                                                {
+                                                    <a href="#" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
+                                                    check = false;
+                                                    break;
+                                                }
+                                            }
+                                            @if (check)
+                                            {
+                                                <form method="post">
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <button type="submit" class="main-btn" style="border: none;">
+                                                        <i class="bi bi-cart-fill"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div> <!-- singel course -->

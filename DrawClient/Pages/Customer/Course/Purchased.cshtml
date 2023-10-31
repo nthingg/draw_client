@@ -48,198 +48,41 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-1.jpg" alt="Course">
+                    @foreach (var item in Model.Courses)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        <span>@item.OriginalPrice</span>
+                                    </div>
                                 </div>
-                                <div class="price">
-                                    <span>250.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                <div class="cont">
+                                    @* <ul>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
                                 </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="/Customer/Course/Detail"><h4>Brushstrokes of Inspiration: Beginner's Drawing</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                <span>(20 Reviews)</span> *@
+                                    <a href="/Customer/Course/Detail"><h4>@item.Name</h4></a>
+                                    <div class="course-teacher">
+                                        <div class="thum">
+                                            <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                        </div>
+                                        <div class="name">
+                                            <a href="#"><h6>@item.Instructor.Information.Name</h6></a>
+                                        </div>
+                                        <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
                                     </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Ngoc Thinh</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
                                 </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-2.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>300.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Storytelling through Comics: Sequential Art</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Pham Phuc Thanh Cong</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-3.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>500.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Botanical Beauty: Floral Illustration</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Ngoc Thinh</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-4.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>799.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Fantasy Realms and Creatures: Drawing Myths</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Quoc Manh</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-5.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>100.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Still Life Secrets: Objects in Detail</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Phan Duc Duy</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-1.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>499.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Architectural Wonders: Perspective Drawing</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Tran Trung Quan</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
+                            </div> <!-- singel course -->
+                        </div>
+                    }
                 </div> <!-- row -->
             </div>
         </div> <!-- tab content -->

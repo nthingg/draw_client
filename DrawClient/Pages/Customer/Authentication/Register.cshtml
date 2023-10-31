@@ -5,24 +5,23 @@
 	<div class="login-container">
 		<div class="screen__register">
 			<div class="screen__content">
-				<form class="register">
-					<div class="login__field">
-						<i class="login__icon bi bi bi-envelope-at-fill"></i>
-						<input type="email" class="login__input" placeholder="Email">
-					</div>
+				<form method="post" class="register">
 					<div class="login__field">
 						<i class="login__icon bi bi-person-fill"></i>
-						<input type="text" class="login__input" placeholder="Name">
+						<input type="text" class="login__input" placeholder="Name" asp-for="Register.Name">
 					</div>
 					<div class="login__field">
-						<i class="login__icon bi bi-telephone-fill"></i>
-						<input type="text" class="login__input" placeholder="Phone">
+						<i class="login__icon bi bi bi-envelope-at-fill"></i>
+						<input type="email" class="login__input" placeholder="Email" asp-for="Register.Email">
 					</div>
 					<div class="login__field">
 						<i class="login__icon bi bi-eye-slash-fill"></i>
-						<input type="password" class="login__input" placeholder="Password">
+						<input type="password" class="login__input" placeholder="Password" asp-for="Register.Password">
 					</div>
-					<button class="button login__submit">
+					<div class="login__field">
+						<div class="text-danger" asp-validation-summary="All"></div>
+					</div>
+					<button type="submit" class="button login__submit">
 						<span class="button__text">Register Now</span>
 						<i class="button__icon bi bi bi-person-plus-fill"></i>
 					</button>
