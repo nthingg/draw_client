@@ -8,10 +8,11 @@
     <div class="container">
         <div class="row">
             <!-- Course Header Section -->
-            <h2 class="mb-5 col-md-8">Edit course</h2>
+            <h2 class="mb-5 col-md-8">Add Lesson</h2>
             <div class="col-md-4 footer action mx-auto">
-                <a class="btn btn-outline-dark" asp-page="/Instructor/Course/AddLesson" asp-page-handler="Finish" asp-route-id="@Model.Id">Finish</a>
-                <button class="btn btn-outline-danger">Cancel</button>
+                <a class="btn btn-outline-dark" asp-page="/Instructor/Course/AddLesson" asp-route-courseName="@Model.CourseName"
+                asp-page-handler="Finish" asp-route-id="@Model.Id">Finish</a>
+                <a class="btn btn-outline-danger" asp-page="/Instructor/Course/Index">Cancel</a>
             </div>
         </div>
         <!-- Course Body Section -->
@@ -105,10 +106,6 @@
                                 <div class="form-container">
                                     <h5 class="form-label mb-2">Video</h5>
                                     <input class="form-control" type="file" asp-for="@Model.VideoUrl">
-                                </div>
-                                <div class="form-container">
-                                    <h5 class="form-label mb-2">Lesson Number</h5>
-                                    <input class="form-control" type="text" />
                                 </div>
                                 <div class="form-container my-4">
                                     <h5 class="form-label d-inline-block">Exam</h5>

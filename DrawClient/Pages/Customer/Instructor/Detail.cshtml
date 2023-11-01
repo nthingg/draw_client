@@ -17,8 +17,8 @@
                             <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Phone == null ? "No data" : Model.Instructor.Information.Phone)</dd>
                             <dt class="col-sm-3">Email:</dt>
                             <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Email == null ? "No data" : Model.Instructor.Information.Email)</dd>
-                            <dt class="col-sm-3">Description:</dt>
-                            <dd class="col-sm-9">@(Model.Instructor == null || Model.Instructor.Description == null ? "No data" : Model.Instructor.Description)</dd>
+                            <dt class="col-sm-5">Description:</dt>
+                            <dd class="col-sm-7">@(Model.Instructor == null || Model.Instructor.Description == null ? "No data" : Model.Instructor.Description)</dd>
                         </dl>
                         <div class="row justify-content-around">
                             <a href="#" class="main-btn"><i class="bi bi-chat-dots-fill"></i> Chat</a>
@@ -45,16 +45,6 @@
                                     <div class="thum">
                                         <div class="image">
                                             <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
-                                        </div>
-                                        <div class="price">
-                                            @if (item.DiscountPrice != 0)
-                                            {
-                                                <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
-                                            }
-                                            else
-                                            {
-                                                <span>@item.OriginalPrice</span>
-                                            }
                                         </div>
                                     </div>
                                     <div class="cont">

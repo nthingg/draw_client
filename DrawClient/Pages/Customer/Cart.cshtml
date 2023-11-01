@@ -8,12 +8,12 @@
                 <div class="col-md-9">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <span class="pull-right">(<strong>@(Model.Courses != null ? Model.Courses.Count : 0)</strong>) items</span>
+                            <span class="pull-right">(<strong>@(Model.Details != null ? Model.Details.Count : 0)</strong>) items</span>
                             <h5>Items in your cart</h5>
                         </div>
-                        @if (Model.Courses != null)
+                        @if (Model.Details != null)
                         {
-                            @foreach (var course in Model.Courses)
+                            @foreach (var detail in Model.Details)
                             {
                                 <div class="ibox-content">
                                     <div class="table-responsive">
@@ -22,40 +22,43 @@
                                                 <tr>
                                                     <td>
                                                         <div class="image" style="width: 90px; height: 90px; overflow: hidden;">
-                                                            <img src="@(course.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
+                                                            <img src="@(detail.Course.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
                                                         </div>
                                                     </td>
                                                     <td class="desc">
                                                         <h5>
-                                                            <a asp-page="/Customer/Course/Detail" asp-route-id="@course.Id" class="text-navy">
-                                                                @course.Name
+                                                            <a asp-page="/Customer/Course/Detail" asp-route-id="@detail.Course.Id" class="text-navy">
+                                                                @detail.Course.Name
                                                             </a>
                                                         </h5>
                                                         <p class="prod-description mt-2">
-                                                            @course.Description
+                                                            @detail.Course.Description
                                                         </p>
                                                         <dl class="m-b-none mt-4">
-                                                            <dt>Instructor: <span class="prod-auth">@course.Instructor.Information.Name</span></dt>
+                                                            <dt>Level: <span class="prod-auth">@detail.Course.Level</span></dt>
+                                                        </dl>
+                                                        <dl class="m-b-none">
+                                                            <dt>Material: <span class="prod-auth">@detail.Course.Material</span></dt>
                                                         </dl>
                                                         <div class="m-t-sm">
-                                                            <a asp-page="Cart" asp-route-removeId="@course.Id" class="remove-prod"><i class="fa fa-trash"></i> Remove item</a>
+                                                            <a asp-page="Cart" asp-route-removeId="@detail.Id" class="remove-prod"><i class="fa fa-trash"></i> Remove item</a>
                                                         </div>
                                                     </td>
-                                                    @if (course.DiscountPrice != 0)
+                                                    @if (detail.Course.DiscountPrice != 0)
                                                     {
                                                         <td>
-                                                            <p class="text-muted">@course.OriginalPrice</p>
+                                                            <p class="text-muted">@detail.Course.OriginalPrice</p>
                                                         </td>
                                                         <td>
                                                             <h5>
-                                                                @course.DiscountPrice
+                                                                @detail.Course.DiscountPrice
                                                             </h5>
                                                         </td>
                                                     }
                                                     else
                                                     {
                                                         <td>
-                                                            <h5> @course.OriginalPrice</h5>
+                                                            <h5> @detail.Course.OriginalPrice</h5>
                                                         </td>
                                                     }
                                                 </tr>
@@ -86,6 +89,7 @@
                             <div class="m-t-sm">
                                 <div class="btn-group">
                                     <form method="post" class="mt-20">
+                                        <input type="hidden" name="total" value="@Model.Total"/>
                                         <button type="submit" class="tmp-add-cart add-cart p-3">
                                             <i class="bi bi-cart-fill"></i> <b>Check out</b>
                                         </button>

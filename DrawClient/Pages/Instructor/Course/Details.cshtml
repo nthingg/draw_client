@@ -48,11 +48,11 @@
                         <div class="card-body">
                             <div class="form-container">
                                 <h5 class="form-label mb-2">Price</h5>
-                                <input class="form-control" type="text" asp-for="@Model.Course.OriginalPrice" readonly />
+                                <input class="form-control" type="text" value="@string.Format(vndFormat, "{0:c}", Model.Course.OriginalPrice)" readonly />
                             </div>
                             <div class="form-container">
                                 <h5 class="form-label mb-2">Discount Price</h5>
-                                <input class="form-control" type="text" asp-for="@Model.Course.DiscountPrice" readonly />
+                                <input class="form-control" type="text" value="@string.Format(vndFormat, "{0:c}", Model.Course.DiscountPrice)" readonly />
                             </div>
                             <div class="form-container">
                                 <h5 class="form-label mb-2">Level</h5>

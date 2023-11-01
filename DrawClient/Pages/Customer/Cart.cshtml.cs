@@ -1,8 +1,9 @@
+using DrawClient.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-using ViewModel.Course;
+using ViewModel.Cart;
 
 namespace DrawClient.Pages.Customer
 {
@@ -10,6 +11,7 @@ namespace DrawClient.Pages.Customer
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
+        private readonly IPaypalServices _paypalServices;
 
         public CartModel(IConfiguration configuration)
         {
@@ -17,9 +19,10 @@ namespace DrawClient.Pages.Customer
             _client = new HttpClient();
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
             _client.BaseAddress = new Uri(apiUrl);
+            _paypalServices = new PaypalServices(_configuration);
         }
 
-        public List<CourseViewModel> Courses { get; set; }
+        public List<OrderDetailViewModel> Details { get; set; }
 
         public decimal Total { get; set; }
 
@@ -30,31 +33,53 @@ namespace DrawClient.Pages.Customer
                 await RemoveItem(removeId);
             }
             await GetCart();
-            HttpContext.Session.SetInt32("cartQty", Courses.Count);
+            HttpContext.Session.SetInt32("cartQty", Details.Count);
 
-            if (Courses == null)
+            if (Details == null)
             {
                 Total = 0;
             } else
             {
-                foreach (var course in Courses)
+                foreach (var detail in Details)
                 {
-                    if (course.DiscountPrice != 0)
+                    if (detail.Course.DiscountPrice != 0)
                     {
-                        Total += course.DiscountPrice;
+                        Total += detail.Course.DiscountPrice;
                     }
                     else
                     {
-                        Total += course.OriginalPrice;
+                        Total += detail.Course.OriginalPrice;
                     }
                 }
             }
             return Page();
         }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(decimal total)
         {
+            try
+            {
+                decimal amount = ConvertVNDToUSD(total);
+                string returnUrl = "https://localhost:7236/Customer/CheckoutMiddleware";
+                string cancelUrl = "https://localhost:7236/Customer/Cart";
 
+                //Create a paypal order
+                var createPayment = await _paypalServices.CreateOrderAsync(amount, returnUrl, cancelUrl);
+
+                //Get paypal approve url
+                string approveUrl = createPayment.links.FirstOrDefault(x => x.rel.ToLower() == "approval_url")?.href;
+
+                //Redirect to url
+                if (!string.IsNullOrEmpty(approveUrl))
+                {
+                    return Redirect(approveUrl);
+                }
+            } catch (Exception ex) 
+            { 
+
+            }
+
+            return Redirect("Cart");
         }
 
         private async Task GetCart()
@@ -68,10 +93,10 @@ namespace DrawClient.Pages.Customer
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var courses = JsonConvert.DeserializeObject<List<CourseViewModel>>(dataStr);
-                if (courses is not null)
+                var details = JsonConvert.DeserializeObject<List<OrderDetailViewModel>>(dataStr);
+                if (details is not null)
                 {
-                    Courses = courses;
+                    Details = details;
                 }
             }
         }
@@ -88,5 +113,17 @@ namespace DrawClient.Pages.Customer
             {
             }
         }
+
+        private decimal ConvertVNDToUSD(decimal vndAmount)
+        {
+            // Use a fixed exchange rate (example rate, you should replace with the actual rate)
+            decimal exchangeRate = 0.000043M;  // 1 VND to USD exchange rate
+
+            // Convert VND to USD
+            decimal usdAmount = vndAmount * exchangeRate;
+
+            return usdAmount;
+        }
+
     }
 }

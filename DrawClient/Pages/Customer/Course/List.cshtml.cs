@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Net.Http;
 using ViewModel.Base;
+using ViewModel.Cart;
 using ViewModel.Course;
 
 namespace DrawClient.Pages.Customer.Course
@@ -34,6 +35,12 @@ namespace DrawClient.Pages.Customer.Course
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            string learner = HttpContext.Session.GetString("learnerLogged");
+            if (learner != "logged")
+            {
+                return RedirectToPage("/Customer/Authentication/Login");
+            }
+
             var token = HttpContext.Session.GetString("learnerToken");
             var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + $"/order/add-to-cart?courseId=" + id);
             request.Headers.Add("Authorization", $"Bearer {token}");
@@ -75,10 +82,10 @@ namespace DrawClient.Pages.Customer.Course
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var courses = JsonConvert.DeserializeObject<List<CourseViewModel>>(dataStr);
-                if (courses is not null)
+                var details = JsonConvert.DeserializeObject<List<OrderDetailViewModel>>(dataStr);
+                if (details is not null)
                 {
-                    HttpContext.Session.SetInt32("cartQty", courses.Count);
+                    HttpContext.Session.SetInt32("cartQty", details.Count);
                 }
             }
         }

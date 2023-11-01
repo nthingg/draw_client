@@ -63,6 +63,8 @@ namespace DrawClient.Pages.Instructor.Course
             ModelState.Remove(nameof(LessonUpdate));
             ModelState.Remove(nameof(LessonId));
             ModelState.Remove(nameof(VideoUrl));
+            ModelState.Remove("Content");
+            ModelState.Remove("Title");
             if (ModelState.IsValid)
             {
                 if (Image is not null)

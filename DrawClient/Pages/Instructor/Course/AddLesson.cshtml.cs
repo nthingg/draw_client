@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ViewModel.Course;
 using ViewModel.Lesson;
@@ -49,15 +50,34 @@ namespace DrawClient.Pages.Instructor.Course
             Id = Course.Id;
         }
 
-        public async Task<IActionResult> OnGetFinishAsync(int id)
+        public async Task<IActionResult> OnGetFinishAsync(int id, string courseName)
         {
-            var token = HttpContext.Session.GetString("instructToken");
-            var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/status/" + id);
-            request.Headers.Add("Authorization", $"Bearer {token}");
-            var res = await _client.SendAsync(request);
-            if (res.IsSuccessStatusCode)
+            await GetCourseByNameAsync(courseName);
+            var isValidCourse = false;
+            foreach (var item in Course.Lessons)
             {
-                return Redirect("/Instructor/Course");
+                if (item.IsExam)
+                {
+                    isValidCourse = true;
+                    break;
+                }
+            }
+            if (isValidCourse)
+            {
+                var token = HttpContext.Session.GetString("instructToken");
+                var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/status/" + id);
+                request.Headers.Add("Authorization", $"Bearer {token}");
+                var res = await _client.SendAsync(request);
+                if (res.IsSuccessStatusCode)
+                {
+                    return Redirect("/Instructor/Course");
+                }
+            }
+            else
+            {
+                Id = id;
+                CourseName = courseName;
+                TempData["error"] = "Your course need at least 1 exam";
             }
             return Page();
         }

@@ -1,5 +1,5 @@
 ﻿@page
-@model DrawClient.Pages.Customer.Exam.ListModel
+@model DrawClient.Pages.Customer.Certificate.ListModel
 
 <!--====== PAGE BANNER PART START ======-->
 
@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-banner-cont">
-                    <h2>Your Exam Result</h2>
+                    <h2>Your Certificates</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Exams</li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="/Customer/Certificate/List">Certificates</a></li>
                         </ol>
                     </nav>
                 </div>  <!-- page banner cont -->
@@ -40,24 +40,18 @@
                             </thead>
 
                             <tbody>
-                                @* @foreach (var coach in Model.Coaches.Items)
+                                @foreach (var course in Model.Purchased)
                                 {
-                                <tr>
-                                <td style="vertical-align: middle;">@coach.User.Name</td>
-                                <td style="vertical-align: middle;">@coach.User.Phone</td>
-                                <td style="vertical-align: middle;">@(string.IsNullOrWhiteSpace(coach.User.Email) ? "No data" : coach.User.Email)</td>
-                                <td style="vertical-align: middle;">
-                                <div class="form-check form-switch m-0 p-0 d-flex justify-content-center">
-                                <input class="form-check-input m-auto" type="checkbox" checked="@coach.User.IsBlocked" id="@coach.Id">
-                                </div>
-                                </td>
-                                <td class="text-center">
-                                <a class="btn btn-dark" asp-page="Update" asp-route-coachId="@coach.Id">
-                                <i class="bi bi-pencil-square"></i>
-                                </a>
-                                </td>
-                                </tr>
-                                } *@
+                                    <tr>
+                                        <td style="vertical-align: middle;"><a class="btn btn-dark" asp-page="/Customer/Course/Detail" asp-route-id="@course.Id">@course.Name</a></td>
+                                        <td style="vertical-align: middle;">@course.AverageScore</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-dark" asp-page="Detail" asp-route-id="@course.Id">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

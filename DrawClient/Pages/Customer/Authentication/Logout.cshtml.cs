@@ -1,6 +1,7 @@
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PayPal.Api;
 
 namespace DrawClient.Pages.Customer.Authentication
 {
@@ -14,6 +15,7 @@ namespace DrawClient.Pages.Customer.Authentication
                 HttpContext.Session.SetString("learnerToken", "");
                 HttpContext.Session.SetString("learnerLogged", "");
                 HttpContext.Session.SetInt32("learnerId", 0);
+                HttpContext.Session.SetInt32("cartQty", 0);
                 return RedirectToPage("/Index");
             }
             else
