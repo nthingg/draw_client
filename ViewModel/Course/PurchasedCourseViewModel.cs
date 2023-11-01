@@ -2,7 +2,7 @@
 using ViewModel.Lesson;
 using ViewModel.Topic;
 
-namespace DrawchadViewModel.Course
+namespace ViewModel.Course
 {
     public class PurchasedCourseViewModel
     {

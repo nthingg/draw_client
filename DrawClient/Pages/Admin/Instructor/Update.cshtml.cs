@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Text;
 using ViewModel.Instructor;
 
 namespace DrawClient.Pages.Admin.Instructor
@@ -9,6 +10,7 @@ namespace DrawClient.Pages.Admin.Instructor
     {
         Uri baseAddress = new Uri("http://localhost:5173/api/");
         private HttpClient _httpClient;
+        [BindProperty]
         public InstructorViewModel instructor { get; set; }
         public UpdateModel()
         {
@@ -21,6 +23,23 @@ namespace DrawClient.Pages.Admin.Instructor
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 instructor = JsonConvert.DeserializeObject<InstructorViewModel>(data);
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if(ModelState.IsValid)
+            {
+                string data = JsonConvert.SerializeObject(instructor);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = _httpClient.PutAsync(baseAddress + "instructor/" + instructor.Id, content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Instructor information updated!";
+                    return RedirectToPage("/Admin/Instructor/List");
+                }
+                
             }
             return Page();
         }

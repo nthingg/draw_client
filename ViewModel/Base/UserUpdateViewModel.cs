@@ -2,7 +2,7 @@
 using Domain.Resources;
 using FluentValidation;
 
-namespace DrawchadViewModel.Base
+namespace ViewModel.Base
 {
     public class UserUpdateViewModel
     {

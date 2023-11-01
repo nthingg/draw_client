@@ -3,3 +3,33 @@
 @{
     Layout = "_LayoutAdmin";
 }
+<partial name="_Notification" />
+<partial name="_Notification" />
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container">
+        <h2 class="mb-5 text-danger">Are you sure to block this user?</h2>
+        <div class="create-section">
+            <form method="post" class="row" enctype="multipart/form-data">
+                <input asp-for="Learner.Id" type="hidden" />
+                <input asp-for="Learner.Information.Id" type="hidden" />
+                <div class="col-md-6 justify-content-center">
+                    <div class="form-container">
+                        <h5 class="form-label mb-2">Name</h5>
+                        <input readonly asp-for="UpdateViewModel.Information.Name" class="form-control" type="text" placeholder="Name length from 3 to 50" />
+                    </div>
+                    <div class="form-container " style="margin:20px 0 0 0">
+                        <h5 class="form-label mb-2">Email</h5>
+                        <input readonly asp-for="UpdateViewModel.Information.Email" class="form-control" type="email" placeholder="Email length from 3 to 50" />
+                    </div>
+                    <div class="form-container " style="margin:20px 0 0 0">
+                        <h5 class="form-label mb-2">Phone</h5>
+                        <input readonly asp-for="UpdateViewModel.Information.Phone" class="form-control" type="text" placeholder="Phone length from 10 to 11" />
+                    </div>
+                    <div class="justify-content-end mb-1" style="float:right;margin: 20px 0 0 0">
+                        <input type="submit" class="btn btn-danger" value="@(Model.Learner.Information.IsBlocked ?"Unblock":"Block" )" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

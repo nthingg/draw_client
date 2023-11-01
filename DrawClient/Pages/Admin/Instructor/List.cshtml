@@ -4,7 +4,7 @@
     Layout = "_LayoutAdmin";
 }
 
-
+<partial name="_Notification" />
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="p-3" style="width: 1000px; margin: auto;">
         <div class="pt-4" style="width: inherit">
@@ -12,9 +12,9 @@
                 <h2 class="draw-header" style="text-align: center; margin-bottom: 30px;">Instructor List</h2>
             </div>
 
-            <div class="justify-content-end mb-1" style="float: right; margin: 0 40px 20px 0; color:#07294d !important;">
-                <a class="btn tbl-exam" asp-page="Create">
-                    <i style="font-size: 20px;" class="bi bi-plus-square mr-2"></i> Add New
+            <div class="justify-content-end mb-1" style="float: right; margin: 0 20px 20px 0; color:#07294d !important;">
+                <a class="btn tbl-exam" asp-page="Create" style="margin: 0 20px 20px 0;">
+                    <i style="font-size: 20px; " class="bi bi-plus-square mr-2"></i> Add New
                 </a>
             </div>
         </div>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var obj in Model.Instructors)
+                    @foreach(var obj in Model.Instructors.Items)
                     {
                         <tr>
                             <td style="vertical-align: middle;">@obj.Id</td>
@@ -48,4 +48,39 @@
             </table>
         </div>
     </div>
+
+
+@{
+    var currentPageIndex = Model.Instructors.PageIndex + 1;
+    var previous = Model.Instructors.Previous;
+    var next = Model.Instructors.Next;
+    var totalPage = Model.Instructors.TotalPagesCount;
+}
+
+<div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(!previous ? "disabled" : "")">
+                    <a class="page-link" href="/Admin/Instructor/List?pageIndex=@(currentPageIndex - 2)" >Previous</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link">@currentPageIndex</a>
+                <span class="sr-only">(current)</span>
+            </li>
+            @if (totalPage >= currentPageIndex + 1)
+            {
+                <li class="page-item"><a class="page-link" href="/Admin/Instructor/List?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
+            }
+            @if (totalPage >= currentPageIndex + 2)
+            {
+                    <li class="page-item"><a class="page-link" href="/Admin/Instructor/List?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
+            }
+            <li class="page-item @(!next ? "disabled" : "")">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+
+    </nav>
+</div>
+     <!-- container -->
 </section>

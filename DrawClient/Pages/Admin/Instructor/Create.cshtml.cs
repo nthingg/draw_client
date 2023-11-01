@@ -13,11 +13,11 @@ namespace DrawClient.Pages.Admin.Instructor
         [BindProperty]
         public InstructorSignUpViewModel Instructor { get; set; }
         [BindProperty]
-        public String ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
         public CreateModel()
         {
             _httpClient = new HttpClient();
-            Instructor = new InstructorSignUpViewModel();
+          
         }
         public void OnGet()
         {
@@ -25,8 +25,12 @@ namespace DrawClient.Pages.Admin.Instructor
 
         public async Task<IActionResult> OnPostAsync(InstructorSignUpViewModel instructor)
         {
-
-            if(ModelState.IsValid)
+            if (Instructor.Password != ConfirmPassword)
+            {
+                TempData["error"] = "Password and Confirm password must be the same!";
+                return Page();
+            }
+            if (ModelState.IsValid)
             {
                 string data = JsonConvert.SerializeObject(instructor);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");

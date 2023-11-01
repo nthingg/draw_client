@@ -1,7 +1,7 @@
 ﻿using Domain.Resources;
 using FluentValidation;
 
-namespace DrawchadViewModel.Exam
+namespace ViewModel.Exam
 {
     public class ExamSubmitViewModel
     {

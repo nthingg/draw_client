@@ -3,6 +3,7 @@
 @{
     Layout = "_LayoutAdmin";
 }
+<partial name="_Notification" />
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
         <h2 class="mb-5 text-danger">Are you sure to block this user?</h2>
@@ -28,7 +29,7 @@
                                   placeholder="Course description goes here..." rows="8"></textarea>
                     </div>
                     <div class="justify-content-end mb-1" style="float:right;margin: 20px 0 0 0">
-                        <input type="submit" class="btn btn-danger" value="Block"/>
+                        <input type="submit" class="btn btn-danger" value="@(Model.instructor.Information.IsBlocked ?"Unblock":"Block" )" />
                     </div>
                 </div>
             </form>

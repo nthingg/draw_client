@@ -3,28 +3,30 @@
 @{
     Layout = "_LayoutAdmin";
 }
-
+<partial name="_Notification" />
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
         <h2 class="mb-5">Update Instructor</h2>
         <div class="create-section">
             <form method="post" class="row" enctype="multipart/form-data">
+                <input type="hidden" asp-for="instructor.Id" />
+               
                 <div class="col-md-6 justify-content-center">
                     <div class="form-container">
                         <h5 class="form-label mb-2">Name</h5>
-                        <input asp-for="@Model.instructor.Information.Name" class="form-control" type="text" placeholder="Name length from 3 to 50" />
+                        <input asp-for="instructor.Information.Name" class="form-control" type="text" placeholder="Name length from 3 to 50" />
                     </div>
                     <div class="form-container " style="margin:20px 0 0 0">
                         <h5 class="form-label mb-2">Email</h5>
-                        <input asp-for="@Model.instructor.Information.Email" class="form-control" type="text" placeholder="Email length from 3 to 50" />
+                        <input asp-for="instructor.Information.Email" class="form-control" type="text" placeholder="Email length from 3 to 50" />
                     </div>
                     <div class="form-container " style="margin:20px 0 0 0">
                         <h5 class="form-label mb-2">Phone</h5>
-                        <input asp-for="@Model.instructor.Information.Phone" class="form-control" type="text" placeholder="Phone length from 10 to 11" />
+                        <input asp-for="instructor.Information.Phone" class="form-control" type="text" placeholder="Phone length from 10 to 11" />
                     </div>
                     <div class="form-container" style="margin:20px 0 0 0">
                         <h5 class="form-label my-2">Description</h5>
-                        <textarea asp-for="@Model.instructor.Description" class="form-control mb-2" type="text"
+                        <textarea asp-for="instructor.Description" class="form-control mb-2" type="text"
                                   placeholder="Course description goes here..." rows="8"></textarea>
                     </div>
                     <div class="justify-content-end mb-1" style="float:right;margin: 20px 0 0 0">
