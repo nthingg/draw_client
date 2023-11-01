@@ -74,7 +74,7 @@
                                             <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
                                         </div>
                                         <div class="name">
-                                            <a><h6>@item.Instructor.Information.Name</h6></a>
+                                            <a asp-page="/Customer/Instructor/Detail" asp-route-id="@item.Instructor.Id"><h6>@item.Instructor.Information.Name</h6></a>
                                         </div>
                                         <div class="button text-center mt-4">
                                             @{
@@ -84,13 +84,13 @@
                                             {
                                                 if (course.Id == item.Id)
                                                 {
-                                                    <a href="#" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
+                                                    <a asp-page="Index" asp-route-id="@course.Id" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
                                                     check = false;
                                                     break;
                                                 }
                                             }
                                             @if (check)
-                                            {
+                                            {   
                                                 <form method="post">
                                                     <input type="hidden" name="id" value="@item.Id" />
                                                     <button type="submit" class="main-btn" style="border: none;">

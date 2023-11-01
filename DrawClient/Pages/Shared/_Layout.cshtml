@@ -29,6 +29,8 @@
     <!--====== Responsive css ======-->
     <link rel="stylesheet" href="/css/responsive.css">
 
+    <link rel="stylesheet" href="/css/rating.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 <body>
@@ -144,7 +146,7 @@
                                             <a href="/Customer/Course/Purchased">My Courses</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/Customer/Exam/List">My Grades</a>
+                                            <a href="/Customer/Certificate/List">Certificates</a>
                                         </li>
                                     }
                                 </ul>
@@ -155,7 +157,14 @@
                         <div class="right-icon text-right">
                             <ul>
                                 <li><a href="#" id="search"><i class="fa fa-search"></i></a></li>
-                                <li><a href="/Customer/Cart"><i class="fa fa-shopping-bag"></i><span>@cartQty</span></a></li>
+                                @if (learner == "logged")
+                                {
+                                    <li><a href="/Customer/Cart"><i class="fa fa-shopping-bag"></i><span>@cartQty</span></a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/Customer/Authentication/Login"><i class="fa fa-shopping-bag"></i><span>@cartQty</span></a></li>
+                                }
                             </ul>
                         </div> <!-- right icon -->
                     </div>

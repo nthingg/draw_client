@@ -101,55 +101,144 @@
                                 </h6>
                                 <p class="mt-1">@Model.Lesson.Content</p>
                             </div>
-                            <div class="ibox-content">
-                                <h6>
-                                    <a class="text-navy">
-                                        Submission:
-                                    </a>
-                                </h6>
-                                <form method="post" enctype="multipart/form-data" class="mt-10">
-                                    <div class="form-group row">
-                                        <div class="col">
-                                            <input class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                            @if (Model.Exam == null)
+                            {
+                                <div class="ibox-content">
+                                    <h6>
+                                        <a class="text-navy">
+                                            Submit My Work:
+                                        </a>
+                                    </h6>
+                                    <form method="post" enctype="multipart/form-data" class="mt-10">
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                                            </div>
+                                            <input type="hidden" name="id" value="@Model.Course.Id" />
+                                            <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
+                                            <div class="col">
+                                                <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {   
+                                if (Model.Exam.Result == null)
+                                {
+                                       <div class="ibox-content">
+                                        <div class="mb-10">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Your Work:
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div class="image-container">
+                                            <img src="@Model.Exam.AnswerUrl" alt="Image Description">
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            @* <div class="ibox-content">
-                                <div class="mb-10">
-                                    <h6>
-                                        <a class="text-navy">
-                                            Your Work:
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div class="image-container">
-                                    <img src="#" alt="Image Description">
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="mb-10">
-                                    <h6>
-                                        <a class="text-navy">
-                                            Teacher's Comment:
-                                        </a>
-                                    </h6>
-                                </div>
-                                <p class="mt-1"> Dive into the fascinating world of architectural perspective. Understand the principles of linear perspective, vanishing points, and horizon lines. Explore how these concepts form the foundation of architectural drawing.</p>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="mb-10">
-                                    <h6>
-                                        <a class="text-navy">
-                                            Final Result (Marks):
-                                        </a>
-                                    </h6>
-                                </div>
-                                <input type="text" class="form-control" readonly="" value="10">
-                            </div> *@
+                                    <div class="ibox-content">
+                                        <h6>
+                                            <a class="text-navy">
+                                                Re-Submit My Work:
+                                            </a>
+                                        </h6>
+                                        <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                                                </div>
+                                                <input type="hidden" name="id" value="@Model.Course.Id" />
+                                                <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
+                                                <input type="hidden" name="examId" value="@Model.Exam.Id" />
+                                                <div class="col">
+                                                    <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                } else
+                                {   
+                                    <div class="ibox-content">
+                                        <div class="mb-10">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Your Work:
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div class="image-container">
+                                            <img src="@Model.Exam.AnswerUrl" alt="Image Description">
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="mb-10">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Teacher's Comment:
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <p class="mt-1">@Model.Exam.Comment</p>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="mb-10">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Final Result (Marks):
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <p class="mt-1">@Model.Exam.Result</p>
+                                    </div>
+                                    @if (Model.Exam.Result < 5)
+                                    {
+                                        <div class="ibox-content">
+                                            <div class="mb-10">
+                                                <h6>
+                                                    <a class="text-navy">
+                                                        Status:
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <p class="mt-1 text-danger">Failed</p>
+                                        </div>
+                                    } else
+                                    {
+                                        <div class="ibox-content">
+                                            <div class="mb-10">
+                                                <h6>
+                                                    <a class="text-navy">
+                                                        Status:
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <p class="mt-1 text-success">Passed</p>
+                                        </div>
+                                    }
+                                    <div class="ibox-content">
+                                        <h6>
+                                            <a class="text-navy">
+                                                Re-Submit My Work:
+                                            </a>
+                                        </h6>
+                                        <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                                                </div>
+                                                <input type="hidden" name="id" value="@Model.Course.Id" />
+                                                <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
+                                                <div class="col">
+                                                    <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                            }
                         </div>
                     </div>
                 }

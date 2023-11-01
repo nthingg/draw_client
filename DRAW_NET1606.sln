@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawClient", "DrawClient\Dr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{A3F3313F-B0A3-4DB4-9DCD-4DC6B9897591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{613D2E7A-C572-418A-81AE-111484831057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{613D2E7A-C572-418A-81AE-111484831057}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

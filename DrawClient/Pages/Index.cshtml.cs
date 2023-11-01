@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using ViewModel.Cart;
 using ViewModel.Course;
 
 namespace DrawClient.Pages
@@ -38,10 +39,10 @@ namespace DrawClient.Pages
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var courses = JsonConvert.DeserializeObject<List<CourseViewModel>>(dataStr);
-                if (courses is not null)
+                var details = JsonConvert.DeserializeObject<List<OrderDetailViewModel>>(dataStr);
+                if (details is not null)
                 {
-                    HttpContext.Session.SetInt32("cartQty", courses.Count);
+                    HttpContext.Session.SetInt32("cartQty", details.Count);
                 }
             }
         }
