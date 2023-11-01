@@ -205,6 +205,25 @@
                                             </div>
                                             <p class="mt-1 text-danger">Failed</p>
                                         </div>
+                                        <div class="ibox-content">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Re-Submit My Work:
+                                                </a>
+                                            </h6>
+                                            <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
+                                                    </div>
+                                                    <input type="hidden" name="id" value="@Model.Course.Id" />
+                                                    <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
+                                                    <div class="col">
+                                                        <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     } else
                                     {
                                         <div class="ibox-content">
@@ -218,25 +237,6 @@
                                             <p class="mt-1 text-success">Passed</p>
                                         </div>
                                     }
-                                    <div class="ibox-content">
-                                        <h6>
-                                            <a class="text-navy">
-                                                Re-Submit My Work:
-                                            </a>
-                                        </h6>
-                                        <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
-                                            <div class="form-group row">
-                                                <div class="col">
-                                                    <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
-                                                </div>
-                                                <input type="hidden" name="id" value="@Model.Course.Id" />
-                                                <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
-                                                <div class="col">
-                                                    <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
                                 }
                             }
                         </div>

@@ -1,5 +1,5 @@
 ﻿@page
-@model DrawClient.Pages.Customer.Exam.DetailModel
+@model DrawClient.Pages.Customer.Certificate.DetailModel
 
 <!--====== PAGE BANNER PART START ======-->
 
@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-banner-cont">
-                    <h2>Your Certificate</h2>
+                    <h2>@Model.Certificate.Name</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/Index">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a href="/Customer/Certificate/List">Certificates</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Painting for Starter</li>
+                            <li class="breadcrumb-item active" aria-current="page">@Model.Certificate.Name</li>
                         </ol>
                     </nav>
                 </div>  <!-- page banner cont -->
@@ -24,12 +24,64 @@
 
 <!--====== PAGE BANNER PART ENDS ======-->
 <section id="courses-part" class="pt-90 pb-120 gray-bg">
-    <div class="container">
-        
-        
-    </div>
+    <body>
+        <div class="container pm-certificate-container">
+            <div class="outer-border"></div>
+            <div class="inner-border"></div>
+
+            <div class="pm-certificate-border col-xs-12">
+                <div class="row-cert pm-certificate-header">
+                    <div class="pm-certificate-title cursive col-xs-12 text-center">
+                        <h2 class="cursive">Drawchad Certificate of Completion</h2>
+                    </div>
+                </div>
+
+                <div class="row pm-certificate-body">
+
+                    <div class="pm-certificate-block">
+                        <div class="col-xs-12">
+                            <div class="row-cert">
+                                <div class="pm-certificate-name underline margin-0 col-xs-8 text-center">
+                                    <span class="pm-name-text bold">@(Model.Learner.Information.Name)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="row-cert">
+                                <div class="pm-earned col-xs-8 text-center">
+                                    <span class="pm-earned-text padding-0 block cursive">has earned</span>
+                                    <span class="pm-credits-text block bold sans">Average Marks: @(Model.Certificate.AverageScore)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="row-cert">
+                                <div class="pm-course-title col-xs-8 text-center">
+                                    <span class="pm-earned-text block cursive">while completing the training course entitled</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="row-cert">
+                                <div class="pm-course-title underline col-xs-8 text-center">
+                                    <span class="pm-credits-text block bold sans">@(Model.Certificate.Name)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
 </section>
     
+@section Scripts {
+    <link rel="stylesheet" href="/css/certificate.css">
+}
         
             
 
