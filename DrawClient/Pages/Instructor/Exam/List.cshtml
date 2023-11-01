@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model DrawClient.Pages.Instructor.Exam.ListModel
 @{
     Layout = "_LayoutInstructor";
@@ -6,7 +6,7 @@
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
     <div class="container">
-        <h3 class="mb-5">Lesson @(Model.Exams.First().Lesson.Title)</h3>
+        <h3 class="mb-5">Lesson @Model.Lesson.Title</h3>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -31,6 +31,12 @@
                         {
                             <td>
                                 <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Grade</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Details</a>
                             </td>
                         }
                     </tr>
