@@ -11,17 +11,19 @@ namespace DrawClient.Pages.Admin.Instructor
         Uri baseAddress = new Uri("http://localhost:5173/api/");
         private HttpClient _httpClient;
         [BindProperty]
-        public InstructorBaseViewModel Instructor { get; set; }
+        public InstructorSignUpViewModel Instructor { get; set; }
+        [BindProperty]
+        public String ConfirmPassword { get; set; }
         public CreateModel()
         {
             _httpClient = new HttpClient();
-            Instructor = new InstructorBaseViewModel();
+            Instructor = new InstructorSignUpViewModel();
         }
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPostAsync(InstructorBaseViewModel instructor)
+        public async Task<IActionResult> OnPostAsync(InstructorSignUpViewModel instructor)
         {
 
             if(ModelState.IsValid)

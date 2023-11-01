@@ -1,4 +1,4 @@
-﻿namespace DrawchadViewModel.Base
+﻿namespace ViewModel.Base
 {
     public class SignInViewModel
     {

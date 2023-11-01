@@ -1,4 +1,4 @@
-﻿using DrawchadDomain.Resources;
+﻿using Domain.Resources;
 using FluentValidation;
 
 namespace DrawchadViewModel.Exam

@@ -1,10 +1,11 @@
-﻿using DrawchadViewModel.Base;
+﻿
+using ViewModel.Base;
 
-namespace DrawchadViewModel.Instructor
+namespace ViewModel.Instructor
 {
     public class InstructorUpdateViewModel
     {
         public string? Description { get; set; }
-        public UserUpdateViewModel Information { get; set; }
+        public UserBaseViewModel Information { get; set; }
     }
 }

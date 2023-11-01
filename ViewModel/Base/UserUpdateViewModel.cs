@@ -1,5 +1,5 @@
-﻿using DrawchadDomain.Constants;
-using DrawchadDomain.Resources;
+﻿using Domain.Constants;
+using Domain.Resources;
 using FluentValidation;
 
 namespace DrawchadViewModel.Base

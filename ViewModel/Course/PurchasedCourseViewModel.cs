@@ -1,6 +1,6 @@
-﻿using DrawchadViewModel.Instructor;
-using DrawchadViewModel.Lesson;
-using DrawchadViewModel.Topic;
+﻿using ViewModel.Instructor;
+using ViewModel.Lesson;
+using ViewModel.Topic;
 
 namespace DrawchadViewModel.Course
 {
