@@ -1,0 +1,103 @@
+﻿@page
+@model DrawClient.Pages.Customer.Instructor.DetailModel
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="d-flex justify-content-around mt-5">
+        <div class="border col-md-3">
+            <div class="tbl-exam p-3">
+                <h2 class="tbl-exam">Instructor Info</h2>
+            </div>
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Name:</dt>
+                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Name == null ? "No data" : Model.Instructor.Information.Name)</dd>
+                            <dt class="col-sm-3">Phone:</dt>
+                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Phone == null ? "No data" : Model.Instructor.Information.Phone)</dd>
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Email == null ? "No data" : Model.Instructor.Information.Email)</dd>
+                            <dt class="col-sm-3">Description:</dt>
+                            <dd class="col-sm-9">@(Model.Instructor == null || Model.Instructor.Description == null ? "No data" : Model.Instructor.Description)</dd>
+                        </dl>
+                        <div class="row justify-content-around">
+                            <a href="#" class="main-btn"><i class="bi bi-chat-dots-fill"></i> Chat</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-8 border">
+            <div class="tbl-exam p-3 text-white ">
+                <h2 class="tbl-exam">Course List</h2>
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
+                    <div class="row">
+                        @foreach (var item in Model.Courses.Items)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="singel-course mt-30">
+                                    <div class="thum">
+                                        <div class="image">
+                                            <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
+                                        </div>
+                                        <div class="price">
+                                            @if (item.DiscountPrice != 0)
+                                            {
+                                                <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@item.OriginalPrice</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="cont">
+                                        <a asp-page="/Customer/Course/Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
+                                    </div>
+                                </div> <!-- singel course -->
+                            </div>
+                        }
+                    </div> <!-- row -->
+                </div>
+            </div>
+            @{
+                var currentPageIndex = Model.Courses.PageIndex + 1;
+                var previous = Model.Courses.Previous;
+                var next = Model.Courses.Next;
+                var totalPage = Model.Courses.TotalPagesCount;
+            }
+
+            <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item @(!previous ? "disabled" : "")">
+                            <a class="page-link" href="" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link">@currentPageIndex</a>
+                            <span class="sr-only">(current)</span>
+                        </li>
+                        @if (totalPage >= currentPageIndex + 1)
+                        {
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?id=@(Model.Instructor.Id)&pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                        }
+                        @if (totalPage >= currentPageIndex + 2)
+                        {
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?id=@(Model.Instructor.Id)&pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                        }
+                        <li class="page-item @(!next ? "disabled" : "")">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

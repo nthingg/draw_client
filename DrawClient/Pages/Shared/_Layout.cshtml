@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -70,6 +72,11 @@
             </div> <!-- container -->
         </div> <!-- header top -->
 
+        @{
+            string learner = Context.Session.GetString("learnerLogged");
+            int? cartQty = Context.Session.GetInt32("cartQty");
+        }
+
         <div class="header-logo-support pt-30 pb-30">
             <div class="container">
                 <div class="row">
@@ -87,15 +94,31 @@
                                     <span>321 325 5678</span>
                                 </div>
                             </div>
-                            <div class="button float-left">
-                                <a href="/Customer/Authentication/Login" class="main-btn">Login Now</a>
-                            </div>
+                            @if (learner == "logged")
+                            {
+                                <div class="button float-left">
+                                    <div class="dropdown">
+                                        <a href="#" class="main-btn logged-user"><i class="bi bi-person-circle"></i></a>
+                                        <div class="dropdown-content">
+                                            <ul>
+                                                <li><a href="#"><i class="bi bi-person-fill-gear"></i> Profile</a></li>
+                                                <li><a href="/Customer/Course/Purchased"><i class="bi bi-book-fill"></i> My Courses</a></li>
+                                                <li><a href="/Customer/Authentication/Logout"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            } else {
+                                <div class="button float-left">
+                                    <a href="/Customer/Authentication/Login" class="main-btn">Login Now</a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div> <!-- row -->
             </div> <!-- container -->
         </div> <!-- header logo support -->
-
+       
         <div class="navigation">
             <div class="container">
                 <div class="row">
@@ -106,7 +129,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-
+                               
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav mr-auto">
                                     <li class="nav-item">
@@ -115,12 +138,15 @@
                                     <li class="nav-item">
                                         <a href="/Customer/Course/List">Courses</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Customer/Course/Purchased">My Courses</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/Customer/Exam/List">My Grades</a>
-                                    </li>
+                                    @if (learner == "logged")
+                                    {
+                                        <li class="nav-item">
+                                            <a href="/Customer/Course/Purchased">My Courses</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/Customer/Exam/List">My Grades</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </nav> <!-- nav -->
@@ -129,7 +155,7 @@
                         <div class="right-icon text-right">
                             <ul>
                                 <li><a href="#" id="search"><i class="fa fa-search"></i></a></li>
-                                <li><a href="/Customer/Cart"><i class="fa fa-shopping-bag"></i><span>0</span></a></li>
+                                <li><a href="/Customer/Cart"><i class="fa fa-shopping-bag"></i><span>@cartQty</span></a></li>
                             </ul>
                         </div> <!-- right icon -->
                     </div>

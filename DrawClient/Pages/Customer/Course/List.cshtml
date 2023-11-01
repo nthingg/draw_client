@@ -11,8 +11,8 @@
                     <h2>Our Courses</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Courses</li>
+                            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="/Customer/Course/List">Courses</li>
                         </ol>
                     </nav>
                 </div>  <!-- page banner cont -->
@@ -33,7 +33,7 @@
                         <li class="nav-item">
                             <a class="active" id="courses-grid-tab" data-toggle="tab" href="#courses-grid" role="tab" aria-controls="courses-grid" aria-selected="true"><i class="fa fa-th-large"></i></a>
                         </li>
-                        <li class="nav-item">Total of 24 Results</li>
+                        <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
                     </ul> <!-- nav -->
 
                     <div class="courses-search float-right">
@@ -48,222 +48,98 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-1.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>250.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="/Customer/Course/Detail"><h4>Brushstrokes of Inspiration: Beginner's Drawing</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                    
+                        @foreach (var item in Model.Courses.Items)
+                        {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
                                     </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Ngoc Thinh</h6></a>
+                                    <div class="price">
+                                        @if (item.DiscountPrice != 0)
+                                        {
+                                            <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
+                                        } else
+                                        {
+                                            <span>@item.OriginalPrice</span>
+                                        }
                                     </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
                                 </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-2.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>300.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Storytelling through Comics: Sequential Art</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                <div class="cont">
+                                    <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
+                                    <div class="course-teacher">
+                                        <div class="thum">
+                                            <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                        </div>
+                                        <div class="name">
+                                            <a><h6>@item.Instructor.Information.Name</h6></a>
+                                        </div>
+                                        <div class="button text-center mt-4">
+                                            @{
+                                                bool check = true;
+                                            }
+                                            @foreach (var course in Model.Purchased)
+                                            {
+                                                if (course.Id == item.Id)
+                                                {
+                                                    <a href="#" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
+                                                    check = false;
+                                                    break;
+                                                }
+                                            }
+                                            @if (check)
+                                            {
+                                                <form method="post">
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <button type="submit" class="main-btn" style="border: none;">
+                                                        <i class="bi bi-cart-fill"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Pham Phuc Thanh Cong</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
                                 </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-3.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>500.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Botanical Beauty: Floral Illustration</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Ngoc Thinh</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-4.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>799.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Fantasy Realms and Creatures: Drawing Myths</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Nguyen Quoc Manh</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-5.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>100.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Still Life Secrets: Objects in Detail</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Phan Duc Duy</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="singel-course mt-30">
-                            <div class="thum">
-                                <div class="image">
-                                    <img src="/images/course/cu-1.jpg" alt="Course">
-                                </div>
-                                <div class="price">
-                                    <span>499.000VND</span>
-                                </div>
-                            </div>
-                            <div class="cont">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(20 Reviews)</span>
-                                <a href="courses-singel.html"><h4>Architectural Wonders: Perspective Drawing</h4></a>
-                                <div class="course-teacher">
-                                    <div class="thum">
-                                        <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#"><h6>Tran Trung Quan</h6></a>
-                                    </div>
-                                    <a href="#" class="add-cart"><i class="bi bi-cart-fill"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- singel course -->
-                    </div>
+                            </div> <!-- singel course -->
+                        </div>
+                        }
                 </div> <!-- row -->
             </div>
         </div> <!-- tab content -->
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="courses-pagination mt-50">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a href="#" aria-label="Previous">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="active" href="#">1</a></li>
-                        <li class="page-item"><a href="#">2</a></li>
-                        <li class="page-item"><a href="#">3</a></li>
-                        <li class="page-item">
-                            <a href="#" aria-label="Next">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>  <!-- courses pagination -->
-            </div>
-        </div>  <!-- row -->
+            <!-- PAGING SECTION -->
+        @{
+            var currentPageIndex = Model.Courses.PageIndex + 1;
+            var previous = Model.Courses.Previous;
+            var next = Model.Courses.Next;
+            var totalPage = Model.Courses.TotalPagesCount;
+        }
+
+        <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item @(!previous ? "disabled" : "")">
+                        <a class="page-link" href="" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link">@currentPageIndex</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    @if (totalPage >= currentPageIndex + 1)
+                    {
+                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                    }
+                    @if (totalPage >= currentPageIndex + 2)
+                    {
+                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                    }
+                    <li class="page-item @(!next ? "disabled" : "")">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
     </div> <!-- container -->
 </section>
 
