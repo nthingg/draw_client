@@ -25,6 +25,12 @@ namespace DrawClient.Pages.Customer.Certificate
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged != "logged")
+            {
+                return Redirect("/Customer/Authentication/Login");
+            }
+
             var token = HttpContext.Session.GetString("learnerToken");
             var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/" + id);
             request.Headers.Add("Authorization", $"Bearer {token}");

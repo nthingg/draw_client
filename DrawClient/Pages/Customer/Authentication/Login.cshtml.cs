@@ -25,8 +25,14 @@ namespace DrawClient.Pages.Customer.Authentication
         [BindProperty]
         public LoginViewModel Login { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged == "logged")
+            {
+                return Redirect("/Index");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

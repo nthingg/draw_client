@@ -36,8 +36,14 @@ namespace DrawClient.Pages.Customer.Course
 
         public CourseViewModel Course { get; set; }
 
-        public async Task OnGetAsync(int id = 0, int changeId = 0)
+        public async Task<IActionResult> OnGetAsync(int id = 0, int changeId = 0)
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged != "logged")
+            {
+                return Redirect("/Customer/Authentication/Login");
+            }
+
             await Refresh(id);
             foreach (var item in Course.Lessons)
             {
@@ -59,6 +65,7 @@ namespace DrawClient.Pages.Customer.Course
             {
                 Exam = await GetExamById(Lesson.Id);
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id, int changeId)

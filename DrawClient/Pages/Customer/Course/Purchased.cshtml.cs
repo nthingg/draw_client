@@ -34,6 +34,12 @@ namespace DrawClient.Pages.Customer.Course
 
         public async Task<IActionResult> OnGetAsync()
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged != "logged")
+            {
+                return Redirect("/Customer/Authentication/Login");
+            }
+
             await GetCoursesList();
             await Refresh();
             return Page();
