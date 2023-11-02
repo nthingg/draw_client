@@ -3,3 +3,41 @@
 @{
 }
 <partial name="_Notification" />
+<section id="corses-singel" class="pt-10 pb-10 gray-bg">
+	<div class="login-container">
+		<div class="screen">
+			<div class="screen__content">
+				<form method="post" class="login">
+					<div class="login__field">
+						<i class="login__icon bi bi-envelope-at-fill"></i>
+						<input type="text" class="login__input" placeholder="Email" asp-for="Login.Email">
+					</div>
+					<div class="login__field">
+						<i class="login__icon bi bi-eye-slash-fill"></i>
+						<input type="password" class="login__input" placeholder="Password" asp-for="Login.Password">
+					</div>
+					<div class="login__field">
+						<div class="text-danger" asp-validation-summary="All"></div>
+					</div>
+					<button type="submit" class="button login__submit">
+						<span class="button__text">Log In Now</span>
+						<i class="button__icon bi bi-box-arrow-in-left"></i>
+					</button>
+				</form>
+				<div class="social-login">
+					<a href="/Customer/Authentication/Register" class="register-anchor"><h8>or Register</h8></a>
+				</div>
+			</div>
+			<div class="screen__background">
+				<span class="screen__background__shape screen__background__shape4"></span>
+				<span class="screen__background__shape screen__background__shape3"></span>
+				<span class="screen__background__shape screen__background__shape2"></span>
+				<span class="screen__background__shape screen__background__shape1"></span>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<link rel="stylesheet" href="/css/login.css">
+}
