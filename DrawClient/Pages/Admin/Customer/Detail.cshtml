@@ -24,13 +24,13 @@
                         </dl>
                         <div class="row justify-content-around">
                             <a asp-page="/Admin/Customer/Block" asp-route-id="@Model.Learner.Id" class="btn btn-danger">@(Model.Learner.Information.IsBlocked ? "Unblock" : "Block")</a>
-                            <a asp-page="/Admin/Customer/Update" asp-route-id="@Model.Learner.Id" class="btn btn-secondary">Update</a>
+                            @*<a asp-page="/Admin/Customer/Update" asp-route-id="@Model.Learner.Id" class="btn btn-secondary">Update</a>*@
                         </div>
 
                     </div>
 
                 </div>
-                <a href="@Url.Content("~/Admin/Customer/List")" class="btn tbl-exam" style="float: right; margin: 20px 60px 20px 00px">Back to customer list</a>
+                <a href="@Url.Content("~/Admin/Customer/List")" class="btn tbl-exam" style="float: right; margin: 20px 60px 20px 00px">Back to learner list</a>
             </div>
         </div>
 

@@ -37,7 +37,7 @@ namespace DrawClient.Pages.Admin.Authentication
 					HttpContext.Session.SetString("adminToken", data.AccessToken);
 					HttpContext.Session.SetString("adminLogged", "logged");
 					//HttpContext.Session.SetInt32("learnerId", data.UserId);
-					return Redirect("/Index");
+					return RedirectToPage("/Admin/Index");
 				}
 				else if (res.StatusCode == HttpStatusCode.Unauthorized)
 				{

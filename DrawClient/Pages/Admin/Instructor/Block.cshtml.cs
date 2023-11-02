@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using ViewModel.Instructor;
 
 namespace DrawClient.Pages.Admin.Instructor
@@ -17,7 +18,9 @@ namespace DrawClient.Pages.Admin.Instructor
         }
         public async Task<IActionResult> OnGet(int id)
         {
-            HttpResponseMessage response = _httpClient.GetAsync(baseAddress + "instructor/" + id).Result;
+			var token = HttpContext.Session.GetString("adminToken");
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			HttpResponseMessage response = _httpClient.GetAsync(baseAddress + "instructor/" + id).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -28,7 +31,9 @@ namespace DrawClient.Pages.Admin.Instructor
 
         public async Task<IActionResult> OnPostAsync()
         {
-            HttpResponseMessage response = _httpClient.DeleteAsync(baseAddress + "instructor/status?id=" + instructor.Id).Result;
+			var token = HttpContext.Session.GetString("adminToken");
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			HttpResponseMessage response = _httpClient.DeleteAsync(baseAddress + "instructor/status?id=" + instructor.Id).Result;
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToPage("/Admin/Instructor/List");

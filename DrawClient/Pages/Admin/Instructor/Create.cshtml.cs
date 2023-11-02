@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using ViewModel.Instructor;
 
@@ -32,7 +33,9 @@ namespace DrawClient.Pages.Admin.Instructor
             }
             if (ModelState.IsValid)
             {
-                string data = JsonConvert.SerializeObject(instructor);
+				var token = HttpContext.Session.GetString("adminToken");
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+				string data = JsonConvert.SerializeObject(instructor);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = _httpClient.PostAsync(baseAddress + "instructor/register", content).Result;
                 if (response.IsSuccessStatusCode)
