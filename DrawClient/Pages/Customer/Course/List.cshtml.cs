@@ -57,7 +57,10 @@ namespace DrawClient.Pages.Customer.Course
 
         private async Task Refresh(int pageIndex = 0)
         {
+            var token = HttpContext.Session.GetString("learnerToken");
             var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/page?pageIndex={pageIndex}&pageSize={6}");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+
             var res = await _client.SendAsync(request);
             if (res.IsSuccessStatusCode)
             {

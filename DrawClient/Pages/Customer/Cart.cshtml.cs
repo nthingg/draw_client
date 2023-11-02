@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using PayPal.Api;
+using System.Text;
 using ViewModel.Cart;
+using ViewModel.Order;
 
 namespace DrawClient.Pages.Customer
 {
@@ -24,7 +27,7 @@ namespace DrawClient.Pages.Customer
 
         public List<OrderDetailViewModel> Details { get; set; }
 
-        public decimal Total { get; set; }
+        public decimal? Total { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int removeId = 0)
         {
@@ -46,16 +49,13 @@ namespace DrawClient.Pages.Customer
             {
                 HttpContext.Session.SetInt32("cartQty", 0);
             }
-            
 
-            if (Details == null)
-            {
-                Total = 0;
-            } else
+            Total = 0;
+            if (Details != null)
             {
                 foreach (var detail in Details)
                 {
-                    if (detail.Course.DiscountPrice != 0)
+                    if (detail.Course.DiscountPrice is not null)
                     {
                         Total += detail.Course.DiscountPrice;
                     }
@@ -71,21 +71,47 @@ namespace DrawClient.Pages.Customer
         public async Task<IActionResult> OnPostAsync(decimal total)
         {
             try
-            {
-                decimal amount = ConvertVNDToUSD(total);
-                string returnUrl = "https://localhost:7236/Customer/CheckoutMiddleware";
-                string cancelUrl = "https://localhost:7236/Customer/Cart";
-
-                //Create a paypal order
-                var createPayment = await _paypalServices.CreateOrderAsync(amount, returnUrl, cancelUrl);
-
-                //Get paypal approve url
-                string approveUrl = createPayment.links.FirstOrDefault(x => x.rel.ToLower() == "approval_url")?.href;
-
-                //Redirect to url
-                if (!string.IsNullOrEmpty(approveUrl))
+            { 
+                if (total > 0)
                 {
-                    return Redirect(approveUrl);
+                    decimal amount = ConvertVNDToUSD(total);
+                    string returnUrl = "https://localhost:7236/Customer/CheckoutMiddleware";
+                    string cancelUrl = "https://localhost:7236/Customer/Cart";
+
+                    //Create a paypal order
+                    var createPayment = await _paypalServices.CreateOrderAsync(amount, returnUrl, cancelUrl);
+
+                    //Get paypal approve url
+                    string approveUrl = createPayment.links.FirstOrDefault(x => x.rel.ToLower() == "approval_url")?.href;
+
+                    //Redirect to url
+                    if (!string.IsNullOrEmpty(approveUrl))
+                    {
+                        return Redirect(approveUrl);
+                    }
+                } else
+                {
+                    var payment = new PaymentViewModel
+                    {
+                        TransactionId = "FREE",
+                        PaymentMethod = 1,
+                    };
+
+                    var dataStr = JsonConvert.SerializeObject(payment);
+                    var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
+
+                    var learnerToken = HttpContext.Session.GetString("learnerToken");
+                    var request = new HttpRequestMessage(HttpMethod.Patch, _client.BaseAddress + "/order/complete");
+                    request.Headers.Add("Authorization", $"Bearer {learnerToken}");
+                    request.Content = content;
+
+                    var res = await _client.SendAsync(request);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        HttpContext.Session.SetInt32("cartQty", 0);
+                        return Redirect("/Customer/Course/Purchased");
+                    }
+                    return Redirect("/Customer/Course");
                 }
             } catch (Exception ex) 
             { 

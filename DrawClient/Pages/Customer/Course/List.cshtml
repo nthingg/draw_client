@@ -67,7 +67,7 @@
                                         <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
                                     </div>
                                     <div class="price">
-                                        @if (item.DiscountPrice != 0)
+                                        @if (item.DiscountPrice is not null)
                                         {
                                             <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
                                         } else
@@ -100,13 +100,16 @@
                                             @{
                                                 bool check = true;
                                             }
-                                            @foreach (var course in Model.Purchased)
+                                            @if (Model.Purchased is not null)
                                             {
-                                                if (course.Id == item.Id)
+                                                @foreach (var course in Model.Purchased)
                                                 {
-                                                    <a asp-page="Index" asp-route-id="@course.Id" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
-                                                    check = false;
-                                                    break;
+                                                    if (course.Id == item.Id)
+                                                    {
+                                                        <a asp-page="Index" asp-route-id="@course.Id" class="main-btn"><i class="bi bi-box-arrow-right"></i></a>
+                                                        check = false;
+                                                        break;
+                                                    }
                                                 }
                                             }
                                             @if (check)
