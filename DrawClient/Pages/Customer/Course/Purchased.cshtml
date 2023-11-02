@@ -48,46 +48,53 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                 <div class="row">
-                    @foreach (var item in Model.Courses)
+                    @foreach (var course in Model.CoursesReview.Items)
                     {
-                        int ratingNum = 0;
-                        int avgRating = 0;
-                        if (item.Reviews is not null)
+                        @foreach (var item in Model.Courses)
                         {
-                            ratingNum = item.Reviews.Count;
-                            avgRating = (int)item.Reviews.Sum(c => c.Rating) / item.Reviews.Count;
-                        } 
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        @for (var i = 0; i < ratingNum; i++)
-                                        {
-                                            <li><i class="fa fa-star"></i></li>
-                                        }
-                                        @for (var i = 0; i < (5 - ratingNum); i++)
-                                        {
-                                            <li><i class="fa fa-star" style="color: gray;"></i></li>
-                                        }
-                                    </ul>
-                                    <span>(@ratingNum reviews)</span>
-                                    <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
-                                    <div class="course-teacher">
+                            if (item.Id == course.Id)
+                            {
+                                int ratingNum = 0;
+                                int avgRating = 0;
+                                if (course.Reviews.Count != 0)
+                                {
+                                    ratingNum = course.Reviews.Count;
+                                    avgRating = (int)course.Reviews.Sum(c => c.Rating) / course.Reviews.Count;
+                                }
+
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="singel-course mt-30">
                                         <div class="thum">
-                                            <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                            <div class="image">
+                                                <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
+                                            </div>
                                         </div>
-                                        <div class="name">
-                                            <a href="#"><h6>@item.Instructor.Information.Name</h6></a>
+                                        <div class="cont">
+                                            <ul>
+                                                @for (var i = 0; i < avgRating; i++)
+                                                {
+                                                    <li><i class="fa fa-star"></i></li>
+                                                }
+                                                @for (var i = 0; i < (5 - avgRating); i++)
+                                                {
+                                                    <li><i class="fa fa-star" style="color: gray;"></i></li>
+                                                }
+                                            </ul>
+                                            <span>(@ratingNum reviews)</span>
+                                            <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
+                                            <div class="course-teacher">
+                                                <div class="thum">
+                                                    <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                                </div>
+                                                <div class="name">
+                                                    <a href="#"><h6>@item.Instructor.Information.Name</h6></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </div> <!-- singel course -->
                                 </div>
-                            </div> <!-- singel course -->
-                        </div>
+                            }
+                        }
                     }
                 </div> <!-- row -->
             </div>

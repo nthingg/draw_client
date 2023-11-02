@@ -40,7 +40,7 @@
                             </thead>
 
                             <tbody>
-                                @foreach (var course in Model.Purchased)
+                                @foreach (var course in Model.Passed)
                                 {
                                     <tr>
                                         <td style="vertical-align: middle;"><a class="btn btn-dark" asp-page="/Customer/Course/Detail" asp-route-id="@course.Id">@course.Name</a></td>

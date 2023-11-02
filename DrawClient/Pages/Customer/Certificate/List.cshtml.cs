@@ -18,7 +18,7 @@ namespace DrawClient.Pages.Customer.Certificate
             _client.BaseAddress = new Uri(apiUrl);
         }
 
-        public List<PurchasedCourseViewModel> Purchased { get; set; }
+        public List<PurchasedCourseViewModel> Passed { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -31,14 +31,40 @@ namespace DrawClient.Pages.Customer.Certificate
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var courses = JsonConvert.DeserializeObject<List<PurchasedCourseViewModel>>(dataStr);
-                Purchased = new List<PurchasedCourseViewModel>();
-                if (courses is not null)
+                var purchased = JsonConvert.DeserializeObject<List<PurchasedCourseViewModel>>(dataStr);
+                if (purchased is not null)
                 {
-                    Purchased.AddRange(courses.Where(course => course.HasPassed));
+                    Passed = new List<PurchasedCourseViewModel>();
+                    foreach (var item in purchased)
+                    {
+                        var course = await GetCourseById(item.Id);
+                        if (course is not null)
+                        {
+                            if (course.HasPassed != false)
+                            {
+                                Passed.Add(course);
+                            }
+                        }
+                    }
                 }
             }
             return Page();
+        }
+
+        private async Task<PurchasedCourseViewModel> GetCourseById(int id)
+        {
+            var token = HttpContext.Session.GetString("learnerToken");
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/" + id);
+            request.Headers.Add("Authorization", $"Bearer {token}");
+
+            var res = await _client.SendAsync(request);
+            if (res.IsSuccessStatusCode)
+            {
+                var dataStr = await res.Content.ReadAsStringAsync();
+                var course = JsonConvert.DeserializeObject<PurchasedCourseViewModel>(dataStr);
+                return course;
+            }
+            return null;
         }
     }   
 }

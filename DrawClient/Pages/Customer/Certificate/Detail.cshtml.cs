@@ -19,8 +19,6 @@ namespace DrawClient.Pages.Customer.Certificate
             _client.BaseAddress = new Uri(apiUrl);
         }
 
-        public List<PurchasedCourseViewModel> Purchased { get; set; }
-
         public PurchasedCourseViewModel Certificate { get; set; }
 
         public LearnerBaseViewModel Learner { get; set; }
@@ -28,21 +26,15 @@ namespace DrawClient.Pages.Customer.Certificate
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var token = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/course/purchased-course");
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/" + id);
             request.Headers.Add("Authorization", $"Bearer {token}");
 
             var res = await _client.SendAsync(request);
-
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var courses = JsonConvert.DeserializeObject<List<PurchasedCourseViewModel>>(dataStr);
-                if (courses is not null)
-                {
-                    Purchased = courses;
-                }
-
-                Certificate = Purchased.FirstOrDefault(c => c.Id == id);
+                var course = JsonConvert.DeserializeObject<PurchasedCourseViewModel>(dataStr);
+                Certificate = course;
                 await GetLearner();
             }
             return Page();
@@ -50,7 +42,7 @@ namespace DrawClient.Pages.Customer.Certificate
 
         private async Task GetLearner()
         {
-            var id = HttpContext.Session.GetString("learnerId");
+            var id = HttpContext.Session.GetInt32("learnerId");
 
             var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/learner/" + id);
 

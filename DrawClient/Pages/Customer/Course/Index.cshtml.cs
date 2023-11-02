@@ -101,7 +101,7 @@ namespace DrawClient.Pages.Customer.Course
             var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
 
             var learnerToken = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/exam/re-submit/" + examId);
+            var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/exam/re-submit/" + examId);
             request.Headers.Add("Authorization", $"Bearer {learnerToken}");
             request.Content = content;
 
@@ -109,6 +109,7 @@ namespace DrawClient.Pages.Customer.Course
 
             if (res.IsSuccessStatusCode)
             {
+                Exam = await GetExamById(examId);
                 return RedirectToPage("Index", new { id, changeId });
             }
             return RedirectToPage("Index", new { id, changeId });
