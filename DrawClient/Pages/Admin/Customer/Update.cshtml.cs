@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using ViewModel.Base;
 using ViewModel.Learner;
@@ -26,7 +27,9 @@ namespace DrawClient.Pages.Admin.Customer
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
+			var token = HttpContext.Session.GetString("adminToken");
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -55,7 +58,9 @@ namespace DrawClient.Pages.Admin.Customer
             //    }
             //};
             string data = JsonConvert.SerializeObject(UpdateViewModel);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+			var token = HttpContext.Session.GetString("adminToken");
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
             HttpResponseMessage response = _httpClient.PutAsync(_httpClient.BaseAddress + "/learner/" + Learner.Id, content).Result;
             if (response.IsSuccessStatusCode)
             {

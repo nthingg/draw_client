@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Xml.Linq;
 using ViewModel.Course;
 using ViewModel.Lesson;
 using ViewModel.Topic;
@@ -105,7 +106,13 @@ namespace DrawClient.Pages.Instructor.Course
 
                 //
                 var requestId = isUpdate ? courseId : Id;
-                var res = await _client.PostAsync(_client.BaseAddress + "/course/lesson/" + requestId, content);
+                var token = HttpContext.Session.GetString("instructToken");
+                var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/course/lesson/" + requestId);
+                request.Headers.Add("Authorization", $"Bearer {token}");
+                request.Content = content;
+
+                var res = await _client.SendAsync(request);
+                //
                 if (res.IsSuccessStatusCode)
                 {
                     TempData["success"] = "Add Succeed";
@@ -133,7 +140,11 @@ namespace DrawClient.Pages.Instructor.Course
         //
         private async Task GetCourseByNameAsync(string name)
         {
-            var res = await _client.GetAsync(_client.BaseAddress + $"/course/lastest-by-name?name={name}");
+            var token = HttpContext.Session.GetString("instructToken");
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/lastest-by-name?name={name}");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+            var res = await _client.SendAsync(request);
+            //
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();

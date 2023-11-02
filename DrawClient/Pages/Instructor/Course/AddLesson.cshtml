@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.AspNetCore.Http;
 @model DrawClient.Pages.Instructor.Course.AddLessonModel
 @{
     Layout = "_LayoutInstructor";
@@ -11,7 +12,7 @@
             <h2 class="mb-5 col-md-8">Add Lesson</h2>
             <div class="col-md-4 footer action mx-auto">
                 <a class="btn btn-outline-dark" asp-page="/Instructor/Course/AddLesson" asp-route-courseName="@Model.CourseName"
-                asp-page-handler="Finish" asp-route-id="@Model.Id">Finish</a>
+                   asp-page-handler="Finish" asp-route-id="@Model.Id">Finish</a>
                 <a class="btn btn-outline-danger" asp-page="/Instructor/Course/Index">Cancel</a>
             </div>
         </div>
@@ -114,7 +115,7 @@
                                 </div>
                                 <div class="text-right">
                                     <input hidden asp-for="@Model.CourseName" />
-                                    <input asp-for="@Model.Id" type="hidden"/>
+                                    <input asp-for="@Model.Id" type="hidden" />
                                     <button type="submit" class="btn btn-outline-secondary">Add Lesson</button>
                                 </div>
                             </div>

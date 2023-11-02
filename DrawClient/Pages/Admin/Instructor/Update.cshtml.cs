@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using ViewModel.Instructor;
 
@@ -18,7 +19,9 @@ namespace DrawClient.Pages.Admin.Instructor
         }
         public async Task<IActionResult> OnGet(int id) 
         {
-            HttpResponseMessage response = _httpClient.GetAsync(baseAddress + "instructor/" + id).Result;
+			var token = HttpContext.Session.GetString("adminToken");
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			HttpResponseMessage response = _httpClient.GetAsync(baseAddress + "instructor/" + id).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -31,7 +34,9 @@ namespace DrawClient.Pages.Admin.Instructor
         {
             if(ModelState.IsValid)
             {
-                string data = JsonConvert.SerializeObject(instructor);
+				var token = HttpContext.Session.GetString("adminToken");
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+				string data = JsonConvert.SerializeObject(instructor);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = _httpClient.PutAsync(baseAddress + "instructor/" + instructor.Id, content).Result;
                 if (response.IsSuccessStatusCode)

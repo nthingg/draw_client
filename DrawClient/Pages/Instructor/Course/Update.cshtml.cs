@@ -141,20 +141,44 @@ namespace DrawClient.Pages.Instructor.Course
 
         public async Task<IActionResult> OnGetRemoveLessonAsync(int lessonId, int courseId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/lesson/" + lessonId);
-            var token = HttpContext.Session.GetString("instructToken");
-            request.Headers.Add("Authorization", $"Bearer {token}");
-            //
-            var res = await _client.SendAsync(request);
-            if (res.IsSuccessStatusCode)
+            var course = await GetCourseByIdAsync(courseId);
+            var examCount = 0;
+            if (course is not null)
             {
-                TempData["success"] = $"Remove Succeed";
-                Id = courseId;
-                await GetCourseDetailAsync(courseId, 0);
-                return Page();
+                foreach (var item in course.Lessons)
+                {
+                    if (item.Id != lessonId && item.IsExam)
+                    {
+                        examCount++;
+                    }
+                }
+            }
+            //
+            if (examCount != 0)
+            {
+                //
+                var request = new HttpRequestMessage(HttpMethod.Delete, _client.BaseAddress + "/course/lesson/" + lessonId);
+                var token = HttpContext.Session.GetString("instructToken");
+                request.Headers.Add("Authorization", $"Bearer {token}");
+                //
+                var res = await _client.SendAsync(request);
+                if (res.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Remove Succeed";
+                    Id = courseId;
+                    await GetCourseDetailAsync(courseId, 0);
+                    return Page();
+                }
+                else
+                {
+                    TempData["error"] = "Error";
+                }
+            }
+            else
+            {
+                TempData["error"] = "Your course need at least 1 exam";
             }
 
-            TempData["error"] = "Error";
             Id = courseId;
             await GetCourseDetailAsync(courseId, 0);
             return Page();
@@ -191,6 +215,20 @@ namespace DrawClient.Pages.Instructor.Course
                 PageSize = pageSize,
                 TotalItemsCount = totalCount
             };
+        }
+
+        private async Task<CourseViewModel?> GetCourseByIdAsync(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/course/" + id);
+            var res = await _client.SendAsync(request);
+            if (res.IsSuccessStatusCode)
+            {
+                var dataStr = await res.Content.ReadAsStringAsync();
+                var course = JsonConvert.DeserializeObject<CourseViewModel>(dataStr);
+                return course;
+            }
+
+            return null;
         }
 
         private async Task GetCourseDetailAsync(int id, int pageIndex)
