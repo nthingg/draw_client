@@ -1,4 +1,3 @@
-using DrawchadViewModel.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -41,5 +40,5 @@ namespace DrawClient.Pages.Customer.Certificate
             }
             return Page();
         }
-    }
+    }   
 }

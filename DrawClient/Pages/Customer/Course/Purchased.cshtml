@@ -50,6 +50,13 @@
                 <div class="row">
                     @foreach (var item in Model.Courses)
                     {
+                        int ratingNum = 0;
+                        int avgRating = 0;
+                        if (item.Reviews is not null)
+                        {
+                            ratingNum = item.Reviews.Count;
+                            avgRating = (int)item.Reviews.Sum(c => c.Rating) / item.Reviews.Count;
+                        } 
                         <div class="col-lg-4 col-md-6">
                             <div class="singel-course mt-30">
                                 <div class="thum">
@@ -59,13 +66,16 @@
                                 </div>
                                 <div class="cont">
                                     <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
+                                        @for (var i = 0; i < ratingNum; i++)
+                                        {
+                                            <li><i class="fa fa-star"></i></li>
+                                        }
+                                        @for (var i = 0; i < (5 - ratingNum); i++)
+                                        {
+                                            <li><i class="fa fa-star" style="color: gray;"></i></li>
+                                        }
                                     </ul>
-                                    <span>(20 reviews)</span>
+                                    <span>(@ratingNum reviews)</span>
                                     <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
                                     <div class="course-teacher">
                                         <div class="thum">

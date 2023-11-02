@@ -1,7 +1,7 @@
-using DrawchadViewModel.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using ViewModel.Course;
 using ViewModel.Learner;
 
 namespace DrawClient.Pages.Customer.Certificate

@@ -1,4 +1,3 @@
-using DrawchadViewModel.Exam;
 using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

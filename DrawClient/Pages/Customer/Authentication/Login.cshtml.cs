@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using ViewModel.Base;
 
@@ -37,9 +40,13 @@ namespace DrawClient.Pages.Customer.Authentication
                 {
                     var resDataStr = await res.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeObject<AuthorizedViewModel>(resDataStr);
+
+                    var decodedToken = new JwtSecurityToken(data.AccessToken);
+                    var id = decodedToken.Claims.First(c => c.Type == "RoleId").Value;
+
                     HttpContext.Session.SetString("learnerToken", data.AccessToken);
                     HttpContext.Session.SetString("learnerLogged", "logged");
-                    HttpContext.Session.SetInt32("learnerId", data.UserId);
+                    HttpContext.Session.SetInt32("learnerId", int.Parse(id));
                     return Redirect("/Index");
                 }
                 else if (res.StatusCode == HttpStatusCode.Unauthorized)
