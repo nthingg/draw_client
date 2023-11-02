@@ -28,12 +28,25 @@ namespace DrawClient.Pages.Customer
 
         public async Task<IActionResult> OnGetAsync(int removeId = 0)
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged != "logged")
+            {
+                return Redirect("/Customer/Authentication/Login");
+            }
+
             if (removeId != 0)
             {
                 await RemoveItem(removeId);
             }
             await GetCart();
-            HttpContext.Session.SetInt32("cartQty", Details.Count);
+            if (Details is not null)
+            {
+                HttpContext.Session.SetInt32("cartQty", Details.Count);
+            } else
+            {
+                HttpContext.Session.SetInt32("cartQty", 0);
+            }
+            
 
             if (Details == null)
             {

@@ -1,4 +1,3 @@
-using DrawchadViewModel.Exam;
 using DrawClient.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -37,8 +36,14 @@ namespace DrawClient.Pages.Customer.Course
 
         public CourseViewModel Course { get; set; }
 
-        public async Task OnGetAsync(int id = 0, int changeId = 0)
+        public async Task<IActionResult> OnGetAsync(int id = 0, int changeId = 0)
         {
+            string? learnerLogged = HttpContext.Session.GetString("learnerLogged");
+            if (learnerLogged != "logged")
+            {
+                return Redirect("/Customer/Authentication/Login");
+            }
+
             await Refresh(id);
             foreach (var item in Course.Lessons)
             {
@@ -60,6 +65,7 @@ namespace DrawClient.Pages.Customer.Course
             {
                 Exam = await GetExamById(Lesson.Id);
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id, int changeId)
@@ -102,7 +108,7 @@ namespace DrawClient.Pages.Customer.Course
             var content = new StringContent(dataStr, Encoding.UTF8, "application/json");
 
             var learnerToken = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/exam/re-submit/" + examId);
+            var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/exam/re-submit/" + examId);
             request.Headers.Add("Authorization", $"Bearer {learnerToken}");
             request.Content = content;
 
@@ -110,6 +116,7 @@ namespace DrawClient.Pages.Customer.Course
 
             if (res.IsSuccessStatusCode)
             {
+                Exam = await GetExamById(examId);
                 return RedirectToPage("Index", new { id, changeId });
             }
             return RedirectToPage("Index", new { id, changeId });

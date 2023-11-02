@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4">
-                    <a href="/Index" class="draw-header">DRAW</a>
+                    <a href="/Index" class="draw-header">Drawchad</a>
                 </div>
                 <div class="col-lg-8 col-md-8">
                     <div class="support-button float-right d-none d-md-block">
@@ -103,6 +103,63 @@
                             </div>
                             @if (Model.Exam == null)
                             {
+                                if (Model.Course.Material == "Kỹ thuật số")
+                                {
+                                    <div class="ibox-content">
+                                        <div class="mb-10">
+                                            <h6>
+                                                <a class="text-navy">
+                                                    Instant Canvas:
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="bd-wrapper" ng-controller="CanvasControls">
+
+                                            <canvas id="c" width="1030" height="600" style="border:1px solid #aaa"></canvas>
+
+                                            <div>
+                                                <div id="drawing-mode-options">
+                                                    <div style="display: flex;" class="mt-20">
+                                                        <label for="drawing-mode-selector" style="width: 130px; line-height: 40px;">Mode:</label>
+                                                        <select id="drawing-mode-selector">
+                                                            <option>Pencil</option>
+                                                            <option>Circle</option>
+                                                            <option>Spray</option>
+                                                            <option>Pattern</option>
+
+                                                            <option>hline</option>
+                                                            <option>vline</option>
+                                                            <option>square</option>
+                                                            <option>diamond</option>
+                                                            <option>texture</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <label for="drawing-line-width" class="mt-20" style="width: 130px;">Line width:</label>
+                                                    <span class="info">30</span><input type="range" value="30" min="0" max="150"
+                                                                                       id="drawing-line-width"><br>
+
+                                                    <label for="drawing-color" class="mt-20" style="width: 130px;">Line color:</label>
+                                                    <input type="color" value="#005E7A" id="drawing-color"><br>
+
+                                                    <label for="drawing-shadow-color" class="mt-20" style="width: 130px;">Shadow color:</label>
+                                                    <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+
+                                                    <label for="drawing-shadow-width" class="mt-20" style="width: 130px;">Shadow width:</label>
+                                                    <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+
+                                                    <label for="drawing-shadow-offset" class="mt-20" style="width: 130px;">Shadow offset:</label>
+                                                    <span class="info">0</span><input type="range" value="0" min="0" max="50"
+                                                                                      id="drawing-shadow-offset"><br>
+                                                </div>
+
+                                                <button id="drawing-mode" class="btn main-btn mt-20">Cancel drawing mode</button><br>
+                                                <button id="clear-canvas" class="btn main-btn mt-20">Clear</button><br>
+                                                <button id="export-button" class="btn main-btn mt-20">Export as PNG</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                                 <div class="ibox-content">
                                     <h6>
                                         <a class="text-navy">
@@ -127,7 +184,7 @@
                             {   
                                 if (Model.Exam.Result == null)
                                 {
-                                       <div class="ibox-content">
+                                    <div class="ibox-content">
                                         <div class="mb-10">
                                             <h6>
                                                 <a class="text-navy">
@@ -139,13 +196,70 @@
                                             <img src="@Model.Exam.AnswerUrl" alt="Image Description">
                                         </div>
                                     </div>
+                                    if (Model.Course.Material == "Kỹ thuật số")
+                                    {
+                                        <div class="ibox-content">
+                                            <div class="mb-10">
+                                                <h6>
+                                                    <a class="text-navy">
+                                                        Instant Canvas:
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="bd-wrapper" ng-controller="CanvasControls">
+
+                                                <canvas id="c" width="1030" height="600" style="border:1px solid #aaa"></canvas>
+
+                                                <div>
+                                                    <div id="drawing-mode-options">
+                                                        <div style="display: flex;" class="mt-20">
+                                                            <label for="drawing-mode-selector" style="width: 130px; line-height: 40px;">Mode:</label>
+                                                            <select id="drawing-mode-selector">
+                                                                <option>Pencil</option>
+                                                                <option>Circle</option>
+                                                                <option>Spray</option>
+                                                                <option>Pattern</option>
+
+                                                                <option>hline</option>
+                                                                <option>vline</option>
+                                                                <option>square</option>
+                                                                <option>diamond</option>
+                                                                <option>texture</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <label for="drawing-line-width" class="mt-20" style="width: 130px;">Line width:</label>
+                                                        <span class="info">30</span><input type="range" value="30" min="0" max="150"
+                                                                                           id="drawing-line-width"><br>
+
+                                                        <label for="drawing-color" class="mt-20" style="width: 130px;">Line color:</label>
+                                                        <input type="color" value="#005E7A" id="drawing-color"><br>
+
+                                                        <label for="drawing-shadow-color" class="mt-20" style="width: 130px;">Shadow color:</label>
+                                                        <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+
+                                                        <label for="drawing-shadow-width" class="mt-20" style="width: 130px;">Shadow width:</label>
+                                                        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+
+                                                        <label for="drawing-shadow-offset" class="mt-20" style="width: 130px;">Shadow offset:</label>
+                                                        <span class="info">0</span><input type="range" value="0" min="0" max="50"
+                                                                                          id="drawing-shadow-offset"><br>
+                                                    </div>
+
+                                                    <button id="drawing-mode" class="btn main-btn mt-20">Cancel drawing mode</button><br>
+                                                    <button id="clear-canvas" class="btn main-btn mt-20">Clear</button><br>
+                                                    <button id="export-button" class="btn main-btn mt-20">Export as PNG</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                     <div class="ibox-content">
                                         <h6>
                                             <a class="text-navy">
                                                 Re-Submit My Work:
                                             </a>
                                         </h6>
-                                        <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
+                                        <form method="post" asp-page-handler="resubmit" enctype="multipart/form-data" class="mt-10">
                                             <div class="form-group row">
                                                 <div class="col">
                                                     <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
@@ -205,24 +319,82 @@
                                             </div>
                                             <p class="mt-1 text-danger">Failed</p>
                                         </div>
+                                        if (Model.Course.Material == "Kỹ thuật số")
+                                        {
+                                            <div class="ibox-content">
+                                                <div class="mb-10">
+                                                    <h6>
+                                                        <a class="text-navy">
+                                                            Instant Canvas:
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                                <div id="bd-wrapper" ng-controller="CanvasControls">
+
+                                                    <canvas id="c" width="1030" height="600" style="border:1px solid #aaa"></canvas>
+
+                                                    <div>
+                                                        <div id="drawing-mode-options">
+                                                            <div style="display: flex;" class="mt-20">
+                                                                <label for="drawing-mode-selector" style="width: 130px; line-height: 40px;">Mode:</label>
+                                                                <select id="drawing-mode-selector">
+                                                                    <option>Pencil</option>
+                                                                    <option>Circle</option>
+                                                                    <option>Spray</option>
+                                                                    <option>Pattern</option>
+
+                                                                    <option>hline</option>
+                                                                    <option>vline</option>
+                                                                    <option>square</option>
+                                                                    <option>diamond</option>
+                                                                    <option>texture</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <label for="drawing-line-width" class="mt-20" style="width: 130px;">Line width:</label>
+                                                            <span class="info">30</span><input type="range" value="30" min="0" max="150"
+                                                                                               id="drawing-line-width"><br>
+
+                                                            <label for="drawing-color" class="mt-20" style="width: 130px;">Line color:</label>
+                                                            <input type="color" value="#005E7A" id="drawing-color"><br>
+
+                                                            <label for="drawing-shadow-color" class="mt-20" style="width: 130px;">Shadow color:</label>
+                                                            <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+
+                                                            <label for="drawing-shadow-width" class="mt-20" style="width: 130px;">Shadow width:</label>
+                                                            <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+
+                                                            <label for="drawing-shadow-offset" class="mt-20" style="width: 130px;">Shadow offset:</label>
+                                                            <span class="info">0</span><input type="range" value="0" min="0" max="50"
+                                                                                              id="drawing-shadow-offset"><br>
+                                                        </div>
+
+                                                        <button id="drawing-mode" class="btn main-btn mt-20">Cancel drawing mode</button><br>
+                                                        <button id="clear-canvas" class="btn main-btn mt-20">Clear</button><br>
+                                                        <button id="export-button" class="btn main-btn mt-20">Export as PNG</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                         <div class="ibox-content">
                                             <h6>
                                                 <a class="text-navy">
                                                     Re-Submit My Work:
                                                 </a>
                                             </h6>
-                                            <form method="post" asp-page-handler="OnPostResubmit" enctype="multipart/form-data" class="mt-10">
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
-                                                    </div>
-                                                    <input type="hidden" name="id" value="@Model.Course.Id" />
-                                                    <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
-                                                    <div class="col">
-                                                        <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
-                                                    </div>
+                                            <form method="post" asp-page-handler="resubmit" enctype="multipart/form-data" class="mt-10">
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <input required class="form-control" id="imageFile" type="file" asp-for="Image" accept="image/*">
                                                 </div>
-                                            </form>
+                                                <input type="hidden" name="id" value="@Model.Course.Id" />
+                                                <input type="hidden" name="changeId" value="@Model.Lesson.Id" />
+                                                <input type="hidden" name="examId" value="@Model.Exam.Id" />
+                                                <div class="col">
+                                                    <button type="submit" value="Add" id="btnAdd" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                         </div>
                                     } else
                                     {
@@ -282,7 +454,7 @@
                                         <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lesson @(lessonNumber)</span>
                                     </div>
                                     <div class="card-header">
-                                        <a asp-page="Index" asp-route-id="@Model.Course.Id" asp-route-changeId="@lesson.Id" asp-page-handler="OnGetAsync" class="lecture-title">
+                                        <a asp-page="Index" asp-route-id="@Model.Course.Id" asp-route-changeId="@lesson.Id" class="lecture-title">
                                             <ul>
                                                 <li><span class="head">@lesson.Title</span></li>
                                             </ul>
@@ -301,4 +473,219 @@
 
 @section Scripts {
     <link rel="stylesheet" href="/css/cart.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script>
+        (function () {
+            var $ = function (id) { return document.getElementById(id) };
+
+            var canvas = this.__canvas = new fabric.Canvas('c', {
+                isDrawingMode: true
+            });
+
+            fabric.Object.prototype.transparentCorners = false;
+
+            var drawingModeEl = $('drawing-mode'),
+                drawingOptionsEl = $('drawing-mode-options'),
+                drawingColorEl = $('drawing-color'),
+                drawingShadowColorEl = $('drawing-shadow-color'),
+                drawingLineWidthEl = $('drawing-line-width'),
+                drawingShadowWidth = $('drawing-shadow-width'),
+                drawingShadowOffset = $('drawing-shadow-offset'),
+                clearEl = $('clear-canvas');
+
+            clearEl.onclick = function () { canvas.clear() };
+
+            drawingModeEl.onclick = function () {
+                canvas.isDrawingMode = !canvas.isDrawingMode;
+                if (canvas.isDrawingMode) {
+                    drawingModeEl.innerHTML = 'Cancel drawing mode';
+                    drawingOptionsEl.style.display = '';
+                }
+                else {
+                    drawingModeEl.innerHTML = 'Enter drawing mode';
+                    drawingOptionsEl.style.display = 'none';
+                }
+            };
+
+            if (fabric.PatternBrush) {
+                var vLinePatternBrush = new fabric.PatternBrush(canvas);
+                vLinePatternBrush.getPatternSrc = function () {
+
+                    var patternCanvas = fabric.document.createElement('canvas');
+                    patternCanvas.width = patternCanvas.height = 10;
+                    var ctx = patternCanvas.getContext('2d');
+
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = 5;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 5);
+                    ctx.lineTo(10, 5);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    return patternCanvas;
+                };
+
+                var hLinePatternBrush = new fabric.PatternBrush(canvas);
+                hLinePatternBrush.getPatternSrc = function () {
+
+                    var patternCanvas = fabric.document.createElement('canvas');
+                    patternCanvas.width = patternCanvas.height = 10;
+                    var ctx = patternCanvas.getContext('2d');
+
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = 5;
+                    ctx.beginPath();
+                    ctx.moveTo(5, 0);
+                    ctx.lineTo(5, 10);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    return patternCanvas;
+                };
+
+                var squarePatternBrush = new fabric.PatternBrush(canvas);
+                squarePatternBrush.getPatternSrc = function () {
+
+                    var squareWidth = 10, squareDistance = 2;
+
+                    var patternCanvas = fabric.document.createElement('canvas');
+                    patternCanvas.width = patternCanvas.height = squareWidth + squareDistance;
+                    var ctx = patternCanvas.getContext('2d');
+
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(0, 0, squareWidth, squareWidth);
+
+                    return patternCanvas;
+                };
+
+                var diamondPatternBrush = new fabric.PatternBrush(canvas);
+                diamondPatternBrush.getPatternSrc = function () {
+
+                    var squareWidth = 10, squareDistance = 5;
+                    var patternCanvas = fabric.document.createElement('canvas');
+                    var rect = new fabric.Rect({
+                        width: squareWidth,
+                        height: squareWidth,
+                        angle: 45,
+                        fill: this.color
+                    });
+
+                    var canvasWidth = rect.getBoundingRect().width;
+
+                    patternCanvas.width = patternCanvas.height = canvasWidth + squareDistance;
+                    rect.set({ left: canvasWidth / 2, top: canvasWidth / 2 });
+
+                    var ctx = patternCanvas.getContext('2d');
+                    rect.render(ctx);
+
+                    return patternCanvas;
+                };
+
+                var img = new Image();
+                img.src = '../assets/honey_im_subtle.png';
+
+                var texturePatternBrush = new fabric.PatternBrush(canvas);
+                texturePatternBrush.source = img;
+            }
+
+            $('drawing-mode-selector').onchange = function () {
+
+                if (this.value === 'hline') {
+                    canvas.freeDrawingBrush = vLinePatternBrush;
+                }
+                else if (this.value === 'vline') {
+                    canvas.freeDrawingBrush = hLinePatternBrush;
+                }
+                else if (this.value === 'square') {
+                    canvas.freeDrawingBrush = squarePatternBrush;
+                }
+                else if (this.value === 'diamond') {
+                    canvas.freeDrawingBrush = diamondPatternBrush;
+                }
+                else if (this.value === 'texture') {
+                    canvas.freeDrawingBrush = texturePatternBrush;
+                }
+                else {
+                    canvas.freeDrawingBrush = new fabric[this.value + 'Brush'](canvas);
+                }
+
+                if (canvas.freeDrawingBrush) {
+                    var brush = canvas.freeDrawingBrush;
+                    brush.color = drawingColorEl.value;
+                    if (brush.getPatternSrc) {
+                        brush.source = brush.getPatternSrc.call(brush);
+                    }
+                    brush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
+                    brush.shadow = new fabric.Shadow({
+                        blur: parseInt(drawingShadowWidth.value, 10) || 0,
+                        offsetX: 0,
+                        offsetY: 0,
+                        affectStroke: true,
+                        color: drawingShadowColorEl.value,
+                    });
+                }
+            };
+
+            drawingColorEl.onchange = function () {
+                var brush = canvas.freeDrawingBrush;
+                brush.color = this.value;
+                if (brush.getPatternSrc) {
+                    brush.source = brush.getPatternSrc.call(brush);
+                }
+            };
+            drawingShadowColorEl.onchange = function () {
+                canvas.freeDrawingBrush.shadow.color = this.value;
+            };
+            drawingLineWidthEl.onchange = function () {
+                canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
+                this.previousSibling.innerHTML = this.value;
+            };
+            drawingShadowWidth.onchange = function () {
+                canvas.freeDrawingBrush.shadow.blur = parseInt(this.value, 10) || 0;
+                this.previousSibling.innerHTML = this.value;
+            };
+            drawingShadowOffset.onchange = function () {
+                canvas.freeDrawingBrush.shadow.offsetX = parseInt(this.value, 10) || 0;
+                canvas.freeDrawingBrush.shadow.offsetY = parseInt(this.value, 10) || 0;
+                this.previousSibling.innerHTML = this.value;
+            };
+
+            if (canvas.freeDrawingBrush) {
+                canvas.freeDrawingBrush.color = drawingColorEl.value;
+                canvas.freeDrawingBrush.source = canvas.freeDrawingBrush.getPatternSrc.call(this);
+                canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
+                canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+                    blur: parseInt(drawingShadowWidth.value, 10) || 0,
+                    offsetX: 0,
+                    offsetY: 0,
+                    affectStroke: true,
+                    color: drawingShadowColorEl.value,
+                });
+            }
+        })();
+    </script>
+
+    <script>
+        document.getElementById('export-button').addEventListener('click', function () {
+            // Export the canvas to a data URL (PNG format)
+            const canvas = document.getElementById("c");
+            var dataURL = canvas.toDataURL({
+                format: 'png',
+                quality: 1
+            });
+
+            // Create an anchor element for downloading
+            var a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'drawing.png';
+            document.body.appendChild(a);
+
+            // Trigger a click event on the anchor to initiate the download
+            a.click();
+
+            // Clean up the anchor element
+            document.body.removeChild(a);
+        });
+    </script>
 }

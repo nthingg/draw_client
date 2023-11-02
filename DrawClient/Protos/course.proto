@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option csharp_namespace = "DrawchadGRPCServer";
+
+package course;
+
+service CourseSrv {
+	rpc GetPurchasedCourse(Empty) returns (Courses);
+	rpc GetById(ProductId) returns (Course);
+}
+
+message Empty {}
+
+message Courses {
+	repeated Course items = 1;
+}
+
+message Lessons {
+	repeated Lesson items = 1;
+}
+
+message Course {
+	int32 id = 1;
+	string name = 2;
+	string description = 3;
+	string thumbUrl = 4;
+	float originalPrice = 5;
+	float discountPrice = 6;
+	string level = 7;
+	string material = 8;
+	Topic topic = 9;
+	Instructor instructor = 10;
+	Lessons lessons = 11;
+}
+
+message Topic {
+	int32 id = 1;
+	string name = 2;
+}
+
+message Instructor {
+	int32 id = 1;
+	User user = 2;
+}
+
+message User {
+	int32 id = 1;
+	string email = 2;
+	string name = 3;
+	string phone = 4;
+	bool isBlocked = 5;
+}
+
+message Lesson {
+	int32 id = 1;
+	int32 courseId = 2;
+	string title = 3;
+	string videoUrl = 4;
+	string content = 5;
+	bool isExam = 6;
+}
+
+message ProductId {
+	int32 id = 1;
+}

@@ -43,6 +43,9 @@ namespace DrawClient.Pages
                 if (details is not null)
                 {
                     HttpContext.Session.SetInt32("cartQty", details.Count);
+                } else
+                {
+                    HttpContext.Session.SetInt32("cartQty", 0);
                 }
             }
         }
