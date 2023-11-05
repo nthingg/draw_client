@@ -1,4 +1,4 @@
-using Domain.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using ViewModel.Instructor;
 using ViewModel.Learner;
+using ViewModel.Order;
 
 namespace DrawClient.Pages.Admin.Customer
 {
@@ -14,6 +15,7 @@ namespace DrawClient.Pages.Admin.Customer
         private HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         public LearnerBaseViewModel Learner { get; set; }   
+        public ICollection<OrderViewModel> orders { get; set; }
 
         public DetailModel(IConfiguration configuration)
         {
@@ -33,6 +35,13 @@ namespace DrawClient.Pages.Admin.Customer
                 string data = response.Content.ReadAsStringAsync().Result;
                 Learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(data);
             }
+            HttpResponseMessage responseỎder = _httpClient.GetAsync(_httpClient.BaseAddress + "/order/history-of-learner?learnerId=" + id).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = responseỎder.Content.ReadAsStringAsync().Result;
+                orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
+            }
+
             return Page();
         }
     }

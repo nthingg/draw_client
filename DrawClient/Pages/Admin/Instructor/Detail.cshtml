@@ -43,30 +43,35 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-1.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>250.000VND</span>
-                                    </div>
+                        @if(Model.courses.Items.Count() != 0)
+                        {
+                            @foreach (var obj in Model.courses.Items)
+                            {
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="singel-course mt-30">
+                                        <div class="thum">
+                                            <div class="image">
+                                                <img src="@obj.ThumbUrl" alt="Course">
+                                            </div>
+                                            <div class="price">
+                                                <span>@obj.OriginalPrice</span>
+                                            </div>
+                                        </div>
+                                        <div class="cont">
+                                            <a href="#"><h4>@obj.Name</h4></a>
+                                        </div>
+                                    </div> <!-- singel course -->
                                 </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="/Customer/Course/Detail"><h4>Brushstrokes of Inspiration: Beginner's Drawing</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-                        <div class="col-lg-4 col-md-6">
+                            }
+                        }
+                        else
+                        {
+                            <div class="py-4" style="width:inherit">
+                                <h3 class=" draw-header" style=" text-align: center;">No data</h3>
+
+                            </div>
+                        }
+                        @*<div class="col-lg-4 col-md-6">
                             <div class="singel-course mt-30">
                                 <div class="thum">
                                     <div class="image">
@@ -180,7 +185,7 @@
                                     <a href="courses-singel.html"><h4>Architectural Wonders: Perspective Drawing</h4></a>
                                 </div>
                             </div> <!-- singel course -->
-                        </div>
+                        </div>*@
                     </div> <!-- row -->
                 </div>
             </div>
