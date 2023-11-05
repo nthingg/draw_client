@@ -307,7 +307,7 @@
                                         </div>
                                         <p class="mt-1">@Model.Exam.Result</p>
                                     </div>
-                                    @if (Model.Exam.Result < 5)
+                                    @if (Model.Exam.IsPassed == false)
                                     {
                                         <div class="ibox-content">
                                             <div class="mb-10">

@@ -33,13 +33,19 @@
                         <li class="nav-item">
                             <a class="active" id="courses-grid-tab" data-toggle="tab" href="#courses-grid" role="tab" aria-controls="courses-grid" aria-selected="true"><i class="fa fa-th-large"></i></a>
                         </li>
-                        <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
+                        @if (Model.Courses != null)
+                        {
+                            <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
+                        } else
+                        {
+                            <li class="nav-item">Total of 0 Results</li>
+                        }
                     </ul> <!-- nav -->
 
                     <div class="courses-search float-right">
-                        <form action="#">
-                            <input type="text" placeholder="Search">
-                            <button type="button"><i class="fa fa-search"></i></button>
+                        <form method="post" asp-page-handler="search">
+                            <input type="text" name="searchVal" placeholder="Find your wished courses">
+                            <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div> <!-- courses search -->
                 </div> <!-- courses top search -->
