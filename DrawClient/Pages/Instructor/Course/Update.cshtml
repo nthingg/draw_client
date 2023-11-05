@@ -1,8 +1,17 @@
 ﻿@page "{id}"
 @model DrawClient.Pages.Instructor.Course.UpdateModel
+@using Microsoft.AspNetCore.Http
 @{
     Layout = "_LayoutInstructor";
     var vndFormat = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var token = HttpContext.Session.GetString("instructToken");
+    if (string.IsNullOrEmpty(token))
+    {
+        <script type="text/javascript">
+            window.location.href = "/Instructor/Index?handler=Logout";
+        </script>
+        return;
+    }
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">

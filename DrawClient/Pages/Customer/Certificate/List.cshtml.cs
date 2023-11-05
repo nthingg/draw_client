@@ -1,6 +1,9 @@
+using DrawchadGRPCServer;
+using DrawchadViewModel.Certificate;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using ViewModel.Base;
 using ViewModel.Course;
 
 namespace DrawClient.Pages.Customer.Certificate
@@ -18,7 +21,7 @@ namespace DrawClient.Pages.Customer.Certificate
             _client.BaseAddress = new Uri(apiUrl);
         }
 
-        public List<PurchasedCourseViewModel> Passed { get; set; }
+        public Page<CertificateViewModel> Certificates { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -28,49 +31,26 @@ namespace DrawClient.Pages.Customer.Certificate
                 return Redirect("/Customer/Authentication/Login");
             }
 
-            var token = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/course/purchased-course");
-            request.Headers.Add("Authorization", $"Bearer {token}");
-
-            var res = await _client.SendAsync(request);
-
-            if (res.IsSuccessStatusCode)
-            {
-                var dataStr = await res.Content.ReadAsStringAsync();
-                var purchased = JsonConvert.DeserializeObject<List<PurchasedCourseViewModel>>(dataStr);
-                if (purchased is not null)
-                {
-                    Passed = new List<PurchasedCourseViewModel>();
-                    foreach (var item in purchased)
-                    {
-                        var course = await GetCourseById(item.Id);
-                        if (course is not null)
-                        {
-                            if (course.HasPassed != false)
-                            {
-                                Passed.Add(course);
-                            }
-                        }
-                    }
-                }
-            }
+            await Refresh();
             return Page();
         }
 
-        private async Task<PurchasedCourseViewModel> GetCourseById(int id)
+        private async Task Refresh(int pageIndex = 0)
         {
             var token = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/" + id);
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/learner/certificates?pageIndex={pageIndex}&pageSize={8}");
             request.Headers.Add("Authorization", $"Bearer {token}");
 
             var res = await _client.SendAsync(request);
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var course = JsonConvert.DeserializeObject<PurchasedCourseViewModel>(dataStr);
-                return course;
+                var certs = JsonConvert.DeserializeObject<Page<CertificateViewModel>>(dataStr);
+                if (certs is not null)
+                {
+                    Certificates = certs;
+                }
             }
-            return null;
         }
     }   
 }

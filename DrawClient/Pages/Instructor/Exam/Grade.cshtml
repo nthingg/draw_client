@@ -1,7 +1,16 @@
 ﻿@page
 @model DrawClient.Pages.Instructor.Exam.GradeModel
+@using Microsoft.AspNetCore.Http
 @{
     Layout = "_LayoutInstructor";
+    var token = HttpContext.Session.GetString("instructToken");
+    if (string.IsNullOrEmpty(token))
+    {
+        <script type="text/javascript">
+            window.location.href = "/Instructor/Index?handler=Logout";
+        </script>
+        return;
+    }
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
@@ -21,7 +30,7 @@
                     <tr>
                         <td>
                             <img src="@item.ThumbUrl" width="50" height="50"></td>
-                        <td>@item.Learner.Information.Name</td>
+                        <td>@item.CourseName</td>
                         <td>@item.Lesson.Content</td>
                         <td>
                             <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/Details" asp-route-id="@item.Id">Details</a>

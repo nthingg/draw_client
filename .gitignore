@@ -230,3 +230,6 @@ PublishScripts/
 *.nuget.targets
 
 # Microsoft Azure
+/.vs/DRAW_NET1606/DesignTimeBuild/.dtbcache.v2
+/.gitignore
+/.vs/DRAW_NET1606/DesignTimeBuild/.dtbcache.v2
