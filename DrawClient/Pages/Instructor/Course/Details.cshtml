@@ -1,8 +1,17 @@
 ﻿@page "{id}"
 @model DrawClient.Pages.Instructor.Course.DetailsModel
+@using Microsoft.AspNetCore.Http
 @{
     Layout = "_LayoutInstructor";
     var vndFormat = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var token = HttpContext.Session.GetString("instructToken");
+    if (string.IsNullOrEmpty(token))
+    {
+        <script type="text/javascript">
+            window.location.href = "/Instructor/Index?handler=Logout";
+        </script>
+        return;
+    }
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
@@ -64,7 +73,7 @@
                             </div>
                             <div class="form-container">
                                 <h5 class="form-label mb-2">Topic</h5>
-                                <input class="form-control" type="text" aria-label="Default select example" asp-for="@Model.Course.Topic.Name" readonly/> 
+                                <input class="form-control" type="text" aria-label="Default select example" asp-for="@Model.Course.Topic.Name" readonly />
                             </div>
                         </div>
                     </div>
@@ -96,11 +105,15 @@
                                     <li class="list-group-item ml-2">@item.Content</li>
                                     @if (item.VideoUrl is not null)
                                     {
-                                        <li class="list-group-item ml-2">@item.VideoUrl</li>
+                                        <li class="list-group-item ml-2">
+                                            <video width="400" controls>
+                                                <source src="@item.VideoUrl" type="video/mp4">
+                                            </video>
+                                        </li>
                                     }
                                     @if (item.IsExam)
                                     {
-                                        <li class="list-group-item ml-2 text-danger">Kiểm tra</li>
+                                        <li class="list-group-item ml-2 text-danger">Exam</li>
                                         <li class="list-group-item ml-2 text-right">
                                             <a class="btn btn-outline-secondary" asp-page="/Instructor/Exam/List" asp-route-id="@item.Id">View Results</a>
                                         </li>

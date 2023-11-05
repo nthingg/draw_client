@@ -1,8 +1,17 @@
 ﻿@page
 @model DrawClient.Pages.Instructor.Course.IndexModel
+@using Microsoft.AspNetCore.Http
 @{
     Layout = "_LayoutInstructor";
     var vndFormat = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var token = HttpContext.Session.GetString("instructToken");
+    if (string.IsNullOrEmpty(token))
+    {
+        <script type="text/javascript">
+            window.location.href = "/Instructor/Index?handler=Logout";
+        </script>
+        return;
+    }
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">
@@ -37,6 +46,9 @@
                                 <p class="card-text">
                                     <b>Topic</b>: @item.Topic.Name
                                 </p>
+                                <p class="card-text">
+                                    <b>Status</b>: @(item.IsAvailable ? "Available" : "Disabled")
+                                </p>
                                 <div class="action text-right mt-3">
                                     <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-primary">Detail</a>
                                     <a asp-page="Update" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
@@ -58,7 +70,7 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item @(!previous ? "disabled" : "")">
-                            <a class="page-link" href="" tabindex="-1">Previous</a>
+                            <a class="page-link" asp-page="" asp-route-pageIndex="@(currentPageIndex - 2)" tabindex="-1">Previous</a>
                         </li>
                         <li class="page-item active">
                             <a class="page-link">@currentPageIndex</a>
@@ -66,14 +78,14 @@
                         </li>
                         @if (totalPage >= currentPageIndex + 1)
                         {
-                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
                         }
                         @if (totalPage >= currentPageIndex + 2)
                         {
-                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                            <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
                         }
                         <li class="page-item @(!next ? "disabled" : "")">
-                            <a class="page-link" href="#">Next</a>
+                            <a class="page-link" asp-page="" asp-route-pageIndex="@(currentPageIndex)">Next</a>
                         </li>
                     </ul>
 

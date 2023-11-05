@@ -3,6 +3,14 @@
 @model DrawClient.Pages.Instructor.Course.AddLessonModel
 @{
     Layout = "_LayoutInstructor";
+    var token = HttpContext.Session.GetString("instructToken");
+    if (string.IsNullOrEmpty(token))
+    {
+        <script type="text/javascript">
+            window.location.href = "/Instructor/Index?handler=Logout";
+        </script>
+        return;
+    }
 }
 
 <section id="corses-singel" class="pt-20 pb-20 gray-bg">

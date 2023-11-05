@@ -15,6 +15,7 @@ namespace ViewModel.Course
         public decimal? DiscountPrice { get; set; }
         public string Level { get; set; }
         public string Material { get; set; }
+        public bool IsAvailable { get; set; }
         public TopicBaseViewModel Topic { get; set; }
         public InstructorBaseViewModel Instructor { get; set; }
         public ICollection<LessonViewModel> Lessons { get; set; }
