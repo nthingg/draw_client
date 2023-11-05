@@ -57,7 +57,7 @@ namespace DrawClient.Pages.Customer
                 {
                     if (detail.Course.DiscountPrice is not null)
                     {
-                        Total += detail.Course.DiscountPrice;
+                        Total += detail.Course.DiscountPrice.GetValueOrDefault();
                     }
                     else
                     {
