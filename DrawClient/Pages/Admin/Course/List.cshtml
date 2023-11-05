@@ -4,6 +4,147 @@
     Layout = "_LayoutAdmin";
 }
 
-<section id="corses-singel" class="pt-20 pb-20 gray-bg">
-    <p>List Course Here</p>
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(/images/page-banner-2.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Our Courses</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="/Customer/Course/List">Courses</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
 </section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== COURSES PART START ======-->
+
+<section id="courses-part" class="pt-120 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="courses-top-search">
+                    <ul class="nav float-left" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="active" id="courses-grid-tab" data-toggle="tab" href="#courses-grid" role="tab" aria-controls="courses-grid" aria-selected="true"><i class="fa fa-th-large"></i></a>
+                        </li>
+                        <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
+                    </ul> <!-- nav -->
+
+                    <div class="courses-search float-right">
+                        <form action="#">
+                            <input type="text" placeholder="Search">
+                            <button type="button"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div> <!-- courses search -->
+                </div> <!-- courses top search -->
+            </div>
+        </div> <!-- row -->
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
+                <div class="row">
+
+                    @foreach (var item in Model.Courses.Items)
+                    {
+
+                        int ratingNum = 0;
+                        int avgRating = 0;
+                        if (item.Reviews.Count != 0)
+                        {
+                            ratingNum = item.Reviews.Count;
+                            avgRating = (int)item.Reviews.Sum(c => c.Rating) / item.Reviews.Count;
+                        }
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="singel-course mt-30">
+                                <div class="thum">
+                                    <div class="image">
+                                        <img src="@(item.ThumbUrl ?? "https://dummyimage.com/600x400/000/fff&text=no+image")" alt="Course">
+                                    </div>
+                                    <div class="price">
+                                        @if (item.DiscountPrice is not null)
+                                        {
+                                            <span><s class="text-muted">@item.OriginalPrice</s>  @item.DiscountPrice</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.OriginalPrice</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="cont">
+                                    <ul>
+                                        @for (var i = 0; i < avgRating; i++)
+                                        {
+                                            <li><i class="fa fa-star"></i></li>
+                                        }
+                                        @for (var i = 0; i < (5 - avgRating); i++)
+                                        {
+                                            <li><i class="fa fa-star" style="color: gray;"></i></li>
+                                        }
+                                    </ul>
+                                    <span>(@ratingNum reviews)</span>
+                                    <a asp-page="Detail" asp-route-id="@item.Id"><h4>@item.Name</h4></a>
+                                    <div class="course-teacher">
+                                        <div class="thum">
+                                            <a href="#"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="teacher"></a>
+                                        </div>
+                                        <div class="name">
+                                            <a asp-page="/Admin/Instructor/Detail" asp-route-id="@item.Instructor.Id"><h6>@item.Instructor.Information.Name</h6></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- singel course -->
+                        </div>
+                    }
+                </div> <!-- row -->
+            </div>
+        </div> <!-- tab content -->
+        <!-- PAGING SECTION -->
+        @{
+            var currentPageIndex = Model.Courses.PageIndex + 1;
+            var previous = Model.Courses.Previous;
+            var next = Model.Courses.Next;
+            var totalPage = Model.Courses.TotalPagesCount;
+        }
+
+        <div class="footer-section pagination text-center mt-5 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item @(!previous ? "disabled" : "")">
+                        <a class="page-link" href="" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link">@currentPageIndex</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    @if (totalPage >= currentPageIndex + 1)
+                    {
+                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                    }
+                    @if (totalPage >= currentPageIndex + 2)
+                    {
+                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                    }
+                    <li class="page-item @(!next ? "disabled" : "")">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+    </div> <!-- container -->
+</section>
+
+<!--====== COURSES PART ENDS ======-->
+@section Scripts {
+
+}
