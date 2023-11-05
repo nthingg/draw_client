@@ -1,3 +1,4 @@
+using DrawchadViewModel.Certificate;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -19,9 +20,8 @@ namespace DrawClient.Pages.Customer.Certificate
             _client.BaseAddress = new Uri(apiUrl);
         }
 
-        public PurchasedCourseViewModel Certificate { get; set; }
+        public CertificateViewModel Certificate { get; set; }
 
-        public LearnerBaseViewModel Learner { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -32,39 +32,17 @@ namespace DrawClient.Pages.Customer.Certificate
             }
 
             var token = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/course/" + id);
+            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/learner/certificates/" + id);
             request.Headers.Add("Authorization", $"Bearer {token}");
 
             var res = await _client.SendAsync(request);
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();
-                var course = JsonConvert.DeserializeObject<PurchasedCourseViewModel>(dataStr);
-                Certificate = course;
-                await GetLearner();
+                var cert = JsonConvert.DeserializeObject<CertificateViewModel>(dataStr);
+                Certificate = cert;
             }
             return Page();
-        }
-
-        private async Task GetLearner()
-        {
-            var id = HttpContext.Session.GetInt32("learnerId");
-
-            var token = HttpContext.Session.GetString("learnerToken");
-            var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/learner/" + id);
-            request.Headers.Add("Authorization", $"Bearer {token}");
-
-            var res = await _client.SendAsync(request);
-
-            if (res.IsSuccessStatusCode)
-            {
-                var dataStr = await res.Content.ReadAsStringAsync();
-                var learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(dataStr);
-                if (learner is not null)
-                {
-                    Learner = learner;
-                }
-            }
         }
     }
 }

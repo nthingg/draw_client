@@ -26,54 +26,24 @@
 <section id="event-page" class="pt-90 pb-120 gray-bg">
     <div class="container">
         <div class="row">
-            @foreach (var course in Model.Passed)
+            @foreach (var cert in Model.Certificates.Items)
             {
                 <div class="col-lg-6">
                     <div class="singel-event-list mt-30">
                         <div class="event-thum">
-                            <img src="@course.ThumbUrl" alt="Event">
+                            <img src="@cert.Course.ThumbUrl" alt="Event">
                         </div>
                         <div class="event-cont">
-                            <a asp-page="Detail" asp-route-id="@course.Id">
-                                <h4>@course.Name</h4>
+                            <span><i class="fa fa-calendar"></i> @cert.ReceiveAt.ToString("dd/MM/yyyy")</span>
+                            <a asp-page="Detail" asp-route-id="@cert.Course.Id">
+                                <h4>@cert.Course.Name</h4>
                             </a>
-                            <span class="pb-2"><b style="color: black;">Level:</b> @course.Level</span>
-                            <span><b style="color: black;">Material:</b> @course.Material</span>
-                            <span><b style="color: black;">Topic:</b> @course.Topic.Name</span>
+                            <span class="pb-2"><b style="color: black;">Level:</b> @cert.Course.Level</span>
+                            <span><b style="color: black;">Material:</b> @cert.Course.Material</span>
                         </div>
                     </div>
                 </div>
             }
-            @* <div class="col-lg-12">
-                <div>
-                    <div class="row">
-
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="tbl-exam">
-                                    <th>Course Name</th>
-                                    <th style="text-align: center;">Result</th>
-                                    <th style="text-align: center;">Details</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach (var course in Model.Passed)
-                                {
-                                    <tr>
-                                        <td style="vertical-align: middle;"><a class="btn btn-dark" asp-page="/Customer/Course/Detail" asp-route-id="@course.Id">@course.Name</a></td>
-                                        <td style="vertical-align: middle;">@course.AverageScore</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-dark" asp-page="Detail" asp-route-id="@course.Id">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div> *@
             </div>
         </div>
     </div>

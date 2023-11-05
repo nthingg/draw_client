@@ -17,7 +17,5 @@ namespace ViewModel.Course
         public TopicBaseViewModel Topic { get; set; }
         public InstructorBaseViewModel Instructor { get; set; }
         public ICollection<LessonViewModel> Lessons { get; set; }
-        public double AverageScore { get; set; }
-        public bool HasPassed => AverageScore >= 5;
     }
 }
