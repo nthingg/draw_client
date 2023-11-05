@@ -35,54 +35,46 @@
         </div>
 
 
-        <div class="col-md-8 border">
+        <div class="col-md-8">
             <div class="tbl-exam p-3 text-white ">
                 <h2 class="tbl-exam">Order history</h2>
             </div>
+            <div style="background-color: white; ">
+                @if (Model.orders == null || Model.orders.Count() == 0)
+                {
+                    <h3 class="draw-header p-3 text-center">No Data</h3>
+                }
 
-
-            <div class="row">
-                
-                    <div class="" style="width:inherit">
-                        @if (Model.orders == null || Model.orders.Count() == 0)
-                        {
-                            <h3 class="draw-header">No Data</h3>
-                        }
-
-                        else
-                        {
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr class="tbl-exam">
-                                        <th style="width: 280px;">ID</th>
-                                        <th style="width: 280px;">Order Date</th>
-                                        <th style="width: 150px;">Total</th>
-                                        @*<th style="width: 300px;">Email</th>*@
-                                        <th style="text-align: center;">Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var obj in Model.orders)
-                                    {
-                                        <tr>
-                                            <td style="vertical-align: middle;">@obj.Id</td>
-                                            <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
-                                            <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
-                                            <td class="text-center">
-                                                <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                    </div> <!-- singel course -->
-
-                 <!-- row -->
+                else
+                {
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="tbl-exam">
+                                <th style="width: 280px;">ID</th>
+                                <th style="width: 280px;">Order Date</th>
+                                <th style="width: 150px;">Total</th>
+                                @*<th style="width: 300px;">Email</th>*@
+                                <th style="text-align: center;">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.orders)
+                            {
+                                <tr>
+                                    <td style="vertical-align: middle;">@obj.Id</td>
+                                    <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
+                                    <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             </div>
-            </>
         </div>
     </div>
 </section>
