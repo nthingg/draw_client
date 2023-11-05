@@ -31,9 +31,6 @@
                                                                 @detail.Course.Name
                                                             </a>
                                                         </h5>
-                                                        <p class="prod-description mt-2">
-                                                            @detail.Course.Description
-                                                        </p>
                                                         <dl class="m-b-none mt-4">
                                                             <dt>Level: <span class="prod-auth">@detail.Course.Level</span></dt>
                                                         </dl>
@@ -44,10 +41,10 @@
                                                             <a asp-page="Cart" asp-route-removeId="@detail.Id" class="remove-prod"><i class="fa fa-trash"></i> Remove item</a>
                                                         </div>
                                                     </td>
-                                                    @if (detail.Course.DiscountPrice != 0)
+                                                    @if (detail.Course.DiscountPrice is not null)
                                                     {
                                                         <td>
-                                                            <p class="text-muted">@detail.Course.OriginalPrice</p>
+                                                            <s class="text-muted">@detail.Course.OriginalPrice</s>
                                                         </td>
                                                         <td>
                                                             <h5>

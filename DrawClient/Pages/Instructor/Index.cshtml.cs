@@ -47,5 +47,11 @@ namespace DrawClient.Pages.Instructor
 
 			return Page();
 		}
+
+		public IActionResult OnGetLogout()
+		{
+			HttpContext.Session.Clear();
+			return Redirect("/Instructor/Index");
+		}
     }
 }

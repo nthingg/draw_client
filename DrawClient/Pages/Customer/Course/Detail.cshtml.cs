@@ -100,10 +100,12 @@ namespace DrawClient.Pages.Customer.Course
 
         private async Task SetOrderDetail()
         {
+
+            var token = HttpContext.Session.GetString("learnerToken");
             var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + $"/order/history?pageIndex=0&pageSize=100");
+            request.Headers.Add("Authorization", $"Bearer {token}");
+
             var res = await _client.SendAsync(request);
-
-
             if (res.IsSuccessStatusCode)
             {
                 var dataStr = await res.Content.ReadAsStringAsync();

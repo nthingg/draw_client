@@ -50,7 +50,9 @@ namespace DrawClient.Pages.Customer.Certificate
         {
             var id = HttpContext.Session.GetInt32("learnerId");
 
+            var token = HttpContext.Session.GetString("learnerToken");
             var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/learner/" + id);
+            request.Headers.Add("Authorization", $"Bearer {token}");
 
             var res = await _client.SendAsync(request);
 
