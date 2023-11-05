@@ -15,11 +15,13 @@ namespace DrawClient.Pages.Admin.Customer
         private HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         public LearnerBaseViewModel Learner { get; set; }   
-        public ICollection<OrderViewModel> orders { get; set; }
+        public List<OrderViewModel> orders { get; set; }
+        public List<decimal> totals { get; set; }
+        public int customerId { get; set; } 
 
         public DetailModel(IConfiguration configuration)
         {
-            
+            totals = new List<decimal>();   
             _httpClient = new HttpClient();
             _configuration = configuration;
             var apiUrl = _configuration.GetSection("ApiUrl").Get<string>();
@@ -40,9 +42,26 @@ namespace DrawClient.Pages.Admin.Customer
             {
                 string data = responseỎder.Content.ReadAsStringAsync().Result;
                 orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
+                if(orders != null && orders.Count > 0)
+                {
+                   await getTotal();
+                }
             }
-
+            customerId = id;
             return Page();
+        }
+
+        public async Task getTotal()
+        {
+            foreach(var order in orders)
+            {
+                decimal total = 0;
+                foreach(var item in order.Details)
+                {
+                    total += item.Price.GetValueOrDefault();
+                }
+                totals.Add(total);
+            }
         }
     }
 }

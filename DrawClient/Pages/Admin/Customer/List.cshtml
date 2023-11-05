@@ -39,9 +39,14 @@
                             <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Phone == null ? "No data" : obj.Information.Phone)</td>
                             <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Email == null ? "No data" : obj.Information.Email)</td>
                             <td class="text-center">
-                                <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+                                <div class="row">
+                                    <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a class="btn btn-danger" asp-page="/Admin/Customer/Block" asp-route-id="@obj.Id">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }

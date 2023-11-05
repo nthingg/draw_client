@@ -50,7 +50,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr class="tbl-exam">
-                                <th style="width: 280px;">ID</th>
+                                <th style="width: 280px;">Order ID</th>
                                 <th style="width: 280px;">Order Date</th>
                                 <th style="width: 150px;">Total</th>
                                 @*<th style="width: 300px;">Email</th>*@
@@ -58,14 +58,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var obj in Model.orders)
+                            @for (int i =0; i < Model.orders.Count(); i++)
                             {
                                 <tr>
-                                    <td style="vertical-align: middle;">@obj.Id</td>
-                                    <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
-                                    <td style="vertical-align: middle;">@(obj.OrderDate == null ? "No data" : obj.OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
+                                    <td style="vertical-align: middle;">@Model.orders[i].Id</td>
+                                    <td style="vertical-align: middle;">@(Model.orders[i].OrderDate == null ? "No data" : Model.orders[i].OrderDate.GetValueOrDefault().ToString("dd/MM/yyyy"))</td>
+                                    <td style="vertical-align: middle;">@(Model.totals[i])</td>
                                     <td class="text-center">
-                                        <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
+                                        <a class="btn btn-dark" asp-page="/Admin/Customer/Order" asp-route-customerId="@Model.customerId" asp-route-orderId="@Model.orders[i].Id">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     </td>

@@ -1,0 +1,51 @@
+﻿@page
+@model DrawClient.Pages.Admin.Customer.OrderModel
+@{
+    Layout = "_LayoutAdmin";
+}
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="p-3" style="width: 1000px; margin: auto;">
+        <div class="pt-4" style="width: inherit">
+            <div>
+                <h2 class="draw-header" style="text-align: center; margin-bottom: 30px;">Order Detail</h2>
+            </div>
+
+@*            <div class="justify-content-end mb-1" style="float: right; margin: 0 40px 20px 0; color:#07294d !important;">
+                <a class="btn tbl-exam" asp-page="Create" style="margin: 0 20px 20px 0;">
+                    <i style="font-size: 20px;" class="bi bi-plus-square mr-2"></i> Add New
+                </a>
+            </div>*@
+        </div>
+        <div>
+
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="tbl-exam">
+                        <th style="width: 280px;">OrderId</th>
+                        <th style="width: 280px;">CourseId</th>
+                        <th style="width: 150px;">Price</th>
+                        @*<th style="width: 300px;">Rating</th>*@
+                        <th style="text-align: center;">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.order.Details)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle;">@obj.Id</td>
+                            <td style="vertical-align: middle;">@(obj.CourseId == null ? "No data" : obj.CourseId)</td>
+                            <td style="vertical-align: middle;">@(obj.Price == null  ? "No data" : obj.Price)</td>
+                            @*<td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Email == null ? "No data" : obj.Information.Email)</td>*@
+                            <td class="text-center">
+                                <a target="_blank" class="btn btn-dark" asp-page="/Admin/Course/Detail" asp-route-id="@obj.CourseId">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
