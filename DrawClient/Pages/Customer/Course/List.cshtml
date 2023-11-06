@@ -35,9 +35,9 @@
                         </li>
                         @if (Model.Courses != null)
                         {
-                            <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
+                            <li class="nav-item">Total of @Model.Courses.TotalItemsCount Results</li>
                         } else
-                        {
+                        {   
                             <li class="nav-item">Total of 0 Results</li>
                         }
                     </ul> <!-- nav -->
@@ -148,7 +148,7 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item @(!previous ? "disabled" : "")">
-                        <a class="page-link" href="" tabindex="-1">Previous</a>
+                        <a class="page-link" href="/Customer/Course/List?pageIndex=@(currentPageIndex - 2)">Previous</a>
                     </li>
                     <li class="page-item active">
                         <a class="page-link">@currentPageIndex</a>
@@ -156,11 +156,11 @@
                     </li>
                     @if (totalPage >= currentPageIndex + 1)
                     {
-                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                        <li class="page-item"><a class="page-link" href="/Customer/Course/List?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
                     }
                     @if (totalPage >= currentPageIndex + 2)
                     {
-                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                        <li class="page-item"><a class="page-link" href="/Customer/Course/List?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
                     }
                     <li class="page-item @(!next ? "disabled" : "")">
                         <a class="page-link" href="#">Next</a>

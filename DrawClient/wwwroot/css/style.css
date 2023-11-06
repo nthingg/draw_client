@@ -1236,7 +1236,7 @@ p {
     font-size: 24px;
     color: #000;
     padding-top: 15px;
-    padding-bottom: 40px;
+    padding-bottom: 15px;
     -webkit-transition: all 0.4s linear;
     transition: all 0.4s linear;
 }
@@ -3936,4 +3936,18 @@ p.form-message.error {
 
     .tmp-add-cart:hover {
         background-color: #24486e;
+    }
+
+.cloud-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (height:width) */
+    overflow: hidden;
+}
+
+    .cloud-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }

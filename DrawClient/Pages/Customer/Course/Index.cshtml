@@ -425,11 +425,27 @@
                                     </a>
                                 </h6>
                             </div>
-                            <div class="ibox-content">
-                                <div class="video-container">
-                                    <iframe src="@Model.Lesson.VideoUrl"></iframe>
-                                </div>
-                            </div>
+                            @if (Model.Lesson.VideoUrl != null)
+                            {       
+                                @if (Model.Lesson.VideoUrl.Contains("youtube.com"))
+                                {
+                                    <div class="ibox-content">
+                                        <div class="video-container">
+                                            <iframe src="@Model.Lesson.VideoUrl"></iframe>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="ibox-content">
+                                        <div class="cloud-container">
+                                            <video controls controlsList="nodownload">
+                                                <source src="@Model.Lesson.VideoUrl" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
+                                }
+                            }
                             <div class="ibox-content">
                                 <h6>
                                     <a class="text-navy">
