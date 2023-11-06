@@ -20,34 +20,8 @@
             <div class="row">
                 <!-- Course Header Section -->
                 <h2 class="mb-5 col-md-8">Edit course</h2>
-                <div class="col-md-4 footer action mx-auto">
+                <div class="col-md-4 footer action">
                     <button type="submit" class="btn btn-outline-dark">Save Change</button>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmModal">
-                        Delete Course
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Do you really want to delete this course?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a class="btn btn-danger" asp-page="/Instructor/Course/Update"
-                                       asp-page-handler="RemoveCourse" asp-route-id="@Model.Id">Confirm</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- Course Body Section -->
@@ -70,6 +44,7 @@
                             @if (Model.Course.ThumbUrl is not null)
                             {
                                 <img src="@Model.Course.ThumbUrl" />
+                                <input type="hidden" asp-for="@Model.CourseUpdate.ThumbUrl" value="@Model.Course.ThumbUrl" />
                             }
                             else
                             {
@@ -178,9 +153,20 @@
                                     <li class="list-group-item ml-2">
                                         @if (item.VideoUrl is not null)
                                         {
-                                            <video width="400" controls>
-                                                <source src="@item.VideoUrl" type="video/mp4">
-                                            </video>
+                                            @if (item.VideoUrl.Contains("youtube.com"))
+                                            {
+                                                <div class="ibox-content">
+                                                    <div class="video-container">
+                                                        <iframe src="@item.VideoUrl"></iframe>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <video width="400" controls>
+                                                    <source src="@item.VideoUrl" type="video/mp4">
+                                                </video>
+                                            }
                                         }
                                         <input class="form-control" type="file" id="formFile" asp-for="@Model.VideoUrl">
                                     </li>
