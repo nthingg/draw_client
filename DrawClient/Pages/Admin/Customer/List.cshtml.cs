@@ -20,15 +20,25 @@ namespace DrawClient.Pages.Admin.Customer
         }
         public async Task<IActionResult> OnGetAsync(int pageIndex = 0)
         {
-			var token = HttpContext.Session.GetString("adminToken");
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-			HttpResponseMessage response = _httpClient.GetAsync(baseAddress + $"learner/page?pageIndex={pageIndex}&pageSize=10").Result;
-            if (response.IsSuccessStatusCode)
+            var log = HttpContext.Session.GetString("adminLogged");
+            if(log == "logged")
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Learners = JsonConvert.DeserializeObject<Page<LearnerBaseViewModel>>(data);
+                var token = HttpContext.Session.GetString("adminToken");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = _httpClient.GetAsync(baseAddress + $"learner/page?pageIndex={pageIndex}&pageSize=10").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    Learners = JsonConvert.DeserializeObject<Page<LearnerBaseViewModel>>(data);
+                }
+                return Page();
             }
-            return Page();
+            else
+            {
+                TempData["error"] = "Please log in with admin role to access this url!";
+                return RedirectToPage("/Admin/Authentication/Login");
+            }
+			
         }
     }
 }

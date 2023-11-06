@@ -36,7 +36,7 @@
                         <li class="nav-item">
                             <a class="active" id="courses-grid-tab" data-toggle="tab" href="#courses-grid" role="tab" aria-controls="courses-grid" aria-selected="true"><i class="fa fa-th-large"></i></a>
                         </li>
-                        <li class="nav-item">Total of @Model.Courses.Items.Count Results</li>
+                        <li class="nav-item">Total of @Model.Courses.TotalItemsCount Results</li>
                     </ul> <!-- nav -->
 
                     <div class="courses-search float-right">
@@ -120,7 +120,7 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item @(!previous ? "disabled" : "")">
-                        <a class="page-link" href="" tabindex="-1">Previous</a>
+                        <a class="page-link" href="/Admin/Course/List?pageIndex=@(currentPageIndex - 2)" tabindex="-1">Previous</a>
                     </li>
                     <li class="page-item active">
                         <a class="page-link">@currentPageIndex</a>
@@ -128,11 +128,11 @@
                     </li>
                     @if (totalPage >= currentPageIndex + 1)
                     {
-                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 1)</a></li>
+                        <li class="page-item"><a class="page-link" href="/Admin/Course/List?pageIndex=@(currentPageIndex)">@(currentPageIndex + 1)</a></li>
                     }
                     @if (totalPage >= currentPageIndex + 2)
                     {
-                        <li class="page-item"><a class="page-link" href="/Instructor/Course?pageIndex=@(currentPageIndex+2)">@(currentPageIndex + 2)</a></li>
+                        <li class="page-item"><a class="page-link" href="/Admin/Course/List?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
                     }
                     <li class="page-item @(!next ? "disabled" : "")">
                         <a class="page-link" href="#">Next</a>

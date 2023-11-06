@@ -20,16 +20,16 @@
                             <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Phone == null ? "No data" : Model.instructor.Information.Phone)</dd>
                             <dt class="col-sm-3">Email:</dt>
                             <dd class="col-sm-9">@(Model.instructor.Information == null || Model.instructor.Information.Email == null ? "No data" : Model.instructor.Information.Email)</dd>
-                            <dt class="col-sm-3">Email:</dt>
+                            <dt class="col-sm-3">Description:</dt>
                             <dd class="col-sm-9">@(Model.instructor == null || Model.instructor.Description == null ? "No data" : Model.instructor.Description)</dd>
                         </dl>
                         <div class="row justify-content-around">
-                            <a asp-page="/Admin/Instructor/Block" asp-route-id="@Model.instructor.Id" class="btn btn-danger">@(Model.instructor.Information.IsBlocked ?"Unblock":"Block" )</a>
+                            <a asp-page="/Admin/Instructor/Block" asp-route-id="@Model.instructor.Id" class="btn btn-danger">@(Model.instructor.Information.IsBlocked ? "Unblock" : "Block")</a>
                             <a asp-page="/Admin/Instructor/Update" asp-route-id="@Model.instructor.Id" class="btn btn-secondary">Update</a>
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
                 <a href="@Url.Content("~/Admin/Instructor/List")" class="btn tbl-exam" style="float: right; margin: 20px 60px 20px 00px">Back to instructor list</a>
             </div>
@@ -40,18 +40,23 @@
             <div class="tbl-exam p-3 text-white ">
                 <h2 class="tbl-exam">Course List</h2>
             </div>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
-                    <div class="row">
-                        @if(Model.courses.Items.Count() != 0)
-                        {
+
+            @if (Model.courses.Items.Count() == 0)
+            {
+                <h3 class="draw-header p-3 text-center">No Data</h3>
+            }
+            else
+            {
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
+                        <div class="row">
                             @foreach (var obj in Model.courses.Items)
                             {
                                 <div class="col-lg-4 col-md-6">
                                     <div class="singel-course mt-30">
                                         <div class="thum">
                                             <div class="image">
-                                                <img src="@obj.ThumbUrl" alt="Course">
+                                                <img src=@(obj.ThumbUrl == null? "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg": obj.ThumbUrl) alt="Course">
                                             </div>
                                             <div class="price">
                                                 <span>@obj.OriginalPrice</span>
@@ -63,132 +68,10 @@
                                     </div> <!-- singel course -->
                                 </div>
                             }
-                        }
-                        else
-                        {
-                            <div class="py-4" style="width:inherit">
-                                <h3 class=" draw-header" style=" text-align: center;">No data</h3>
-
-                            </div>
-                        }
-                        @*<div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-2.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>300.000VND</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="courses-singel.html"><h4>Storytelling through Comics: Sequential Art</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-3.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>500.000VND</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="courses-singel.html"><h4>Botanical Beauty: Floral Illustration</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-4.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>799.000VND</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="courses-singel.html"><h4>Fantasy Realms and Creatures: Drawing Myths</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-5.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>100.000VND</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="courses-singel.html"><h4>Still Life Secrets: Objects in Detail</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src="/images/course/cu-1.jpg" alt="Course">
-                                    </div>
-                                    <div class="price">
-                                        <span>499.000VND</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                    <span>(20 Reviews)</span>
-                                    <a href="courses-singel.html"><h4>Architectural Wonders: Perspective Drawing</h4></a>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>*@
-                    </div> <!-- row -->
+                        </div> <!-- row -->
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </section>

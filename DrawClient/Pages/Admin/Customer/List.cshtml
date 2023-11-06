@@ -27,6 +27,7 @@
                         <th style="width: 280px;">Name</th>
                         <th style="width: 150px;">Phone</th>
                         <th style="width: 300px;">Email</th>
+                        <th style="width: 75px">Block</th>
                         <th style="text-align: center;">Details</th>
                     </tr>
                 </thead>
@@ -38,10 +39,21 @@
                             <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Name == null ? "No data" : obj.Information.Name)</td>
                             <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Phone == null ? "No data" : obj.Information.Phone)</td>
                             <td style="vertical-align: middle;">@(obj.Information == null || obj.Information.Email == null ? "No data" : obj.Information.Email)</td>
+                            <td style="vertical-align: middle;" class="text-center">
+                                @if (obj.Information.IsBlocked)
+                                {
+                                    <i class="bi bi-check-lg text-success"></i>
+                                }
+                            </td>
                             <td class="text-center">
-                                <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+                                <div class="row">
+                                    <a class="btn btn-dark" asp-page="/Admin/Customer/Detail" asp-route-id="@obj.Id">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a class="btn btn-danger" asp-page="/Admin/Customer/Block" asp-route-id="@obj.Id">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -75,7 +87,7 @@
                     <li class="page-item"><a class="page-link" href="/Admin/Customer/List?pageIndex=@(currentPageIndex+1)">@(currentPageIndex + 2)</a></li>
                 }
                 <li class="page-item @(!next ? "disabled" : "")">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="/Admin/Customer/List?pageIndex=@(currentPageIndex)">Next</a>
                 </li>
             </ul>
 
