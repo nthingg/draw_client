@@ -105,11 +105,22 @@
                                     <li class="list-group-item ml-2">@item.Content</li>
                                     @if (item.VideoUrl is not null)
                                     {
-                                        <li class="list-group-item ml-2">
-                                            <video width="400" controls>
-                                                <source src="@item.VideoUrl" type="video/mp4">
-                                            </video>
-                                        </li>
+                                        @if (item.VideoUrl.Contains("youtube.com"))
+                                        {
+                                            <div class="ibox-content">
+                                                <div class="video-container">
+                                                    <iframe src="@item.VideoUrl"></iframe>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <li class="list-group-item ml-2">
+                                                <video width="400" controls>
+                                                    <source src="@item.VideoUrl" type="video/mp4">
+                                                </video>
+                                            </li>
+                                        }
                                     }
                                     @if (item.IsExam)
                                     {
