@@ -22,16 +22,25 @@ namespace DrawClient.Pages.Admin.Customer
         }
         public async Task<IActionResult> OnGetAsync(int orderId, int customerId)
         {
-            var token = HttpContext.Session.GetString("adminToken");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage responseOrder = _httpClient.GetAsync(_httpClient.BaseAddress + "/order/history-of-learner?learnerId=" + customerId).Result;
-            if (responseOrder.IsSuccessStatusCode)
+            var log = HttpContext.Session.GetString("adminLogged");
+            if (log == "logged")
             {
-                string data = responseOrder.Content.ReadAsStringAsync().Result;
-                var rs = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
-                order = rs.FirstOrDefault(o => o.Id == orderId);
+                var token = HttpContext.Session.GetString("adminToken");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage responseOrder = _httpClient.GetAsync(_httpClient.BaseAddress + "/order/history-of-learner?learnerId=" + customerId).Result;
+                if (responseOrder.IsSuccessStatusCode)
+                {
+                    string data = responseOrder.Content.ReadAsStringAsync().Result;
+                    var rs = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
+                    order = rs.FirstOrDefault(o => o.Id == orderId);
+                }
+                return Page();
             }
-            return Page();
+            else
+            {
+                TempData["error"] = "Please login with admin role to access this url!";
+                return RedirectToPage("/Admin/Authentication/Login");
+            }
         }
     }
 }

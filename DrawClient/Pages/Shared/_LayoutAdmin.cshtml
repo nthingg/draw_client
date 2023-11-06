@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -71,7 +73,9 @@
                 </div> <!-- row -->
             </div> <!-- container -->
         </div> <!-- header top -->
-
+        @{
+            string log = Context.Session.GetString("adminLogged");
+        }
         <div class="header-logo-support pt-30 pb-30">
             <div class="container">
                 <div class="row">
@@ -82,12 +86,16 @@
                         <div class="support-button float-right d-none d-md-block">
                             <div class="button float-left">
                                 <div class="dropdown">
-                                    <a href="/Customer/Authentication/Login" class="main-btn logged-user"><i class="bi bi-person-circle"></i></a>
-                                    <div class="dropdown-content">
-                                        <ul>
-                                            <li><a href="#"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                                        </ul>
-                                    </div>
+                                    <a href="/Admin/Authentication/Login" class="main-btn logged-user"><i class="bi bi-person-circle"></i></a>
+                                    
+                                    @if(log == "logged")
+                                    {
+                                        <div class="dropdown-content">
+                                            <ul>
+                                                <li><a href="/Admin/Authentication/Logout"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

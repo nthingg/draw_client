@@ -29,26 +29,35 @@ namespace DrawClient.Pages.Admin.Customer
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-			var token = HttpContext.Session.GetString("adminToken");
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-			HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
-            if (response.IsSuccessStatusCode)
+            var log = HttpContext.Session.GetString("adminLogged");
+            if (log == "logged")
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(data);
-            }
-            HttpResponseMessage responseỎder = _httpClient.GetAsync(_httpClient.BaseAddress + "/order/history-of-learner?learnerId=" + id).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = responseỎder.Content.ReadAsStringAsync().Result;
-                orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
-                if(orders != null && orders.Count > 0)
+                var token = HttpContext.Session.GetString("adminToken");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
+                if (response.IsSuccessStatusCode)
                 {
-                   await getTotal();
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    Learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(data);
                 }
+                HttpResponseMessage responseỎder = _httpClient.GetAsync(_httpClient.BaseAddress + "/order/history-of-learner?learnerId=" + id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = responseỎder.Content.ReadAsStringAsync().Result;
+                    orders = JsonConvert.DeserializeObject<List<OrderViewModel>>(data);
+                    if (orders != null && orders.Count > 0)
+                    {
+                        await getTotal();
+                    }
+                }
+                customerId = id;
+                return Page();
             }
-            customerId = id;
-            return Page();
+            else
+            {
+                TempData["error"] = "Please login with admin role to access this url!";
+                return RedirectToPage("/Admin/Authentication/Login");
+            }
         }
 
         public async Task getTotal()

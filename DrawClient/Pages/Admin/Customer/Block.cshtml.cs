@@ -25,24 +25,33 @@ namespace DrawClient.Pages.Admin.Customer
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-			var token = HttpContext.Session.GetString("adminToken");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-			HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(data);
-                UpdateViewModel = new LearnerUpdateViewModel
+			var log = HttpContext.Session.GetString("adminLogged");
+            if (log == "logged")
+            { 
+            var token = HttpContext.Session.GetString("adminToken");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/learner/" + id).Result;
+                if (response.IsSuccessStatusCode)
                 {
-                    Information = new UserBaseViewModel
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    Learner = JsonConvert.DeserializeObject<LearnerBaseViewModel>(data);
+                    UpdateViewModel = new LearnerUpdateViewModel
                     {
-                        Email = Learner.Information.Email,
-                        Phone = Learner.Information.Phone,
-                        Name = Learner.Information.Name,
-                    }
-                };
+                        Information = new UserBaseViewModel
+                        {
+                            Email = Learner.Information.Email,
+                            Phone = Learner.Information.Phone,
+                            Name = Learner.Information.Name,
+                        }
+                    };
+                }
+                return Page();
             }
-            return Page();
+            else
+            {
+                TempData["error"] = "Please login with admin role to access this url!";
+                return RedirectToPage("/Admin/Authentication/Login");
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
