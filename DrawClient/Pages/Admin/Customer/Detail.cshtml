@@ -20,7 +20,6 @@
                             <dd class="col-sm-9">@(Model.Learner.Information == null || Model.Learner.Information.Phone == null ? "No data" : Model.Learner.Information.Phone)</dd>
                             <dt class="col-sm-3">Email:</dt>
                             <dd class="col-sm-9">@(Model.Learner.Information == null || Model.Learner.Information.Email == null ? "No data" : Model.Learner.Information.Email)</dd>
-
                         </dl>
                         <div class="row justify-content-around">
                             <a asp-page="/Admin/Customer/Block" asp-route-id="@Model.Learner.Id" class="btn btn-danger">@(Model.Learner.Information.IsBlocked ? "Unblock" : "Block")</a>

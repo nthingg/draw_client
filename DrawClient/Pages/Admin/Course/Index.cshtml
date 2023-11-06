@@ -1,0 +1,179 @@
+﻿@page
+@model DrawClient.Pages.Admin.Course.IndexModel
+@{
+    Layout = "_LayoutCourse";
+}
+
+<!--====== HEADER PART START ======-->
+
+<header id="header-part">
+
+    <div class="header-logo-support pt-30 pb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <a href="/Index" class="draw-header">Drawchad</a>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    <div class="support-button float-right d-none d-md-block">
+                        <div class="button float-left">
+                            <div class="dropdown">
+                                <a href="/Customer/Authentication/Login" class="main-btn logged-user"><i class="bi bi-person-circle"></i></a>
+                                <div class="dropdown-content">
+                                    <ul>
+                                        <li><a href="#"><i class="bi bi-person-fill-gear"></i> Profile</a></li>
+                                        <li><a href="/Customer/Course/Purchased"><i class="bi bi-book-fill"></i> My Courses</a></li>
+                                        <li><a href="/Customer/Authentication/Logout"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- header logo support -->
+
+    <div class="navigation">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-sm-9 col-8">
+                    <nav class="navbar navbar-expand-lg">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a asp-page="Detail" asp-route-id="@Model.Course.Id"><i class="bi bi-arrow-left-circle-fill"></i> @Model.Course.Name </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav> <!-- nav -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div>
+
+</header>
+<!--====== HEADER PART ENDS ======-->
+<!--====== SEARCH BOX PART START ======-->
+
+<div class="search-box">
+    <div class="serach-form">
+        <div class="closebtn">
+            <span></span>
+            <span></span>
+        </div>
+        <form action="#">
+            <input type="text" placeholder="Search by keyword">
+            <button><i class="fa fa-search"></i></button>
+        </form>
+    </div> <!-- serach form -->
+</div>
+
+<!--====== SEARCH BOX PART ENDS ======-->
+
+<section id="corses-singel" class="pt-20 pb-20 gray-bg">
+    <div class="container__course-index" style="margin: 0 auto">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                @if (Model.Lesson.IsExam)
+                {
+                    <div class="col-sm-8">
+                        <div class="ibox">
+                            <div class="ibox-content tbl-exam p-3">
+                                <h6 class="tbl-exam">
+                                    <a class="index-title">
+                                        @Model.Lesson.Title
+                                    </a>
+                                </h6>
+                            </div>
+                            <div class="ibox-content">
+                                <h6>
+                                    <a class="text-navy">
+                                        Content:
+                                    </a>
+                                </h6>
+                                <p class="mt-1">@Model.Lesson.Content</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-8">
+                        <div class="ibox">
+                            <div class="ibox-content tbl-exam p-3">
+                                <h6 class="tbl-exam">
+                                    <a class="index-title">
+                                        @Model.Lesson.Title
+                                    </a>
+                                </h6>
+                            </div>
+                            @if (Model.Lesson.VideoUrl != null)
+                            {
+                                @if (Model.Lesson.VideoUrl.Contains("youtube.com"))
+                                {
+                                    <div class="ibox-content">
+                                        <div class="video-container">
+                                            <iframe src="@Model.Lesson.VideoUrl"></iframe>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="ibox-content">
+                                        <div class="cloud-container">
+                                            <video controls controlsList="nodownload">
+                                                <source src="@Model.Lesson.VideoUrl" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="ibox-content">
+                                <h6>
+                                    <a class="text-navy">
+                                        Content:
+                                    </a>
+                                </h6>
+                                <p class="mt-1">@Model.Lesson.Content</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-sm-4">
+                    <div class="scrollable-content" style="max-height: 840px; overflow-y: scroll;">
+                        <div class="accordion" id="accordionExample">
+                            <!-- Your existing card elements go here -->
+                            @{
+                                int lessonNumber = 1; // Initialize the lesson number counter
+                            }
+                            @foreach (var lesson in Model.Lessons)
+                            {
+                                <div class="card mt-20">
+                                    <div class="card-header tbl-exam">
+                                        <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lesson @(lessonNumber)</span>
+                                    </div>
+                                    <div class="card-header">
+                                        <a asp-page="Index" asp-route-id="@Model.Course.Id" asp-route-changeId="@lesson.Id" class="lecture-title">
+                                            <ul>
+                                                <li><span class="head">@lesson.Title</span></li>
+                                            </ul>
+                                        </a>
+                                    </div>
+                                </div>
+                                lessonNumber++;
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

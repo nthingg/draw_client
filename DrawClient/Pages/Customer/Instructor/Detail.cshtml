@@ -11,17 +11,19 @@
                 <div class="card">
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-3">Name:</dt>
-                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Name == null ? "No data" : Model.Instructor.Information.Name)</dd>
-                            <dt class="col-sm-3">Phone:</dt>
-                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Phone == null ? "No data" : Model.Instructor.Information.Phone)</dd>
-                            <dt class="col-sm-3">Email:</dt>
-                            <dd class="col-sm-9">@(Model.Instructor.Information == null || Model.Instructor.Information.Email == null ? "No data" : Model.Instructor.Information.Email)</dd>
-                            <dt class="col-sm-5">Description:</dt>
-                            <dd class="col-sm-7">@(Model.Instructor == null || Model.Instructor.Description == null ? "No data" : Model.Instructor.Description)</dd>
+                            <dt class="col-sm-4">Name:</dt>
+                            <dd class="col-sm-8">@(Model.Instructor.Information == null || Model.Instructor.Information.Name == null ? "No data" : Model.Instructor.Information.Name)</dd>
+                            <dt class="col-sm-4">Phone:</dt>
+                            <dd class="col-sm-8">@(Model.Instructor.Information == null || Model.Instructor.Information.Phone == null ? "No data" : Model.Instructor.Information.Phone)</dd>
+                            <dt class="col-sm-4">Email:</dt>
+                            <dd class="col-sm-8">@(Model.Instructor.Information == null || Model.Instructor.Information.Email == null ? "No data" : Model.Instructor.Information.Email)</dd>
+                            <dt class="col-sm-4">Description:</dt>
                         </dl>
+                        <div>
+                            <p>@(Model.Instructor == null || Model.Instructor.Description == null ? "No data" : Model.Instructor.Description)</p>
+                        </div>
                     </div>
-
+                    
                 </div>
             </div>
         </div>

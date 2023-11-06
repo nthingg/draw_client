@@ -51,6 +51,7 @@ namespace DrawClient.Pages.Customer.Course
                 if (lesson == null) { continue; }
                 else { Lessons.Add(lesson); }
             }
+            Lessons = Lessons.OrderBy(l => l.Id).ToList();
 
             if (changeId != 0)
             {
@@ -65,6 +66,7 @@ namespace DrawClient.Pages.Customer.Course
             {
                 Exam = await GetExamById(Lesson.Id);
             }
+
             return Page();
         }
 

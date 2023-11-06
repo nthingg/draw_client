@@ -99,7 +99,7 @@
                                         Content:
                                     </a>
                                 </h6>
-                                <p class="mt-1">@Model.Lesson.Content</p>
+                                <p class="mt-1">@Html.Raw(Model.Lesson.Content)</p>
                             </div>
                             @if (Model.Exam == null)
                             {
@@ -452,7 +452,7 @@
                                         Content:
                                     </a>
                                 </h6>
-                                <p class="mt-1">@Model.Lesson.Content</p>
+                                <p class="mt-1">@Html.Raw(Model.Lesson.Content)</p>
                             </div>
                         </div>
                     </div>
@@ -465,7 +465,7 @@
                                 int lessonNumber = 1; // Initialize the lesson number counter
                             }
                             @foreach (var lesson in Model.Lessons) {
-                                <div class="card mt-20">
+                                <div class="card mb-20">
                                     <div class="card-header tbl-exam">
                                         <span class="lecture-section"><i class="bi bi-bookmark-dash-fill"></i> Lesson @(lessonNumber)</span>
                                     </div>
